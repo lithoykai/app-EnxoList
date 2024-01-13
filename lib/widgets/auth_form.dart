@@ -1,3 +1,6 @@
+import 'package:dio/dio.dart';
+import 'package:enxolist/data/data_source/clients/http_clients.dart';
+import 'package:enxolist/data/data_source/product_remote_datasource_impl.dart';
 import 'package:flutter/material.dart';
 
 enum AuthMode { Signup, Login }
@@ -161,7 +164,10 @@ class _AuthFormState extends State<AuthForm> {
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFFE36F6F)),
-              onPressed: () {},
+              onPressed: () {
+                ProductDataSourceImpl(http: HttpClientApp(dio: Dio()))
+                    .getProducts();
+              },
               child: const Text(
                 'Login',
                 style: TextStyle(

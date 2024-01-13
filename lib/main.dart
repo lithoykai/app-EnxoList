@@ -1,6 +1,6 @@
+import 'package:enxolist/infra/utils/approuter.dart';
 import 'package:enxolist/pages/auth_page.dart';
 import 'package:enxolist/pages/splash_page.dart';
-import 'package:enxolist/utils/approuter.dart';
 import 'package:flutter/material.dart';
 
 void main() {
