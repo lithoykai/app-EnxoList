@@ -7,7 +7,7 @@ import 'package:injectable/injectable.dart';
 
 @Injectable(as: IProductDataSource)
 class ProductDataSourceImpl implements IProductDataSource {
-  final HttpClientApp _http;
+  HttpClientApp _http;
 
   ProductDataSourceImpl({required HttpClientApp http}) : _http = http;
 

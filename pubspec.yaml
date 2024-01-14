@@ -27,6 +27,7 @@ dependencies:
   dartz: ^0.10.1
   mockito: ^5.4.4
   json_annotation: ^4.8.1
+  http: ^1.1.0
 
 dev_dependencies:
   flutter_test:

@@ -17,8 +17,9 @@ class HttpClientAppMock extends Mock implements HttpClientApp {
       super.noSuchMethod(Invocation.method(#getMethod, [endpoint]),
           returnValue: Future.value(_FakeResponse()));
   @override
-  Future<Response> getTokenLogin(User user, String endpoint) =>
-      super.noSuchMethod(Invocation.method(#getTokenLogin, [user, endpoint]),
+  Future<Response> getTokenLogin(User user, String password, String endpoint) =>
+      super.noSuchMethod(
+          Invocation.method(#getTokenLogin, [user, password, endpoint]),
           returnValue: Future.value(_FakeResponse()));
 }
 
