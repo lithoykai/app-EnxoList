@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:enxolist/data/data_source/clients/http_clients.dart';
-import 'package:enxolist/data/data_source/product_remote_datasource_impl.dart';
+import 'package:enxolist/data/models/auth/request/auth_request.dart';
+import 'package:enxolist/data/services/auth_service.dart';
 import 'package:flutter/material.dart';
 
 enum AuthMode { Signup, Login }
@@ -60,6 +61,37 @@ class _AuthFormState extends State<AuthForm> {
             key: _formKey,
             child: Column(
               children: [
+                !_isLogin()
+                    ? TextFormField(
+                        decoration: const InputDecoration(
+                          fillColor: Color(0xFFFDFDFD),
+                          filled: true,
+                          enabledBorder: UnderlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(5)),
+                            borderSide:
+                                BorderSide(color: Colors.transparent, width: 5),
+                          ),
+                          labelText: 'Nome',
+                          labelStyle: TextStyle(
+                            fontFamily: "Roboto",
+                            color: Color(0xFF6B6B6B),
+                            fontSize: 17,
+                          ),
+                        ),
+                        keyboardType: TextInputType.emailAddress,
+                        onSaved: (name) => _authData['name'] = name ?? '',
+                        validator: (_name) {
+                          final name = _name ?? '';
+                          if (name.trim().isEmpty) {
+                            return 'Informe um nome válido';
+                          }
+                          return null;
+                        },
+                      )
+                    : Container(),
+                const SizedBox(
+                  height: 20,
+                ),
                 TextFormField(
                   decoration: const InputDecoration(
                     fillColor: Color(0xFFFDFDFD),
@@ -122,39 +154,42 @@ class _AuthFormState extends State<AuthForm> {
           const SizedBox(
             height: 20,
           ),
-          AnimatedContainer(
-            constraints: BoxConstraints(
-                minHeight: _isLogin() ? 0 : 60,
-                maxHeight: _isLogin() ? 0 : 120),
-            duration: const Duration(milliseconds: 300),
-            curve: Curves.linear,
-            child: TextFormField(
-                decoration: const InputDecoration(
-                  fillColor: Colors.white,
-                  filled: true,
-                  enabledBorder: UnderlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(5)),
-                    borderSide: BorderSide(color: Colors.transparent, width: 0),
-                  ),
-                  labelStyle: TextStyle(
-                    fontFamily: "Roboto",
-                    color: Color(0xFF6B6B6B),
-                    fontSize: 17,
-                  ),
-                  labelText: 'Confirmar senha',
-                ),
-                obscureText: true,
-                validator: _isLogin()
-                    ? null
-                    : (_password) {
-                        final password = _password ?? '';
-                        if (password != _passwordController.text) {
-                          return 'As senhas não conferem!';
-                        } else {
-                          return null;
-                        }
-                      }),
-          ),
+          !_isLogin()
+              ? AnimatedContainer(
+                  constraints: BoxConstraints(
+                      minHeight: _isLogin() ? 0 : 60,
+                      maxHeight: _isLogin() ? 0 : 120),
+                  duration: const Duration(milliseconds: 300),
+                  curve: Curves.linear,
+                  child: TextFormField(
+                      decoration: const InputDecoration(
+                        fillColor: Colors.white,
+                        filled: true,
+                        enabledBorder: UnderlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(5)),
+                          borderSide:
+                              BorderSide(color: Colors.transparent, width: 0),
+                        ),
+                        labelStyle: TextStyle(
+                          fontFamily: "Roboto",
+                          color: Color(0xFF6B6B6B),
+                          fontSize: 17,
+                        ),
+                        labelText: 'Confirmar senha',
+                      ),
+                      obscureText: true,
+                      validator: _isLogin()
+                          ? null
+                          : (_password) {
+                              final password = _password ?? '';
+                              if (password != _passwordController.text) {
+                                return 'As senhas não conferem!';
+                              } else {
+                                return null;
+                              }
+                            }),
+                )
+              : Container(),
           const SizedBox(
             height: 20,
           ),
@@ -164,13 +199,10 @@ class _AuthFormState extends State<AuthForm> {
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFFE36F6F)),
-              onPressed: () {
-                ProductDataSourceImpl(http: HttpClientApp(dio: Dio()))
-                    .getProducts();
-              },
-              child: const Text(
-                'Login',
-                style: TextStyle(
+              onPressed: onSubmit,
+              child: Text(
+                _isLogin() ? 'Login' : 'Cadastrar',
+                style: const TextStyle(
                   fontFamily: "Roboto",
                   fontWeight: FontWeight.bold,
                   fontSize: 17,
@@ -194,5 +226,26 @@ class _AuthFormState extends State<AuthForm> {
         ],
       ),
     );
+  }
+
+  onSubmit() {
+    final isValid = _formKey.currentState?.validate() ?? false;
+
+    if (!isValid) {
+      return;
+    }
+
+    _formKey.currentState?.save();
+    AuthRequest request = AuthRequest(
+      email: _authData['email']!,
+      password: _authData['password']!,
+      name: _authData['name'],
+    );
+
+    try {
+      AuthService(http: HttpClientApp(dio: Dio())).authenticate(request);
+    } catch (e) {
+      print(e);
+    }
   }
 }

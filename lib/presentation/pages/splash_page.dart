@@ -1,4 +1,4 @@
-import 'package:enxolist/pages/auth_page.dart';
+import 'package:enxolist/infra/utils/approuter.dart';
 import 'package:flutter/material.dart';
 
 class SplashPage extends StatefulWidget {
@@ -12,12 +12,10 @@ class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) => splashPage(context));
-  }
-
-  Future<void> splashPage(BuildContext context) async {
-    Future.delayed(Duration(seconds: 5), () {
-      Navigator.push(context, MaterialPageRoute(builder: (_) => AuthPage()));
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Future.delayed(Duration(seconds: 5), () {
+        Navigator.of(context).pushReplacementNamed(AppRouter.AUTH_PAGE);
+      });
     });
   }
 

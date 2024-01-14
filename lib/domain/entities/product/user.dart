@@ -1,8 +1,10 @@
 class User {
+  String? id;
   String email;
   String? name;
-  String password;
-  String? token;
+  String? _token;
 
-  User({required this.email, this.name, required this.password, this.token});
+  User({required this.email, this.name});
+
+  String? get token => _token;
 }
