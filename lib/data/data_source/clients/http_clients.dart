@@ -2,9 +2,7 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:enxolist/data/models/auth/request/auth_request.dart';
-import 'package:enxolist/data/services/auth_service.dart';
-import 'package:enxolist/di/injectable.dart';
-import 'package:enxolist/domain/entities/product/user.dart';
+import 'package:enxolist/infra/utils/store.dart';
 import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
 
@@ -22,26 +20,25 @@ class HttpClientApp {
     return _dio.post(endpoint, data: jsonEncode(request.toJson()));
   }
 
-  Future<Response> getMethod(String endpoint) {
-    User user = User(email: 'admin2@teste.com');
-    final token = getIt<AuthService>().token;
-
+  Future<Response> getMethod(String endpoint) async {
+    final token = await Store.getString('token');
+    print('TOKEN GETMETHOD: $token');
     debugPrint('$token');
     _dio.options.headers['content-Type'] = 'application/json';
-    _dio.options.headers['authorization'] = 'Barear ${token}';
+    _dio.options.headers['authorization'] = '${token}';
     return _dio.get(endpoint);
   }
 
-  Future<Response> getTokenLogin(
-      User user, String password, String endpoint) async {
-    final response = await _dio.post(endpoint,
-        data: jsonEncode({
-          'email': user.email,
-          'password': password,
-        }));
-    final bodyToken = jsonDecode(response.data);
+  // Future<Response> getTokenLogin(
+  //     User user, String password, String endpoint) async {
+  //   final response = await _dio.post(endpoint,
+  //       data: jsonEncode({
+  //         'email': user.email,
+  //         'password': password,
+  //       }));
+  //   final bodyToken = jsonDecode(response.data);
 
-    print(bodyToken);
-    return bodyToken['token'];
-  }
+  //   print(bodyToken);
+  //   return bodyToken['token'];
+  // }
 }

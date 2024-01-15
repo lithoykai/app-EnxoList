@@ -9,7 +9,8 @@ class AuthRequest {
     final Map<String, dynamic> data = {
       'email': email,
       'password': password,
-      'name': name ?? ''
+      'name': name ?? '',
+      'role': name == null ? '' : 'USER',
     };
     return data;
   }

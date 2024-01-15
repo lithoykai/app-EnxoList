@@ -235,6 +235,8 @@ class _AuthFormState extends State<AuthForm> {
       return;
     }
 
+    if (_isLogin()) _authData.remove('name');
+
     _formKey.currentState?.save();
     AuthRequest request = AuthRequest(
       email: _authData['email']!,
