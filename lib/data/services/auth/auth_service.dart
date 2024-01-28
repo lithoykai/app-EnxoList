@@ -4,6 +4,7 @@ import 'package:enxolist/data/data_source/clients/http_clients.dart';
 import 'package:enxolist/data/models/auth/request/auth_request.dart';
 import 'package:enxolist/data/models/auth/response/user_response.dart';
 import 'package:enxolist/infra/constants/endpoints.dart';
+import 'package:enxolist/infra/failure/auth_exception.dart';
 import 'package:enxolist/infra/utils/store.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';
@@ -48,7 +49,7 @@ abstract class AuthServiceBase with Store {
       if (request.name == null) {
         final response = await _http.login(Endpoints.login, request);
         if (response.statusCode != 200) {
-          throw Exception('${response.statusCode}');
+          throw AuthException(response.data['detail']);
         }
         Map<String, dynamic> data = response.data;
         UserResponse user = UserResponse.fromJson(data);
@@ -87,7 +88,7 @@ abstract class AuthServiceBase with Store {
         updateAuthStatus(_token != null && isValid);
       }
     } catch (e) {
-      throw Exception();
+      rethrow;
     }
   }
 
