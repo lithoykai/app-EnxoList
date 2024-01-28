@@ -14,14 +14,14 @@ class ProductDataSourceImpl implements IProductDataSource {
   @override
   Future<ProductResponse> getProducts() async {
     try {
-      final _response = await _http.getMethod(Endpoints.getProducts);
+      final response = await _http.getMethod(Endpoints.getProducts);
 
-      final _data = (_response.data as List)
+      final data = (response.data as List)
           .map((json) => ProductModel.fromJson(json).toEntity())
           .toList();
 
-      final _result = ProductResponse(data: _data);
-      return _result;
+      final result = ProductResponse(data: data);
+      return result;
     } catch (e) {
       rethrow;
     }

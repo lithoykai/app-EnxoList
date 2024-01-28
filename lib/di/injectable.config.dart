@@ -18,7 +18,7 @@ import '../data/data_source/product_remote_datasource.dart' as _i5;
 import '../data/data_source/product_remote_datasource_impl.dart' as _i6;
 import '../data/repositories/product/product_repository_impl.dart' as _i8;
 import '../data/services/auth_service.dart' as _i9;
-import '../repositories/product_repository.dart' as _i7;
+import '../domain/repositories/product_repository.dart' as _i7;
 
 // initializes the registration of main-scope dependencies inside of GetIt
 _i1.GetIt $initGetIt(
@@ -38,7 +38,7 @@ _i1.GetIt $initGetIt(
       () => _i6.ProductDataSourceImpl(http: gh<_i4.HttpClientApp>()));
   gh.factory<_i7.IProductRepository>(
       () => _i8.ProductRepositoryImpl(dataSouce: gh<_i5.IProductDataSource>()));
-  gh.factory<_i9.AuthService>(
+  gh.lazySingleton<_i9.AuthService>(
       () => _i9.AuthService(http: gh<_i4.HttpClientApp>()));
   return getIt;
 }

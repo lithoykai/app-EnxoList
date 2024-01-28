@@ -1,8 +1,8 @@
 import 'package:dartz/dartz.dart';
 import 'package:enxolist/data/data_source/product_remote_datasource.dart';
+import 'package:enxolist/domain/repositories/product_repository.dart';
 import 'package:enxolist/domain/response/product_response.dart';
 import 'package:enxolist/infra/failure/failure.dart';
-import 'package:enxolist/repositories/product_repository.dart';
 import 'package:injectable/injectable.dart';
 
 @Injectable(as: IProductRepository)

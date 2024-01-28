@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
-class Store {
+class StoreData {
   static Future<bool> saveString(String key, String value) async {
     final prefs = await SharedPreferences.getInstance();
     return prefs.setString(key, value);
@@ -24,6 +24,16 @@ class Store {
     } catch (_) {
       return {};
     }
+  }
+
+  static Future<bool?> getBool(String key) async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getBool(key);
+  }
+
+  static Future<bool?> saveBool(String key, bool value) async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.setBool(key, value);
   }
 
   static Future<bool?> remove(String key) async {
