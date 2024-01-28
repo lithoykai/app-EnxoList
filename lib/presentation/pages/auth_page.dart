@@ -27,7 +27,6 @@ class _AuthPageState extends State<AuthPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFF0ECEC),
-      // appBar: AppBar(title: Text('AppBar')),
       body: Column(
         children: [
           Stack(children: [

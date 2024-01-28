@@ -10,12 +10,17 @@ class UserResponse {
     this.name,
   });
 
+  String get token => _token!;
+
   set token(String token) {
     _token = token;
   }
 
   factory UserResponse.fromJson(Map<String, dynamic> json) {
     return UserResponse(
-        email: json['email'], id: json['id'], name: json['name']);
+      email: json['email'],
+      id: json['id'],
+      name: json['name'] ?? '',
+    );
   }
 }

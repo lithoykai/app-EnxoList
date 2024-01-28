@@ -24,10 +24,18 @@ dependencies:
   #di
   get_it: ^7.6.6
   injectable: ^2.3.2
-  dartz: ^0.10.1
-  mockito: ^5.4.4
+
+  #data management
   json_annotation: ^4.8.1
-  http: ^1.1.0
+  dartz: ^0.10.1
+
+  #mock
+  mockito: ^5.4.4
+  
+  #state
+  mobx: ^2.3.0+1  
+  flutter_mobx: ^2.2.0+2
+  mobx_codegen: ^2.6.0+1  
 
 dev_dependencies:
   flutter_test:

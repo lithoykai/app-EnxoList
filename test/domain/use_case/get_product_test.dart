@@ -1,8 +1,8 @@
 import 'package:dartz/dartz.dart';
+import 'package:enxolist/domain/repositories/product_repository.dart';
 import 'package:enxolist/domain/response/product_response.dart';
 import 'package:enxolist/domain/use-cases/product/get_products.dart';
 import 'package:enxolist/infra/failure/failure.dart';
-import 'package:enxolist/repositories/product_repository.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';

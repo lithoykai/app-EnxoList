@@ -1,4 +1,5 @@
 import 'package:enxolist/infra/utils/approuter.dart';
+import 'package:enxolist/presentation/pages/auth_or_home.dart';
 import 'package:enxolist/presentation/pages/auth_page.dart';
 import 'package:enxolist/presentation/pages/splash_page.dart';
 import 'package:flutter/material.dart';
@@ -22,10 +23,10 @@ class _AppWidgetState extends State<AppWidget> {
       ),
       debugShowCheckedModeBanner: false,
       routes: {
-        AppRouter.SPLASH_PAGE: (context) => SplashPage(),
-        AppRouter.AUTH_PAGE: (context) => AuthPage(),
+        AppRouter.AUTH_OR_HOME: (context) => const AuthOrHomePage(),
+        AppRouter.SPLASH_PAGE: (context) => const SplashPage(),
+        AppRouter.AUTH_PAGE: (context) => const AuthPage(),
       },
     );
-    ;
   }
 }

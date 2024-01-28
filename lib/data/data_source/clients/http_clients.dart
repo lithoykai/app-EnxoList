@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:enxolist/data/models/auth/request/auth_request.dart';
 import 'package:enxolist/infra/utils/store.dart';
-import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
 
 @injectable
@@ -21,24 +20,10 @@ class HttpClientApp {
   }
 
   Future<Response> getMethod(String endpoint) async {
-    final token = await Store.getString('token');
-    print('TOKEN GETMETHOD: $token');
-    debugPrint('$token');
+    final userData = await StoreData.getMap('userData');
+    String token = userData['token'];
     _dio.options.headers['content-Type'] = 'application/json';
-    _dio.options.headers['authorization'] = '${token}';
+    _dio.options.headers['authorization'] = token;
     return _dio.get(endpoint);
   }
-
-  // Future<Response> getTokenLogin(
-  //     User user, String password, String endpoint) async {
-  //   final response = await _dio.post(endpoint,
-  //       data: jsonEncode({
-  //         'email': user.email,
-  //         'password': password,
-  //       }));
-  //   final bodyToken = jsonDecode(response.data);
-
-  //   print(bodyToken);
-  //   return bodyToken['token'];
-  // }
 }
