@@ -1,6 +1,8 @@
+import 'package:dio/dio.dart';
 import 'package:enxolist/data/models/auth/request/auth_request.dart';
-import 'package:enxolist/data/services/auth_service.dart';
+import 'package:enxolist/data/services/auth/auth_service.dart';
 import 'package:enxolist/di/injectable.dart';
+import 'package:enxolist/infra/failure/auth_exception.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -83,7 +85,7 @@ class _AuthFormState extends State<AuthForm> {
     });
   }
 
-  onSubmit() {
+  onSubmit() async {
     final isValid = _formKey.currentState?.validate() ?? false;
 
     if (!isValid) {
@@ -104,9 +106,20 @@ class _AuthFormState extends State<AuthForm> {
     );
 
     try {
-      authService.authenticate(request);
+      await authService.authenticate(request);
+    } on AuthException catch (error) {
+      _showErrorDialog(error.toString());
+    } on DioException catch (error) {
+      if (error.response?.statusCode == 401 ||
+          error.response?.statusCode == 403) {
+        _showErrorDialog(
+            'Credenciais inválidas. Verifique seu e-mail e senha.');
+      } else {
+        _showErrorDialog(
+            'Erro desconhecido. Por favor, tente novamente mais tarde.');
+      }
     } catch (e) {
-      _showErrorDialog(e.toString());
+      _showErrorDialog('Ocorreu um erro: $e');
     }
 
     setState(() {

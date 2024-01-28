@@ -1,6 +1,6 @@
-import 'package:enxolist/data/services/auth_service.dart';
+import 'package:enxolist/data/services/auth/auth_service.dart';
 import 'package:enxolist/di/injectable.dart';
-import 'package:enxolist/presentation/pages/auth_page.dart';
+import 'package:enxolist/presentation/auth/auth_page.dart';
 import 'package:enxolist/presentation/pages/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';

@@ -1,4 +1,4 @@
-import 'package:enxolist/presentation/widgets/auth_form.dart';
+import 'package:enxolist/presentation/auth/widget/auth_form.dart';
 import 'package:flutter/material.dart';
 
 class AuthPage extends StatefulWidget {
