@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:dartz/dartz.dart';
+import 'package:dio/dio.dart';
 import 'package:enxolist/data/data_source/clients/http_clients.dart';
 import 'package:enxolist/data/models/auth/request/auth_request.dart';
 import 'package:enxolist/data/models/auth/response/user_response.dart';
@@ -43,16 +45,35 @@ abstract class AuthServiceBase with Store {
     return isAuth ? _userId : null;
   }
 
+  Future<void> saveAuthenticate(Response<dynamic> response) async {
+    Map<String, dynamic> data = response.data;
+    UserResponse user = UserResponse.fromJson(data);
+    user.token = data['token'];
+    _token = user.token;
+    _userId = user.id;
+    _expiryDate = DateTime.now().add(Duration(
+      hours: data['expiryDate'],
+    ));
+    await StoreData.saveMap('userData', {
+      'token': _token,
+      'email': user.email,
+      'userId': user.id,
+      'expiryToken': _expiryDate!.toIso8601String(),
+    });
+  }
+
   @action
-  Future<void> authenticate(AuthRequest request) async {
+  Future<Either<AuthException, UserResponse>> authenticate(
+      AuthRequest request) async {
     try {
       if (request.name == null) {
-        final response = await _http.login(Endpoints.login, request);
+        final response = await _http.login(request);
         if (response.statusCode != 200) {
           throw AuthException(response.data['detail']);
         }
         Map<String, dynamic> data = response.data;
         UserResponse user = UserResponse.fromJson(data);
+
         user.token = data['token'];
         _token = user.token;
         _userId = user.id;
@@ -66,29 +87,22 @@ abstract class AuthServiceBase with Store {
           'expiryToken': _expiryDate!.toIso8601String(),
         });
         final isValid = _expiryDate?.isAfter(DateTime.now()) ?? false;
-        print(_token != null && isValid);
+
         updateAuthStatus(_token != null && isValid);
+
+        return right(
+            UserResponse.fromJson(response.data as Map<String, dynamic>));
+        ;
       } else {
         final response = await _http.register(Endpoints.register, request);
-        Map<String, dynamic> data = response.data;
-        UserResponse user = UserResponse.fromJson(data);
-        user.token = data['token'];
-        _token = user.token;
-        _userId = user.id;
-        _expiryDate = DateTime.now().add(Duration(
-          hours: data['expiryDate'],
-        ));
-        await StoreData.saveMap('userData', {
-          'token': _token,
-          'email': user.email,
-          'userId': user.id,
-          'expiryToken': _expiryDate!.toIso8601String(),
-        });
+        await saveAuthenticate(response);
         final isValid = _expiryDate?.isAfter(DateTime.now()) ?? false;
         updateAuthStatus(_token != null && isValid);
+        return right(
+            UserResponse.fromJson(response.data as Map<String, dynamic>));
       }
     } catch (e) {
-      rethrow;
+      throw left(AuthException(e.toString()));
     }
   }
 

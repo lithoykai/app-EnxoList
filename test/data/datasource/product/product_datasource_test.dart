@@ -25,9 +25,7 @@ void main() {
         'When try get list products then return a ProductResponse with a data list',
         () async {
       final _fakeHttpResponse = fakeProductHttpResponse;
-      // User user = User(email: 'admin2@teste.com', password: 'teste123');
-      // final token = httpClientMock.getTokenLogin(user, Endpoints.login);
-      // debugPrint('$token');
+
       when(httpClientMock.getMethod(Endpoints.getProducts)).thenAnswer(
           (_) async => Response(
               data: _fakeHttpResponse, requestOptions: RequestOptions()));

@@ -1,7 +1,7 @@
 import 'package:enxolist/data/services/auth/auth_service.dart';
 import 'package:enxolist/di/injectable.dart';
 import 'package:enxolist/presentation/auth/auth_page.dart';
-import 'package:enxolist/presentation/pages/home_page.dart';
+import 'package:enxolist/presentation/page_navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
@@ -25,7 +25,7 @@ class AuthOrHomePage extends StatelessWidget {
           );
         } else {
           return Observer(builder: (context) {
-            return auth.isAuth ? HomePage() : AuthPage();
+            return auth.isAuth ? PageNavigatorScreen() : AuthPage();
           });
         }
       },

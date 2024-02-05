@@ -13,12 +13,14 @@ import 'package:get_it/get_it.dart' as _i1;
 import 'package:injectable/injectable.dart' as _i2;
 
 import '../data/data_source/clients/http_clients.dart' as _i4;
-import '../data/data_source/clients/third_module.dart' as _i10;
+import '../data/data_source/clients/third_module.dart' as _i11;
 import '../data/data_source/product_remote_datasource.dart' as _i5;
 import '../data/data_source/product_remote_datasource_impl.dart' as _i6;
 import '../data/repositories/product/product_repository_impl.dart' as _i8;
-import '../data/services/auth_service.dart' as _i9;
+import '../data/services/auth/auth_service.dart' as _i10;
 import '../domain/repositories/product_repository.dart' as _i7;
+import '../presentation/page-navigator/controller/page_navigator_controller.dart'
+    as _i9;
 
 // initializes the registration of main-scope dependencies inside of GetIt
 _i1.GetIt $initGetIt(
@@ -38,9 +40,10 @@ _i1.GetIt $initGetIt(
       () => _i6.ProductDataSourceImpl(http: gh<_i4.HttpClientApp>()));
   gh.factory<_i7.IProductRepository>(
       () => _i8.ProductRepositoryImpl(dataSouce: gh<_i5.IProductDataSource>()));
-  gh.lazySingleton<_i9.AuthService>(
-      () => _i9.AuthService(http: gh<_i4.HttpClientApp>()));
+  gh.singleton<_i9.PageNavigatorController>(_i9.PageNavigatorController());
+  gh.lazySingleton<_i10.AuthService>(
+      () => _i10.AuthService(http: gh<_i4.HttpClientApp>()));
   return getIt;
 }
 
-class _$RegisterModule extends _i10.RegisterModule {}
+class _$RegisterModule extends _i11.RegisterModule {}
