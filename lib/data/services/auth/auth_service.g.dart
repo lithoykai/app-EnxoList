@@ -90,7 +90,8 @@ mixin _$AuthService on AuthServiceBase, Store {
       AsyncAction('AuthServiceBase.authenticate', context: context);
 
   @override
-  Future<void> authenticate(AuthRequest request) {
+  Future<Either<AuthException, UserResponse>> authenticate(
+      AuthRequest request) {
     return _$authenticateAsyncAction.run(() => super.authenticate(request));
   }
 

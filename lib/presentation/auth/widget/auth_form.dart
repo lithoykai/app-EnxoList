@@ -151,221 +151,235 @@ class _AuthFormState extends State<AuthForm> {
             padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 0),
             child: Column(
               children: [
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    _isLogin() ? 'Login' : 'Cadastro',
-                    textAlign: TextAlign.left,
-                    style: const TextStyle(
-                      fontSize: 40,
-                      fontFamily: "MarkaziText",
+                Column(
+                  children: [
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        _isLogin() ? 'Login' : 'Cadastro',
+                        textAlign: TextAlign.left,
+                        style: const TextStyle(
+                          fontSize: 40,
+                          fontFamily: "MarkaziText",
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Form(
-                  key: _formKey,
-                  child: Column(
-                    children: [
-                      !_isLogin()
-                          ? TextFormField(
-                              decoration: const InputDecoration(
-                                fillColor: Color(0xFFFDFDFD),
-                                filled: true,
-                                enabledBorder: UnderlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(5)),
-                                  borderSide: BorderSide(
-                                      color: Colors.transparent, width: 5),
-                                ),
-                                labelText: 'Nome',
-                                labelStyle: TextStyle(
-                                  fontFamily: "Roboto",
-                                  color: Color(0xFF6B6B6B),
-                                  fontSize: 17,
-                                ),
-                              ),
-                              focusNode: _nameFocus,
-                              keyboardType: TextInputType.emailAddress,
-                              onSaved: (name) => _authData['name'] = name ?? '',
-                              validator: (_name) {
-                                final name = _name ?? '';
-                                if (name.trim().isEmpty) {
-                                  return 'Informe um nome válido';
-                                }
-                                return null;
-                              },
-                            )
-                          : Container(),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      TextFormField(
-                        decoration: const InputDecoration(
-                          fillColor: Color(0xFFFDFDFD),
-                          filled: true,
-                          enabledBorder: UnderlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(5)),
-                            borderSide:
-                                BorderSide(color: Colors.transparent, width: 5),
-                          ),
-                          labelText: 'E-mail',
-                          labelStyle: TextStyle(
-                            fontFamily: "Roboto",
-                            color: Color(0xFF6B6B6B),
-                            fontSize: 17,
-                          ),
-                        ),
-                        focusNode: _emailFocus,
-                        controller: _emailController,
-                        keyboardType: TextInputType.emailAddress,
-                        onSaved: (email) => _authData['email'] = email ?? '',
-                        validator: (_email) {
-                          final email = _email ?? '';
-                          if (email.trim().isEmpty || !email.contains('@')) {
-                            return 'Informe um email válido';
-                          }
-                          return null;
-                        },
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      TextFormField(
-                        decoration: const InputDecoration(
-                          fillColor: Colors.white,
-                          filled: true,
-                          enabledBorder: UnderlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(5)),
-                            borderSide:
-                                BorderSide(color: Colors.transparent, width: 0),
-                          ),
-                          labelStyle: TextStyle(
-                            fontFamily: "Roboto",
-                            color: Color(0xFF6B6B6B),
-                            fontSize: 17,
-                          ),
-                          labelText: 'Senha',
-                        ),
-                        obscureText: true,
-                        focusNode: _passwordFocus,
-                        controller: _passwordController,
-                        onSaved: (password) =>
-                            _authData['password'] = password ?? '',
-                        validator: (_password) {
-                          final password = _password ?? '';
-                          if (password.isEmpty || password.length < 5) {
-                            return 'Informe uma senha válida (no minímo 5 caracteres)';
-                          }
-                          return null;
-                        },
-                      ),
-                    ],
-                  ),
-                ),
-                _isLogin()
-                    ? Column(
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Form(
+                      key: _formKey,
+                      child: Column(
                         children: [
-                          const SizedBox(
-                            height: 13,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Checkbox(
-                                value: saveLogin,
-                                onChanged: (value) {
-                                  setState(() {
-                                    saveLogin = value!;
-                                    _saveLoginData();
-                                  });
-                                },
-                              ),
-                              const Text(
-                                'Salvar email',
-                                style: TextStyle(
-                                  fontFamily: "Roboto",
-                                  color: Color(0xFF6B6B6B),
-                                  fontSize: 17,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      )
-                    : Container(),
-                !_isLogin()
-                    ? Column(
-                        children: [
+                          !_isLogin()
+                              ? TextFormField(
+                                  decoration: const InputDecoration(
+                                    fillColor: Color(0xFFFDFDFD),
+                                    filled: true,
+                                    enabledBorder: UnderlineInputBorder(
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(5)),
+                                      borderSide: BorderSide(
+                                          color: Colors.transparent, width: 5),
+                                    ),
+                                    labelText: 'Nome',
+                                    labelStyle: TextStyle(
+                                      fontFamily: "Roboto",
+                                      color: Color(0xFF6B6B6B),
+                                      fontSize: 17,
+                                    ),
+                                  ),
+                                  focusNode: _nameFocus,
+                                  keyboardType: TextInputType.emailAddress,
+                                  onSaved: (name) =>
+                                      _authData['name'] = name ?? '',
+                                  validator: (_name) {
+                                    final name = _name ?? '';
+                                    if (name.trim().isEmpty) {
+                                      return 'Informe um nome válido';
+                                    }
+                                    return null;
+                                  },
+                                )
+                              : Container(),
                           const SizedBox(
                             height: 20,
                           ),
-                          AnimatedContainer(
-                            constraints: BoxConstraints(
-                                minHeight: _isLogin() ? 0 : 60,
-                                maxHeight: _isLogin() ? 0 : 120),
-                            duration: const Duration(milliseconds: 300),
-                            curve: Curves.linear,
-                            child: TextFormField(
-                                decoration: const InputDecoration(
-                                  fillColor: Colors.white,
-                                  filled: true,
-                                  enabledBorder: UnderlineInputBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(5)),
-                                    borderSide: BorderSide(
-                                        color: Colors.transparent, width: 0),
-                                  ),
-                                  labelStyle: TextStyle(
-                                    fontFamily: "Roboto",
-                                    color: Color(0xFF6B6B6B),
-                                    fontSize: 17,
-                                  ),
-                                  labelText: 'Confirmar senha',
-                                ),
-                                obscureText: true,
-                                validator: _isLogin()
-                                    ? null
-                                    : (_password) {
-                                        final password = _password ?? '';
-                                        if (password !=
-                                            _passwordController.text) {
-                                          return 'As senhas não conferem!';
-                                        } else {
-                                          return null;
-                                        }
-                                      }),
+                          TextFormField(
+                            decoration: const InputDecoration(
+                              fillColor: Color(0xFFFDFDFD),
+                              filled: true,
+                              enabledBorder: UnderlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(5)),
+                                borderSide: BorderSide(
+                                    color: Colors.transparent, width: 5),
+                              ),
+                              labelText: 'E-mail',
+                              labelStyle: TextStyle(
+                                fontFamily: "Roboto",
+                                color: Color(0xFF6B6B6B),
+                                fontSize: 17,
+                              ),
+                            ),
+                            focusNode: _emailFocus,
+                            controller: _emailController,
+                            keyboardType: TextInputType.emailAddress,
+                            onSaved: (email) =>
+                                _authData['email'] = email ?? '',
+                            validator: (_email) {
+                              final email = _email ?? '';
+                              if (email.trim().isEmpty ||
+                                  !email.contains('@')) {
+                                return 'Informe um email válido';
+                              }
+                              return null;
+                            },
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          TextFormField(
+                            decoration: const InputDecoration(
+                              fillColor: Colors.white,
+                              filled: true,
+                              enabledBorder: UnderlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(5)),
+                                borderSide: BorderSide(
+                                    color: Colors.transparent, width: 0),
+                              ),
+                              labelStyle: TextStyle(
+                                fontFamily: "Roboto",
+                                color: Color(0xFF6B6B6B),
+                                fontSize: 17,
+                              ),
+                              labelText: 'Senha',
+                            ),
+                            obscureText: true,
+                            focusNode: _passwordFocus,
+                            controller: _passwordController,
+                            onSaved: (password) =>
+                                _authData['password'] = password ?? '',
+                            validator: (_password) {
+                              final password = _password ?? '';
+                              if (password.isEmpty || password.length < 5) {
+                                return 'Informe uma senha válida (no minímo 5 caracteres)';
+                              }
+                              return null;
+                            },
                           ),
                         ],
-                      )
-                    : Container(),
-                const SizedBox(
-                  height: 20,
-                ),
-                isLoading
-                    ? const CircularProgressIndicator()
-                    : SizedBox(
-                        width: double.infinity,
-                        height: 50,
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color(0xFFE36F6F)),
-                          onPressed: onSubmit,
-                          child: Text(
-                            _isLogin() ? 'Login' : 'Cadastrar',
-                            style: const TextStyle(
-                              fontFamily: "Roboto",
-                              fontWeight: FontWeight.bold,
-                              fontSize: 17,
-                              color: Colors.white,
+                      ),
+                    ),
+                    _isLogin()
+                        ? Column(
+                            children: [
+                              const SizedBox(
+                                height: 13,
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Checkbox(
+                                    value: saveLogin,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        saveLogin = value!;
+                                        _saveLoginData();
+                                      });
+                                    },
+                                  ),
+                                  const Text(
+                                    'Salvar email',
+                                    style: TextStyle(
+                                      fontFamily: "Roboto",
+                                      color: Color(0xFF6B6B6B),
+                                      fontSize: 17,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          )
+                        : Container(),
+                    !_isLogin()
+                        ? Column(
+                            children: [
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              AnimatedContainer(
+                                constraints: BoxConstraints(
+                                    minHeight: _isLogin() ? 0 : 60,
+                                    maxHeight: _isLogin() ? 0 : 120),
+                                duration: const Duration(milliseconds: 300),
+                                curve: Curves.linear,
+                                child: TextFormField(
+                                    decoration: const InputDecoration(
+                                      fillColor: Colors.white,
+                                      filled: true,
+                                      enabledBorder: UnderlineInputBorder(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(5)),
+                                        borderSide: BorderSide(
+                                            color: Colors.transparent,
+                                            width: 0),
+                                      ),
+                                      labelStyle: TextStyle(
+                                        fontFamily: "Roboto",
+                                        color: Color(0xFF6B6B6B),
+                                        fontSize: 17,
+                                      ),
+                                      labelText: 'Confirmar senha',
+                                    ),
+                                    obscureText: true,
+                                    validator: _isLogin()
+                                        ? null
+                                        : (_password) {
+                                            final password = _password ?? '';
+                                            if (password !=
+                                                _passwordController.text) {
+                                              return 'As senhas não conferem!';
+                                            } else {
+                                              return null;
+                                            }
+                                          }),
+                              ),
+                            ],
+                          )
+                        : Container(),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    isLoading
+                        ? const CircularProgressIndicator()
+                        : SizedBox(
+                            width: double.infinity,
+                            height: 50,
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: const Color(0xFFE36F6F),
+                                shape: ContinuousRectangleBorder(
+                                  borderRadius: BorderRadius.circular(15),
+                                ),
+                              ),
+                              onPressed: onSubmit,
+                              child: Text(
+                                _isLogin() ? 'Login' : 'Cadastrar',
+                                style: const TextStyle(
+                                  fontFamily: "Roboto",
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 17,
+                                  color: Colors.white,
+                                ),
+                              ),
                             ),
                           ),
-                        ),
-                      ),
-                const SizedBox(
-                  height: 10,
+                    const SizedBox(
+                      height: 10,
+                    ),
+                  ],
                 ),
                 Align(
                   alignment: Alignment.bottomCenter,
