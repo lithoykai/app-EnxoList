@@ -40,8 +40,13 @@ List<Category> CATEGORIES = [
     icon: const Icon(Icons.microwave),
   ),
   Category(
-    id: 6,
+    id: 7,
     title: 'Construção/Reformas',
     icon: const Icon(Icons.construction),
+  ),
+  Category(
+    id: 8,
+    title: 'Moveis',
+    icon: const Icon(Icons.sensor_door),
   ),
 ];

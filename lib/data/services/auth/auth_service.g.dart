@@ -95,6 +95,14 @@ mixin _$AuthService on AuthServiceBase, Store {
     return _$authenticateAsyncAction.run(() => super.authenticate(request));
   }
 
+  late final _$logoutAsyncAction =
+      AsyncAction('AuthServiceBase.logout', context: context);
+
+  @override
+  Future<void> logout() {
+    return _$logoutAsyncAction.run(() => super.logout());
+  }
+
   late final _$tryAutoLoginAsyncAction =
       AsyncAction('AuthServiceBase.tryAutoLogin', context: context);
 
@@ -105,17 +113,6 @@ mixin _$AuthService on AuthServiceBase, Store {
 
   late final _$AuthServiceBaseActionController =
       ActionController(name: 'AuthServiceBase', context: context);
-
-  @override
-  void logout() {
-    final _$actionInfo = _$AuthServiceBaseActionController.startAction(
-        name: 'AuthServiceBase.logout');
-    try {
-      return super.logout();
-    } finally {
-      _$AuthServiceBaseActionController.endAction(_$actionInfo);
-    }
-  }
 
   @override
   void clearLogoutTimer() {

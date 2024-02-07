@@ -1,17 +1,41 @@
-class UserResponse {
-  String? id;
-  String email;
-  String? token;
-  int? expiryDate;
+import 'package:enxolist/data/models/auth/user_mapper.dart';
+import 'package:enxolist/domain/entities/user/user_entity.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
-  UserResponse({this.id, required this.email, this.token, this.expiryDate});
+part 'user_response.g.dart';
+
+@HiveType(typeId: 0)
+class UserResponse extends HiveObject {
+  @HiveField(0)
+  String id;
+  @HiveField(1)
+  String email;
+  @HiveField(2)
+  String name;
+  @HiveField(3)
+  String token;
+  @HiveField(4)
+  DateTime expiryDate;
+
+  UserResponse(
+      {required this.id,
+      required this.email,
+      required this.token,
+      required this.expiryDate,
+      required this.name});
 
   factory UserResponse.fromJson(Map<String, dynamic> json) {
     return UserResponse(
-      email: json['email'],
       id: json['id'],
+      email: json['email'],
+      name: json['name'],
       token: json['token'] ?? '',
-      expiryDate: json['expiryDate'],
+      expiryDate: DateTime.now().add(Duration(hours: json['expiryDate'])),
     );
   }
+
+  Map<String, dynamic> toJson() => {};
+  factory UserResponse.fromEntity(UserEntity entity) =>
+      $UserModelFromEntity(entity);
+  UserEntity toEntity() => $UserEntityFromModel(this);
 }
