@@ -2,8 +2,10 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:enxolist/data/models/auth/request/auth_request.dart';
+import 'package:enxolist/data/models/auth/response/user_response.dart';
 import 'package:enxolist/infra/constants/endpoints.dart';
-import 'package:enxolist/infra/utils/store.dart';
+import 'package:enxolist/infra/failure/auth_exception.dart';
+import 'package:hive/hive.dart';
 import 'package:injectable/injectable.dart';
 
 @injectable
@@ -12,9 +14,13 @@ class HttpClientApp {
 
   HttpClientApp({required Dio dio}) : _dio = dio;
 
-  Future<Response> login(AuthRequest request) {
-    print(jsonEncode(request.toJson()));
-    return _dio.post(Endpoints.login, data: jsonEncode(request.toJson()));
+  Future<Response> login(AuthRequest request) async {
+    var response =
+        await _dio.post(Endpoints.login, data: jsonEncode(request.toJson()));
+    if (response.statusCode != 200) {
+      throw AuthException('Credências erradas');
+    }
+    return response;
   }
 
   Future<Response> register(String endpoint, AuthRequest request) {
@@ -22,8 +28,13 @@ class HttpClientApp {
   }
 
   Future<Response> getMethod(String endpoint) async {
-    final userData = await StoreData.getMap('userData');
-    String token = userData['token'];
+    UserResponse? user;
+    if (Hive.isBoxOpen('userData')) {
+      var box = Hive.box('userData');
+      user = box.get('userData');
+    }
+    String token = user!.token;
+
     _dio.options.headers['content-Type'] = 'application/json';
     _dio.options.headers['authorization'] = token;
     return _dio.get(endpoint);

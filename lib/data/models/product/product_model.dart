@@ -21,8 +21,8 @@ class ProductModel extends ProductEntity {
   @JsonKey(name: 'price')
   final double price;
 
-  @JsonKey(name: 'idCategory')
-  int idCategory;
+  @JsonKey(name: 'category')
+  int category;
 
   @JsonKey(name: 'urlLink')
   String? urlLink;
@@ -34,7 +34,7 @@ class ProductModel extends ProductEntity {
       {required this.name,
       required this.wasBought,
       required this.price,
-      required this.idCategory,
+      required this.category,
       this.id,
       this.image,
       this.urlLink})
@@ -42,7 +42,7 @@ class ProductModel extends ProductEntity {
             name: name,
             wasBought: wasBought,
             price: price,
-            idCategory: idCategory,
+            category: category,
             id: id,
             image: image,
             urlLink: urlLink);

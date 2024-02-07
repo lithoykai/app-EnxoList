@@ -60,4 +60,22 @@ class MockIProductRepository extends _i1.Mock
           ),
         )),
       ) as _i4.Future<_i2.Either<_i5.Failure, _i6.ProductResponse>>);
+
+  @override
+  _i4.Future<_i2.Either<_i5.Failure, _i6.ProductResponse>>
+      getProductsByCategory(int? categoryId) => (super.noSuchMethod(
+            Invocation.method(
+              #getProductsByCategory,
+              [categoryId],
+            ),
+            returnValue:
+                _i4.Future<_i2.Either<_i5.Failure, _i6.ProductResponse>>.value(
+                    _FakeEither_0<_i5.Failure, _i6.ProductResponse>(
+              this,
+              Invocation.method(
+                #getProductsByCategory,
+                [categoryId],
+              ),
+            )),
+          ) as _i4.Future<_i2.Either<_i5.Failure, _i6.ProductResponse>>);
 }

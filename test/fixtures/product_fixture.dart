@@ -4,7 +4,7 @@ import 'package:enxolist/domain/response/product_response.dart';
 List<Map<String, dynamic>> fakeProductHttpResponse = [
   {
     "id": "-NZTSmXLgyrj864irMYn",
-    "idCategory": 0,
+    "category": 0,
     "image":
         "https://firebasestorage.googleapis.com/v0/b/enxoval-app.appspot.com/o/local_image%2FConjunto%20de%20Panelas?alt=media&token=2e7ab06e-dbc7-4510-8e59-fe84cb8c4c09",
     "name": "Conjunto de Panelas",
@@ -15,7 +15,7 @@ List<Map<String, dynamic>> fakeProductHttpResponse = [
   },
   {
     "id": "-NZcKUrmYS_UwnSZELQm",
-    "idCategory": 0,
+    "category": 0,
     "image":
         "https://firebasestorage.googleapis.com/v0/b/enxoval-app.appspot.com/o/local_image%2FFaqueiro?alt=media&token=1d442323-efa5-484d-b600-9fad98482091",
     "name": "Faqueiro",
@@ -31,7 +31,7 @@ List<ProductEntity> fakeProducts = [
     name: 'Cama',
     wasBought: true,
     price: 2.500,
-    idCategory: 1,
+    category: 1,
     id: '-NZcKUrmYS_UwnSZELQm',
     image: 'http://google.com',
     urlLink: 'https://amazon.com',
@@ -40,7 +40,7 @@ List<ProductEntity> fakeProducts = [
     name: 'Cozinha',
     wasBought: true,
     price: 3.500,
-    idCategory: 2,
+    category: 2,
     id: '-NZcKUrmYS_UwnSZELQm',
     image: 'http://google.com',
     urlLink: 'https://amazon.com',

@@ -21,4 +21,15 @@ class ProductRepositoryImpl implements IProductRepository {
       return left(ServerFailure(msg: 'genericListError'));
     }
   }
+
+  @override
+  Future<Either<Failure, ProductResponse>> getProductsByCategory(
+      int categoryId) async {
+    try {
+      final _response = await _dataSource.getProductsByCategory(categoryId);
+      return right(_response);
+    } catch (e) {
+      return left(ServerFailure(msg: e.toString()));
+    }
+  }
 }

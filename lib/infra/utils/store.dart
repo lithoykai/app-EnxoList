@@ -1,5 +1,8 @@
 import 'dart:convert';
 
+import 'package:enxolist/data/models/auth/response/user_response.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class StoreData {
@@ -39,5 +42,15 @@ class StoreData {
   static Future<bool?> remove(String key) async {
     final prefs = await SharedPreferences.getInstance();
     prefs.remove(key);
+  }
+}
+
+@injectable
+class StoreHive {
+  Future<void> init() async {}
+
+  static Future<LazyBox<UserResponse>> openBox(String key) async {
+    Hive.initFlutter();
+    return await Hive.openLazyBox<UserResponse>('userData');
   }
 }

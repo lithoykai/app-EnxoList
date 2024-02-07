@@ -19,7 +19,7 @@ class ProductEntity {
   final String name;
   bool wasBought = false;
   final double price;
-  int idCategory;
+  int category;
   String? urlLink;
   String? image;
 
@@ -27,7 +27,7 @@ class ProductEntity {
       {required this.name,
       required this.wasBought,
       required this.price,
-      required this.idCategory,
+      required this.category,
       this.id,
       this.image,
       this.urlLink});

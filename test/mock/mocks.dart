@@ -37,9 +37,3 @@ class ProductDataSourceMock extends Mock implements IProductDataSource {
       super.noSuchMethod(Invocation.method(#getProducts, []),
           returnValue: Future.value(_FakeProductResponse()));
 }
-
-  // @override
-  // Future<Either<Failure, ProductResponse>> getProducts() =>
-  //     super.noSuchMethod(Invocation.method(#getProducts, []),
-  //         returnValue:
-  //             Future.value(_FakeResponseEither<Failure, ProductResponse>()));

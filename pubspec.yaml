@@ -28,6 +28,7 @@ dependencies:
   #data management
   json_annotation: ^4.8.1
   dartz: ^0.10.1
+  path_provider: ^2.1.2
 
   #mock
   mockito: ^5.4.4
@@ -35,7 +36,9 @@ dependencies:
   #state
   mobx: ^2.3.0+1  
   flutter_mobx: ^2.2.0+2
-  mobx_codegen: ^2.6.0+1  
+  mobx_codegen: ^2.6.0+1
+
+  #presentation  
   google_nav_bar: ^5.0.6
 
 dev_dependencies:
@@ -55,8 +58,12 @@ flutter:
   
   assets:
     - assets/imgs/icon.png
+    - assets/imgs/undraw/nodata.png
     - assets/imgs/login_image.png
     - assets/imgs/text_auth.png
+    - assets/imgs/avatares/1.jpg
+    - assets/imgs/avatares/2.jpg
+    - assets/imgs/avatares/3.jpg
 
   fonts:
     - family: JustMeAgainDownHere
@@ -71,5 +78,6 @@ flutter:
           weight: 700
     - family: Roboto
       fonts:
+        - asset: assets/fonts/Roboto-Regular.ttf
         - asset: assets/fonts/Roboto-Light.ttf
           weight: 700

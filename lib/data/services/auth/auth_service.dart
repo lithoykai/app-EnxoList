@@ -7,17 +7,18 @@ import 'package:enxolist/data/models/auth/request/auth_request.dart';
 import 'package:enxolist/data/models/auth/response/user_response.dart';
 import 'package:enxolist/infra/constants/endpoints.dart';
 import 'package:enxolist/infra/failure/auth_exception.dart';
-import 'package:enxolist/infra/utils/store.dart';
+import 'package:hive/hive.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';
 
 part 'auth_service.g.dart';
 
 @lazySingleton
+@injectable
 class AuthService = AuthServiceBase with _$AuthService;
 
 abstract class AuthServiceBase with Store {
-  final HttpClientApp _http;
+  late Box _userBox;
   @observable
   String? _token;
   @observable
@@ -26,7 +27,11 @@ abstract class AuthServiceBase with Store {
   @observable
   String? _userId;
 
-  AuthServiceBase({required HttpClientApp http}) : _http = http;
+  final HiveInterface _hive;
+  final HttpClientApp _http;
+  AuthServiceBase({required HttpClientApp http, required HiveInterface hive})
+      : _http = http,
+        _hive = hive;
 
   @observable
   bool isAuth = false;
@@ -45,21 +50,26 @@ abstract class AuthServiceBase with Store {
     return isAuth ? _userId : null;
   }
 
-  Future<void> saveAuthenticate(Response<dynamic> response) async {
+  Future<void> _openBoxIfNeeded() async {
+    if (!_hive.isBoxOpen('userData')) {
+      _userBox = await _hive.openBox('userData');
+    }
+  }
+
+  Future<UserResponse> saveAuthenticate(Response<dynamic> response) async {
+    await _openBoxIfNeeded();
+
+    // final _userBox; = await _hive.openLazyBox('userData');
+
+    await _userBox.clear();
     Map<String, dynamic> data = response.data;
     UserResponse user = UserResponse.fromJson(data);
-    user.token = data['token'];
+    await _userBox.put('userData', user);
     _token = user.token;
     _userId = user.id;
-    _expiryDate = DateTime.now().add(Duration(
-      hours: data['expiryDate'],
-    ));
-    await StoreData.saveMap('userData', {
-      'token': _token,
-      'email': user.email,
-      'userId': user.id,
-      'expiryToken': _expiryDate!.toIso8601String(),
-    });
+    _expiryDate = user.expiryDate;
+
+    return user;
   }
 
   @action
@@ -71,35 +81,18 @@ abstract class AuthServiceBase with Store {
         if (response.statusCode != 200) {
           throw AuthException(response.data['detail']);
         }
-        Map<String, dynamic> data = response.data;
-        UserResponse user = UserResponse.fromJson(data);
-
-        user.token = data['token'];
-        _token = user.token;
-        _userId = user.id;
-        _expiryDate = DateTime.now().add(Duration(
-          hours: data['expiryDate'],
-        ));
-        await StoreData.saveMap('userData', {
-          'token': _token,
-          'email': user.email,
-          'userId': user.id,
-          'expiryToken': _expiryDate!.toIso8601String(),
-        });
+        final user = await saveAuthenticate(response);
         final isValid = _expiryDate?.isAfter(DateTime.now()) ?? false;
 
         updateAuthStatus(_token != null && isValid);
 
-        return right(
-            UserResponse.fromJson(response.data as Map<String, dynamic>));
-        ;
+        return right(user);
       } else {
         final response = await _http.register(Endpoints.register, request);
-        await saveAuthenticate(response);
+        final user = await saveAuthenticate(response);
         final isValid = _expiryDate?.isAfter(DateTime.now()) ?? false;
         updateAuthStatus(_token != null && isValid);
-        return right(
-            UserResponse.fromJson(response.data as Map<String, dynamic>));
+        return right(user);
       }
     } catch (e) {
       throw left(AuthException(e.toString()));
@@ -107,12 +100,14 @@ abstract class AuthServiceBase with Store {
   }
 
   @action
-  void logout() {
+  Future<void> logout() async {
     _token = null;
     _userId = null;
     _expiryDate = null;
     clearLogoutTimer();
-    StoreData.remove('userData');
+    await _openBoxIfNeeded();
+
+    await _userBox.clear();
     updateAuthStatus(false);
   }
 
@@ -136,22 +131,26 @@ abstract class AuthServiceBase with Store {
 
   @action
   Future<void> tryAutoLogin() async {
+    await _openBoxIfNeeded();
+    // var box = await _hive.openBox<UserResponse>('userData');
+
     if (isAuth) return;
 
-    final userData = await StoreData.getMap('userData');
-    if (userData.isEmpty) return;
+    UserResponse? user = await _userBox.get('userData');
 
-    final expiryDate = DateTime.parse(userData['expiryToken']);
-    if (expiryDate.isBefore(DateTime.now())) return;
+    if (user == null) return;
 
-    _token = userData['token'];
-    _userId = userData['userId'];
-    _expiryDate = expiryDate;
+    if (user.expiryDate.isBefore(DateTime.now())) return;
+
+    _token = user.token;
+    _userId = user.id;
+    _expiryDate = user.expiryDate;
 
     final isValid = _expiryDate?.isAfter(DateTime.now()) ?? false;
-
     updateAuthStatus(_token != null && isValid);
-  } // @action
+  }
+
+// @action
   // Future<void> tryAutoLogin() async {
   //   if (isAuth) return;
 
