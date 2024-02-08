@@ -43,13 +43,15 @@ Repositório do backend: [SpringBoot - Enxolist.](https://github.com/lithoykai/s
 
 Alguns dos meus projetos anteriores.
 
-|Projetos              |             |
-|----------------|-------------------------------|-----------------------------|
-|[**WeekJobs**](https://github.com/lithoykai/orderService_Flutter)          |`[![GitHub stars](https://img.shields.io/github/stars/lithoykai/orderService_Flutter?style=social)](https://github.com/login?return_to=/lithoykai/orderService_Flutter)
+| Projetos                                                                   | Github                                         |
+| ---------------------------------------------------------------------- | --------------------------------------------- |
+|[**WeekJobs**](https://github.com/lithoykai/orderService_Flutter)          |[![GitHub stars](https://img.shields.io/github/stars/lithoykai/orderService_Flutter?style=social)](https://github.com/login?return_to=/lithoykai/orderService_Flutter)
 |[**Finanças pessoais**](https://github.com/lithoykai/personal_expense)|[![GitHub stars](https://img.shields.io/github/stars/lithoykai/personal_expense?style=social)](https://github.com/login?return_to=/lithoykai/personal_expense)            
 |[**FoodRecipes**](https://github.com/lithoykai/food_recipes_app)          |[![GitHub stars](https://img.shields.io/github/stars/lithoykai/food_recipes_app?style=social)](https://github.com/login?return_to=/lithoykai/food_recipes_app)
 |[**Simple E-Commecer**](https://github.com/lithoykai/shop_app_Flutter)          |[![GitHub stars](https://img.shields.io/github/stars/lithoykai/shop_app_Flutter?style=social)](https://github.com/login?return_to=/lithoykai/shop_app_Flutter)
 |[**Lista de Contato**](https://github.com/lithoykai/contactList_app)          |[![GitHub stars](https://img.shields.io/github/stars/lithoykai/contactList_app?style=social)](https://github.com/login?return_to=/lithoykai/contactList_app)
 |[**ForwaderMessage**](https://github.com/lithoykai/TelegramForwarder-Python)          |[![GitHub stars](https://img.shields.io/github/stars/lithoykai/TelegramForwarder-Python?style=social)](https://github.com/login?return_to=/lithoykai/TelegramForwarder-Python)
+
+
 
 
