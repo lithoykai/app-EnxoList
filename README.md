@@ -23,7 +23,7 @@ Repositório do backend: [SpringBoot - Enxolist.](https://github.com/lithoykai/s
 
 ## Alguns screenshots.
 
-![](assets/imgs/github/a1.png) | ![](assets/imgs/github/a2.png) | ![](assets/imgs/github/a3.png) | ![](assets/imgs/github/a4.png) | ![](assets/imgs/github/a5.png) | ![](assets/imgs/github/a6.png)
+|<img src="assets/imgs/github/a1.png" width="400">| |<img src="assets/imgs/github/a2.png" width="400">|<img src="assets/imgs/github/a3.png" width="400">|<img src="assets/imgs/github/a4.png" width="400">|<img src="assets/imgs/github/a5.png" width="400">|<img src="assets/imgs/github/a6.png" width="400">
 
 ## 🔌 Packages 
 
