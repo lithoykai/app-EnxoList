@@ -1,13 +1,17 @@
 # EnxoList - Aplicativo para Enxoval.
 
-Um simples aplicativo para poder armazenar sua lista de itens para comprar no seu enxoval da casa nova. Você pode armazenar por categorias os produtos que você deseja comprar para sua nova casa e ver o lado financeiro. 
+Um simples aplicativo para poder armazenar sua lista de itens para comprar no seu enxoval da casa nova. Você pode armazenar por categorias os produtos que você deseja comprar para sua nova casa e ver o lado financeiro.
+
 O aplicativo ainda está em desenvolvimento, atualizarei conforme avança.
 
 
 ## Desenvolvimento
 
 O aplicativo está sendo desenvolvido em Flutter e em Java Spring Boot (O backend está sendo feito por mim, atualizando conforme o projeto avança).
-Repositório do backend: [SpringBoot - Enxolist.](https://github.com/lithoykai/springboot-Enxolist)
+Repositório do backend: [**SpringBoot - Enxolist.**](https://github.com/lithoykai/springboot-Enxolist)
+
+O design do aplicativo está sendo realizado no Figma: [**Figma - Enxolist**](https://www.figma.com/file/rmPLZYfURBBruItG4DqYdM/EnxoList?type=design&node-id=0%3A1&mode=design&t=GZ1Xwbh3tDPnkhRs-1)
+
 
 ## Passos a serem feitos
 
@@ -22,6 +26,7 @@ Repositório do backend: [SpringBoot - Enxolist.](https://github.com/lithoykai/s
 
 
 ## Alguns screenshots.
+
 
 |<img src="assets/imgs/github/a1.png" width="400">| |<img src="assets/imgs/github/a2.png" width="400">|<img src="assets/imgs/github/a3.png" width="400">|<img src="assets/imgs/github/a4.png" width="400">|<img src="assets/imgs/github/a5.png" width="400">|<img src="assets/imgs/github/a6.png" width="400">
 
