@@ -95,12 +95,12 @@ class _AuthFormState extends State<AuthForm> {
     setState(() {
       isLoading = true;
     });
-
     if (_isLogin()) _authData.remove('name');
+    await _saveLoginData();
 
     _formKey.currentState?.save();
     AuthRequest request = AuthRequest(
-      email: _authData['email']!,
+      email: _authData['email'] ?? '',
       password: _authData['password']!,
       name: _authData['name'],
     );
@@ -286,7 +286,6 @@ class _AuthFormState extends State<AuthForm> {
                                     onChanged: (value) {
                                       setState(() {
                                         saveLogin = value!;
-                                        _saveLoginData();
                                       });
                                     },
                                   ),

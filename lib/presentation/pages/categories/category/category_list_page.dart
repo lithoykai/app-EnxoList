@@ -1,9 +1,12 @@
 import 'package:enxolist/di/injectable.dart';
 import 'package:enxolist/domain/entities/product/product_entity.dart';
 import 'package:enxolist/infra/utils/approuter.dart';
+import 'package:enxolist/presentation/pages/categories/category/search/search_bar_delegate.dart';
+import 'package:enxolist/presentation/pages/categories/category/widget/category_card.dart';
 import 'package:enxolist/presentation/pages/categories/category/widget/empty_list.dart';
 import 'package:enxolist/presentation/pages/categories/controller/categories_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 
 class CategoryListPage extends StatefulWidget {
   // final List<ProductEntity> products;
@@ -18,6 +21,9 @@ class CategoryListPage extends StatefulWidget {
 }
 
 class _CategoryListPageState extends State<CategoryListPage> {
+  TextEditingController searchController =
+      TextEditingController(); // Adicione este controlador
+
   @override
   Widget build(BuildContext context) {
     final int id = ModalRoute.of(context)!.settings.arguments as int;
@@ -28,9 +34,23 @@ class _CategoryListPageState extends State<CategoryListPage> {
         title: const Text('Lista de Produtos'),
         actions: [
           IconButton(
-              onPressed: () =>
-                  Navigator.of(context).pushNamed(AppRouter.PRODUCT_FORM_PAGE),
-              icon: const Icon(Icons.add))
+            onPressed: () {
+              showSearch(
+                context: context,
+                delegate: SearchBarDelegate(controller: controller),
+              );
+            },
+            icon: const Icon(
+              Icons.search,
+            ),
+          ),
+          IconButton(
+            onPressed: () =>
+                Navigator.of(context).pushNamed(AppRouter.PRODUCT_FORM_PAGE),
+            icon: const Icon(
+              Icons.add,
+            ),
+          ),
         ],
       ),
       body: FutureBuilder(
@@ -45,15 +65,36 @@ class _CategoryListPageState extends State<CategoryListPage> {
             } else if (controller.products.isEmpty) {
               return const EmptyList();
             } else {
-              return ListView.builder(
-                  itemCount: controller.products.length,
-                  itemBuilder: (context, index) {
-                    ProductEntity product = controller.products[index];
-                    return ListTile(
-                      title: Text(product.name),
-                      trailing: Text(product.id!),
-                    );
-                  });
+              return Observer(builder: (context) {
+                if (controller.products.isEmpty) {
+                  return const EmptyList();
+                }
+                {
+                  return Column(
+                    children: [
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      Expanded(
+                        child: ListView.builder(
+                          itemCount: controller.filteredProducts.length,
+                          itemBuilder: (context, index) {
+                            ProductEntity product =
+                                controller.filteredProducts[index];
+                            return Padding(
+                              padding: const EdgeInsets.all(4.0),
+                              child: CategoryCard(
+                                product: product,
+                                controller: controller,
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    ],
+                  );
+                }
+              });
             }
           }),
     );

@@ -8,6 +8,7 @@ O aplicativo ainda está em desenvolvimento, atualizarei conforme avança.
 ## Desenvolvimento
 
 O aplicativo está sendo desenvolvido em Flutter e em Java Spring Boot (O backend está sendo feito por mim, atualizando conforme o projeto avança).
+
 Repositório do backend: [**SpringBoot - Enxolist.**](https://github.com/lithoykai/springboot-Enxolist)
 
 O design do aplicativo está sendo realizado no Figma: [**Figma - Enxolist**](https://www.figma.com/file/rmPLZYfURBBruItG4DqYdM/EnxoList?type=design&node-id=0%3A1&mode=design&t=GZ1Xwbh3tDPnkhRs-1)

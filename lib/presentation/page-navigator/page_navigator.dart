@@ -44,15 +44,15 @@ class _PageNavigatorScreenState extends State<PageNavigatorScreen> {
           onTabChange: (index) => controller.changeToPage(index),
           tabs: const [
             GButton(
-              icon: Icons.home_outlined,
+              icon: Icons.home,
               text: 'Home',
             ),
             GButton(
-              icon: Icons.account_balance_wallet_outlined,
+              icon: Icons.wallet,
               text: 'Finanças',
             ),
             GButton(
-              icon: Icons.person_outline,
+              icon: Icons.person,
               text: 'Person ',
             ),
           ],

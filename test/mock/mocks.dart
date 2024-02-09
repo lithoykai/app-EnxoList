@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:enxolist/data/data_source/clients/http_clients.dart';
 import 'package:enxolist/data/data_source/product_remote_datasource.dart';
 import 'package:enxolist/data/models/auth/request/auth_request.dart';
+import 'package:enxolist/domain/entities/product/product_entity.dart';
 import 'package:enxolist/domain/response/product_response.dart';
 import 'package:mockito/mockito.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -9,6 +10,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 class _FakeResponse<T> extends Fake implements Response<T> {}
 
 class _FakeProductResponse<L, R> extends Fake implements ProductResponse {}
+
+class _FakeDeleteResponse<L, R> extends Fake implements Response {}
 
 class _FakeAuthResponse<UserResponse> extends Fake
     implements Response<UserResponse> {}
@@ -27,6 +30,10 @@ class HttpClientAppMock extends Mock implements HttpClientApp {
   Future<Response> login(AuthRequest request) =>
       super.noSuchMethod(Invocation.method(#login, [request]),
           returnValue: Future.value(_FakeAuthResponse()));
+  @override
+  Future<Response> delete(String endpoint) =>
+      super.noSuchMethod(Invocation.method(#delete, [endpoint]),
+          returnValue: Future.value(_FakeResponse()));
 }
 
 class ProductDataSourceMock extends Mock implements IProductDataSource {
@@ -36,4 +43,9 @@ class ProductDataSourceMock extends Mock implements IProductDataSource {
   Future<ProductResponse> getProducts() =>
       super.noSuchMethod(Invocation.method(#getProducts, []),
           returnValue: Future.value(_FakeProductResponse()));
+
+  @override
+  Future<Response> deleteProduct(ProductEntity product) =>
+      super.noSuchMethod(Invocation.method(#deleteProduct, [product]),
+          returnValue: Future.value(_FakeResponse()));
 }

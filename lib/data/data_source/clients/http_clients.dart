@@ -27,16 +27,27 @@ class HttpClientApp {
     return _dio.post(endpoint, data: jsonEncode(request.toJson()));
   }
 
-  Future<Response> getMethod(String endpoint) async {
+  Future<String> token() async {
     UserResponse? user;
     if (Hive.isBoxOpen('userData')) {
       var box = Hive.box('userData');
       user = box.get('userData');
     }
     String token = user!.token;
+    return token;
+  }
 
+  Future<Response> delete(String endpoint) async {
     _dio.options.headers['content-Type'] = 'application/json';
-    _dio.options.headers['authorization'] = token;
+    _dio.options.headers['authorization'] = await token();
+    print(token());
+    return _dio.delete(endpoint);
+  }
+
+  Future<Response> getMethod(String endpoint) async {
+    _dio.options.headers['content-Type'] = 'application/json';
+    _dio.options.headers['authorization'] = await token();
+
     return _dio.get(endpoint);
   }
 }

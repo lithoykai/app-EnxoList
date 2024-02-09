@@ -34,6 +34,14 @@ mixin _$CategoriesController on _CategoriesControllerBase, Store {
         .run(() => super.listByCategory(categoryId));
   }
 
+  late final _$deleteProductAsyncAction =
+      AsyncAction('_CategoriesControllerBase.deleteProduct', context: context);
+
+  @override
+  Future<void> deleteProduct(ProductEntity product) {
+    return _$deleteProductAsyncAction.run(() => super.deleteProduct(product));
+  }
+
   @override
   String toString() {
     return '''
