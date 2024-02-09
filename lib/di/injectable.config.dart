@@ -14,18 +14,19 @@ import 'package:hive/hive.dart' as _i13;
 import 'package:injectable/injectable.dart' as _i2;
 
 import '../data/data_source/clients/http_clients.dart' as _i4;
-import '../data/data_source/clients/third_module.dart' as _i16;
+import '../data/data_source/clients/third_module.dart' as _i17;
 import '../data/data_source/product_remote_datasource.dart' as _i5;
 import '../data/data_source/product_remote_datasource_impl.dart' as _i6;
 import '../data/repositories/product/product_repository_impl.dart' as _i8;
 import '../data/services/auth/auth_service.dart' as _i12;
 import '../domain/repositories/product_repository.dart' as _i7;
-import '../domain/use-cases/product/get_products.dart' as _i14;
+import '../domain/use-cases/product/delete_product.dart' as _i14;
+import '../domain/use-cases/product/get_products.dart' as _i15;
 import '../infra/utils/store.dart' as _i11;
 import '../presentation/page-navigator/controller/page_navigator_controller.dart'
     as _i9;
 import '../presentation/pages/categories/controller/categories_controller.dart'
-    as _i15;
+    as _i16;
 import '../presentation/pages/profile/controller/profile_controller.dart'
     as _i10;
 
@@ -54,11 +55,15 @@ _i1.GetIt $initGetIt(
         http: gh<_i4.HttpClientApp>(),
         hive: gh<_i13.HiveInterface>(),
       ));
-  gh.factory<_i14.GetProductsUseCase>(
-      () => _i14.GetProductsUseCase(repository: gh<_i7.IProductRepository>()));
-  gh.singleton<_i15.CategoriesController>(_i15.CategoriesController(
-      getProductsUseCase: gh<_i14.GetProductsUseCase>()));
+  gh.factory<_i14.DeleteProductUseCase>(() =>
+      _i14.DeleteProductUseCase(repository: gh<_i7.IProductRepository>()));
+  gh.factory<_i15.GetProductsUseCase>(
+      () => _i15.GetProductsUseCase(repository: gh<_i7.IProductRepository>()));
+  gh.singleton<_i16.CategoriesController>(_i16.CategoriesController(
+    getProductsUseCase: gh<_i15.GetProductsUseCase>(),
+    deleteProductUseCase: gh<_i14.DeleteProductUseCase>(),
+  ));
   return getIt;
 }
 
-class _$RegisterModule extends _i16.RegisterModule {}
+class _$RegisterModule extends _i17.RegisterModule {}

@@ -132,12 +132,11 @@ abstract class AuthServiceBase with Store {
   @action
   Future<void> tryAutoLogin() async {
     await _openBoxIfNeeded();
-    // var box = await _hive.openBox<UserResponse>('userData');
 
     if (isAuth) return;
 
     UserResponse? user = await _userBox.get('userData');
-
+    print(user!.id);
     if (user == null) return;
 
     if (user.expiryDate.isBefore(DateTime.now())) return;

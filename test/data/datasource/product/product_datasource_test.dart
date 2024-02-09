@@ -49,12 +49,26 @@ void main() {
       expect(_response.data.isEmpty, true);
     });
 
-    test('When try get list products then throw a Exception', () async {
+    test('Should get list products then throw a Exception', () async {
       when(httpClientMock.getMethod(Endpoints.getProducts))
           .thenThrow(Exception());
 
       expect(() async => await dataSource.getProducts(),
           throwsA(isA<Exception>()));
     });
+  });
+
+  test('Should delete product then return a Response with a data msg',
+      () async {
+    final _fakeProduct = fakeProduct;
+
+    when(httpClientMock.delete('${Endpoints.deleteProduct}/${fakeProduct.id}'))
+        .thenAnswer((_) async => Response(
+            data: {"msg": "Produto deletado com sucesso"},
+            requestOptions: RequestOptions()));
+    final _response = await dataSource.deleteProduct(fakeProduct);
+    expect(_response, isA<Response>());
+    expect(_response.data.isNotEmpty, true);
+    expect(_response.data["msg"], 'Produto deletado com sucesso');
   });
 }

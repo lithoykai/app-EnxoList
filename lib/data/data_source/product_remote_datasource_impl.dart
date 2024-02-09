@@ -1,7 +1,9 @@
+import 'package:dio/src/response.dart';
 import 'package:enxolist/data/data_source/clients/http_clients.dart';
 import 'package:enxolist/data/data_source/product_remote_datasource.dart';
 import 'package:enxolist/data/models/auth/response/user_response.dart';
 import 'package:enxolist/data/models/product/product_model.dart';
+import 'package:enxolist/domain/entities/product/product_entity.dart';
 import 'package:enxolist/domain/response/product_response.dart';
 import 'package:enxolist/infra/constants/endpoints.dart';
 import 'package:hive/hive.dart';
@@ -47,6 +49,23 @@ class ProductDataSourceImpl implements IProductDataSource {
 
       final result = ProductResponse(data: data);
       return result;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<Response> deleteProduct(ProductEntity product) async {
+    UserResponse? user;
+    if (Hive.isBoxOpen('userData')) {
+      var box = Hive.box('userData');
+      user = box.get('userData');
+    }
+
+    try {
+      final response =
+          await _http.delete('${Endpoints.deleteProduct}/${product.id}');
+      return response;
     } catch (e) {
       rethrow;
     }

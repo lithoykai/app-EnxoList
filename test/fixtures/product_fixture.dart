@@ -47,4 +47,14 @@ List<ProductEntity> fakeProducts = [
   ),
 ];
 
+ProductEntity fakeProduct = ProductEntity(
+  name: 'Cama',
+  wasBought: true,
+  price: 2.500,
+  category: 1,
+  id: '-NZcKUrmYS_UwnSZELQm',
+  image: 'http://google.com',
+  urlLink: 'https://amazon.com',
+);
+
 ProductResponse responseProduct = ProductResponse(data: fakeProducts);
