@@ -26,9 +26,8 @@ void main() {
         () async {
       final _fakeHttpResponse = fakeProductHttpResponse;
 
-      when(httpClientMock.getMethod(Endpoints.getProducts)).thenAnswer(
-          (_) async => Response(
-              data: _fakeHttpResponse, requestOptions: RequestOptions()));
+      when(httpClientMock.getMethod(Endpoints.products)).thenAnswer((_) async =>
+          Response(data: _fakeHttpResponse, requestOptions: RequestOptions()));
       final _response = await dataSource.getProducts();
       expect(_response, isA<ProductResponse>());
       expect(_response.data.isNotEmpty, true);
@@ -40,9 +39,8 @@ void main() {
         () async {
       final _fakeHttpResponse = [];
 
-      when(httpClientMock.getMethod(Endpoints.getProducts)).thenAnswer(
-          (_) async => Response(
-              data: _fakeHttpResponse, requestOptions: RequestOptions()));
+      when(httpClientMock.getMethod(Endpoints.products)).thenAnswer((_) async =>
+          Response(data: _fakeHttpResponse, requestOptions: RequestOptions()));
       final _response = await dataSource.getProducts();
 
       expect(_response, isA<ProductResponse>());
@@ -50,8 +48,7 @@ void main() {
     });
 
     test('Should get list products then throw a Exception', () async {
-      when(httpClientMock.getMethod(Endpoints.getProducts))
-          .thenThrow(Exception());
+      when(httpClientMock.getMethod(Endpoints.products)).thenThrow(Exception());
 
       expect(() async => await dataSource.getProducts(),
           throwsA(isA<Exception>()));

@@ -8,4 +8,5 @@ abstract class IProductRepository {
   Future<Either<Failure, ProductResponse>> getProductsByCategory(
       int categoryId);
   Future<Either<Failure, String>> deleteProduct(ProductEntity product);
+  Future<Either<Failure, String>> updateWasBought(ProductEntity product);
 }

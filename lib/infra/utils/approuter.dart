@@ -6,4 +6,5 @@ class AppRouter {
   static const APP_CONFIG_PAGE = "/app-config-page";
   static const CATEGORY_LIST = "/category-list";
   static const PRODUCT_FORM_PAGE = "/product-form-page";
+  static const PRODUCT_DETAIL = "product-detail";
 }

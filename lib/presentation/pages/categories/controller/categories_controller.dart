@@ -21,8 +21,11 @@ abstract class _CategoriesControllerBase with Store {
       : _getProductsUseCase = getProductsUseCase,
         _deleteProductUseCase = deleteProductUseCase;
 
+  @observable
   ObservableList<ProductEntity> filteredProducts =
       ObservableList<ProductEntity>();
+  @observable
+  List<ProductEntity> products = ObservableList.of([]);
 
   void searchProducts(String searchTerm) {
     if (searchTerm.isEmpty) {
@@ -37,9 +40,6 @@ abstract class _CategoriesControllerBase with Store {
     }
   }
 
-  @observable
-  List<ProductEntity> products = ObservableList.of([]);
-
   void setProducts(List<ProductEntity> list) {
     products = ObservableList.of(list);
     products.sort((a, b) => a.wasBought ? 1 : -1);
@@ -50,6 +50,12 @@ abstract class _CategoriesControllerBase with Store {
   void deleteProductFromList(ProductEntity product) {
     products.remove(product);
     filteredProducts.remove(product);
+  }
+
+  @action
+  Future<void> toggleWasBought(ProductEntity product) async {
+    product.toggleWasBought();
+    _getProductsUseCase.updateWasBought(product);
   }
 
   @action
@@ -67,7 +73,6 @@ abstract class _CategoriesControllerBase with Store {
     _response.fold((l) {
       l as ServerFailure;
       throw ServerFailure(msg: l.toString());
-      print(l.msg);
     }, (r) => deleteProductFromList(product));
   }
 }

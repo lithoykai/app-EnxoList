@@ -37,6 +37,10 @@ class HttpClientApp {
     return token;
   }
 
+  Future<Response> put(String endpoint, Map<String, dynamic> data) {
+    return _dio.put(endpoint, data: jsonEncode(data));
+  }
+
   Future<Response> delete(String endpoint) async {
     _dio.options.headers['content-Type'] = 'application/json';
     _dio.options.headers['authorization'] = await token();
@@ -47,7 +51,6 @@ class HttpClientApp {
   Future<Response> getMethod(String endpoint) async {
     _dio.options.headers['content-Type'] = 'application/json';
     _dio.options.headers['authorization'] = await token();
-
     return _dio.get(endpoint);
   }
 }

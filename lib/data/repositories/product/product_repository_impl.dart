@@ -45,4 +45,14 @@ class ProductRepositoryImpl implements IProductRepository {
       return left(ServerFailure(msg: e.toString()));
     }
   }
+
+  @override
+  Future<Either<Failure, String>> updateWasBought(ProductEntity product) async {
+    try {
+      final _response = await _dataSource.updateWasBought(product);
+      return right('Atualizado!');
+    } catch (e) {
+      return left(ServerFailure(msg: e.toString()));
+    }
+  }
 }

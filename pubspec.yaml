@@ -40,6 +40,9 @@ dependencies:
 
   #presentation  
   google_nav_bar: ^5.0.6
+  cached_network_image: ^3.3.1
+  pinch_zoom: ^2.0.0
+  easy_image_viewer: ^1.4.1
 
 dev_dependencies:
   flutter_test:

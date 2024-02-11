@@ -18,7 +18,7 @@ class ProductDataSourceImpl implements IProductDataSource {
   @override
   Future<ProductResponse> getProducts() async {
     try {
-      final response = await _http.getMethod(Endpoints.getProducts);
+      final response = await _http.getMethod(Endpoints.products);
 
       final data = (response.data as List)
           .map((json) => ProductModel.fromJson(json).toEntity())
@@ -40,8 +40,8 @@ class ProductDataSourceImpl implements IProductDataSource {
     }
 
     try {
-      final response = await _http.getMethod(
-          '${Endpoints.getProducts}/${user!.id}/category/$categoryId');
+      final response = await _http
+          .getMethod('${Endpoints.products}/${user!.id}/category/$categoryId');
 
       final data = (response.data as List)
           .map((json) => ProductModel.fromJson(json).toEntity())
@@ -66,6 +66,21 @@ class ProductDataSourceImpl implements IProductDataSource {
       final response =
           await _http.delete('${Endpoints.deleteProduct}/${product.id}');
       return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<Response> updateWasBought(ProductEntity product) async {
+    Map<String, dynamic> data = {
+      "wasBought": product.wasBought,
+    };
+
+    try {
+      final _response =
+          await _http.put('${Endpoints.products}/${product.id}', data);
+      return _response;
     } catch (e) {
       rethrow;
     }
