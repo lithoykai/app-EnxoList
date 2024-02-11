@@ -97,4 +97,22 @@ class MockIProductRepository extends _i1.Mock
           ),
         )),
       ) as _i4.Future<_i2.Either<_i5.Failure, String>>);
+
+  @override
+  _i4.Future<_i2.Either<_i5.Failure, String>> updateWasBought(
+          _i7.ProductEntity? product) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #updateWasBought,
+          [product],
+        ),
+        returnValue: _i4.Future<_i2.Either<_i5.Failure, String>>.value(
+            _FakeEither_0<_i5.Failure, String>(
+          this,
+          Invocation.method(
+            #updateWasBought,
+            [product],
+          ),
+        )),
+      ) as _i4.Future<_i2.Either<_i5.Failure, String>>);
 }

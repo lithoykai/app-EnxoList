@@ -8,4 +8,6 @@ abstract class IProductDataSource {
   Future<ProductResponse> getProductsByCategory(int categoryId);
 
   Future<Response> deleteProduct(ProductEntity product);
+
+  Future<Response> updateWasBought(ProductEntity product);
 }
