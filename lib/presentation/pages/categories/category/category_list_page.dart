@@ -1,10 +1,10 @@
 import 'package:enxolist/di/injectable.dart';
 import 'package:enxolist/domain/entities/product/product_entity.dart';
-import 'package:enxolist/infra/utils/approuter.dart';
+import 'package:enxolist/presentation/pages/categories/category/product/product_card.dart';
 import 'package:enxolist/presentation/pages/categories/category/search/search_bar_delegate.dart';
-import 'package:enxolist/presentation/pages/categories/category/widget/category_card.dart';
 import 'package:enxolist/presentation/pages/categories/category/widget/empty_list.dart';
 import 'package:enxolist/presentation/pages/categories/controller/categories_controller.dart';
+import 'package:enxolist/presentation/pages/categories/forms/product_form_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
@@ -45,8 +45,12 @@ class _CategoryListPageState extends State<CategoryListPage> {
             ),
           ),
           IconButton(
-            onPressed: () =>
-                Navigator.of(context).pushNamed(AppRouter.PRODUCT_FORM_PAGE),
+            onPressed: () => Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => const ProductFormPage(),
+                settings: RouteSettings(arguments: id),
+              ),
+            ),
             icon: const Icon(
               Icons.add,
             ),
@@ -63,11 +67,15 @@ class _CategoryListPageState extends State<CategoryListPage> {
                 child: Text('Ocorreu um erro!'),
               );
             } else if (controller.products.isEmpty) {
-              return const EmptyList();
+              return EmptyList(
+                idPage: id,
+              );
             } else {
               return Observer(builder: (context) {
                 if (controller.products.isEmpty) {
-                  return const EmptyList();
+                  return EmptyList(
+                    idPage: id,
+                  );
                 }
                 {
                   return Column(
@@ -83,7 +91,7 @@ class _CategoryListPageState extends State<CategoryListPage> {
                                 controller.filteredProducts[index];
                             return Padding(
                               padding: const EdgeInsets.all(4.0),
-                              child: CategoryCard(
+                              child: ProductCard(
                                 product: product,
                                 controller: controller,
                               ),

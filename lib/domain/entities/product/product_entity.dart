@@ -1,19 +1,5 @@
 enum Room { cozinha, sala, quarto, banheiro, eletro, lavanderia, reforma }
 
-class CategoriesEntity {
-  final int id;
-  final String name;
-  final String urlImage;
-  final Room category;
-
-  CategoriesEntity({
-    required this.id,
-    required this.name,
-    required this.urlImage,
-    required this.category,
-  });
-}
-
 class ProductEntity {
   final String? id;
   final String name;
@@ -34,5 +20,17 @@ class ProductEntity {
 
   void toggleWasBought() {
     wasBought = !wasBought;
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'name': name,
+      'wasBought': wasBought,
+      'price': price,
+      'category': category,
+      'id': id,
+      'image': image,
+      'urlLink': urlLink,
+    };
   }
 }

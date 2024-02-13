@@ -136,7 +136,6 @@ abstract class AuthServiceBase with Store {
     if (isAuth) return;
 
     UserResponse? user = await _userBox.get('userData');
-    print(user!.id);
     if (user == null) return;
 
     if (user.expiryDate.isBefore(DateTime.now())) return;

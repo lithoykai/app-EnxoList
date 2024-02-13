@@ -1,10 +1,11 @@
 import 'package:enxolist/infra/theme/colors_theme.dart';
 import 'package:enxolist/infra/theme/theme_constants.dart';
-import 'package:enxolist/infra/utils/approuter.dart';
+import 'package:enxolist/presentation/pages/categories/forms/product_form_page.dart';
 import 'package:flutter/material.dart';
 
 class EmptyList extends StatelessWidget {
-  const EmptyList({super.key});
+  final int idPage;
+  const EmptyList({required this.idPage, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -29,8 +30,13 @@ class EmptyList extends StatelessWidget {
               height: 10,
             ),
             ElevatedButton(
-              onPressed: () => Navigator.of(context).pushNamed(
-                AppRouter.PRODUCT_FORM_PAGE,
+              onPressed: () => Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => const ProductFormPage(),
+                  settings: RouteSettings(
+                    arguments: idPage,
+                  ),
+                ),
               ),
               style: ElevatedButton.styleFrom(
                 backgroundColor: ColorsTheme.primaryColor,

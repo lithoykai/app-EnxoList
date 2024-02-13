@@ -2,19 +2,20 @@ import 'package:enxolist/domain/entities/product/product_entity.dart';
 import 'package:enxolist/infra/theme/colors_theme.dart';
 import 'package:enxolist/infra/utils/approuter.dart';
 import 'package:enxolist/presentation/pages/categories/controller/categories_controller.dart';
+import 'package:enxolist/presentation/pages/categories/forms/product_form_page.dart';
 import 'package:flutter/material.dart';
 
-class CategoryCard extends StatefulWidget {
+class ProductCard extends StatefulWidget {
   final ProductEntity product;
   final CategoriesController controller;
-  const CategoryCard(
+  const ProductCard(
       {required this.product, required this.controller, super.key});
 
   @override
-  State<CategoryCard> createState() => _CategoryCardState();
+  State<ProductCard> createState() => _ProductCardState();
 }
 
-class _CategoryCardState extends State<CategoryCard> {
+class _ProductCardState extends State<ProductCard> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -70,9 +71,15 @@ class _CategoryCardState extends State<CategoryCard> {
                             ),
                     ),
                     IconButton(
-                      onPressed: () => Navigator.of(context).pushNamed(
-                          AppRouter.PRODUCT_FORM_PAGE,
-                          arguments: null),
+                      onPressed: () => Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => ProductFormPage(
+                            product: widget.product,
+                          ),
+                          settings:
+                              RouteSettings(arguments: widget.product.category),
+                        ),
+                      ),
                       icon: Icon(
                         Icons.edit,
                         color: widget.product.wasBought

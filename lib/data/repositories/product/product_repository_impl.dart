@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:dartz/dartz.dart';
 import 'package:enxolist/data/data_source/product_remote_datasource.dart';
+import 'package:enxolist/data/models/product/product_model.dart';
 import 'package:enxolist/domain/entities/product/product_entity.dart';
 import 'package:enxolist/domain/repositories/product_repository.dart';
 import 'package:enxolist/domain/response/product_response.dart';
@@ -51,6 +54,22 @@ class ProductRepositoryImpl implements IProductRepository {
     try {
       final _response = await _dataSource.updateWasBought(product);
       return right('Atualizado!');
+    } catch (e) {
+      return left(ServerFailure(msg: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, ProductEntity>> createProduct(ProductModel product,
+      {File? image}) async {
+    try {
+      if (image != null) {
+        final _response =
+            await _dataSource.createProduct(product, imageFile: image);
+        return right(_response);
+      }
+      final _response = await _dataSource.createProduct(product);
+      return right(_response);
     } catch (e) {
       return left(ServerFailure(msg: e.toString()));
     }
