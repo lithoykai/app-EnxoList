@@ -4,8 +4,10 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i4;
+import 'dart:io' as _i9;
 
 import 'package:dartz/dartz.dart' as _i2;
+import 'package:enxolist/data/models/product/product_model.dart' as _i8;
 import 'package:enxolist/domain/entities/product/product_entity.dart' as _i7;
 import 'package:enxolist/domain/repositories/product_repository.dart' as _i3;
 import 'package:enxolist/domain/response/product_response.dart' as _i6;
@@ -115,4 +117,27 @@ class MockIProductRepository extends _i1.Mock
           ),
         )),
       ) as _i4.Future<_i2.Either<_i5.Failure, String>>);
+
+  @override
+  _i4.Future<_i2.Either<_i5.Failure, _i7.ProductEntity>> createProduct(
+    _i8.ProductModel? product, {
+    _i9.File? image,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #createProduct,
+          [product],
+          {#image: image},
+        ),
+        returnValue:
+            _i4.Future<_i2.Either<_i5.Failure, _i7.ProductEntity>>.value(
+                _FakeEither_0<_i5.Failure, _i7.ProductEntity>(
+          this,
+          Invocation.method(
+            #createProduct,
+            [product],
+            {#image: image},
+          ),
+        )),
+      ) as _i4.Future<_i2.Either<_i5.Failure, _i7.ProductEntity>>);
 }

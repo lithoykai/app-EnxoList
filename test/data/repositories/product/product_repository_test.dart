@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:enxolist/data/data_source/product_remote_datasource.dart';
 import 'package:enxolist/data/repositories/product/product_repository_impl.dart';
+import 'package:enxolist/domain/entities/product/product_entity.dart';
 import 'package:enxolist/domain/repositories/product_repository.dart';
 import 'package:enxolist/domain/response/product_response.dart';
 import 'package:enxolist/infra/failure/failure.dart';
@@ -59,6 +60,18 @@ void main() {
         final _result = _response.fold((l) => l, (r) => r);
         expect(_result, 'Produto deletado com sucesso');
         expect(_result, isA<String>());
+      });
+      test('Should create product then return a ProductEntity', () async {
+        final _fixture = fakeProduct;
+        final _fakeProductModel = fakeProductModel;
+
+        when(dataSource.createProduct(_fakeProductModel))
+            .thenAnswer((_) async => _fixture);
+
+        final _response = await repository.createProduct(_fakeProductModel);
+        final _result = _response.fold((l) => l, (r) => r);
+        // expect(_result);
+        expect(_result, isA<ProductEntity>());
       });
     },
   );

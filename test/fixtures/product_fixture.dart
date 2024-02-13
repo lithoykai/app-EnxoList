@@ -1,3 +1,4 @@
+import 'package:enxolist/data/models/product/product_model.dart';
 import 'package:enxolist/domain/entities/product/product_entity.dart';
 import 'package:enxolist/domain/response/product_response.dart';
 
@@ -37,6 +38,15 @@ List<ProductEntity> fakeProducts = [
     urlLink: 'https://amazon.com',
   ),
   ProductEntity(
+    name: 'Cama',
+    wasBought: true,
+    price: 2.500,
+    category: 1,
+    id: '-NZcKUrmYS_UwnSZELQm',
+    image: 'http://google.com',
+    urlLink: 'https://amazon.com',
+  ),
+  ProductEntity(
     name: 'Cozinha',
     wasBought: true,
     price: 3.500,
@@ -56,5 +66,27 @@ ProductEntity fakeProduct = ProductEntity(
   image: 'http://google.com',
   urlLink: 'https://amazon.com',
 );
+
+ProductModel fakeProductModel = ProductModel(
+  name: 'Cama',
+  wasBought: true,
+  price: 2.500,
+  category: 1,
+  id: '-NZcKUrmYS_UwnSZELQm',
+  image: 'http://google.com',
+  urlLink: 'https://amazon.com',
+);
+
+Map<String, dynamic> fakeResponseProduct = {
+  "id": "65c8e57c32193c04feeb0462",
+  "name": "Cama",
+  "price": 2.500,
+  "category": 1,
+  "urlLink": "https://amazon.com",
+  "wasBought": true,
+  "image": "http://google.com",
+  "createdAt": "2024-02-11T15:19:24.312+00:00",
+  "idUser": "65a2c8aa3c50904ce685f7ae"
+};
 
 ProductResponse responseProduct = ProductResponse(data: fakeProducts);

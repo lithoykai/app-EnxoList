@@ -60,6 +60,14 @@ mixin _$CategoriesController on _CategoriesControllerBase, Store {
         .run(() => super.listByCategory(categoryId));
   }
 
+  late final _$createProductAsyncAction =
+      AsyncAction('_CategoriesControllerBase.createProduct', context: context);
+
+  @override
+  Future<void> createProduct(ProductModel product) {
+    return _$createProductAsyncAction.run(() => super.createProduct(product));
+  }
+
   late final _$deleteProductAsyncAction =
       AsyncAction('_CategoriesControllerBase.deleteProduct', context: context);
 

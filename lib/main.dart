@@ -1,9 +1,11 @@
 import 'dart:async';
 
 import 'package:enxolist/di/injectable.dart' as di;
+import 'package:enxolist/firebase_options.dart';
 import 'package:enxolist/infra/failure/failure.dart';
 import 'package:enxolist/presentation/app/app_config.dart';
 import 'package:enxolist/presentation/app/app_widget.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 void main() async {
@@ -18,6 +20,6 @@ void main() async {
       });
 
   await di.init();
-
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const AppWidget());
 }

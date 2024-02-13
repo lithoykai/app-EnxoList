@@ -68,6 +68,7 @@ class _AppWidgetState extends State<AppWidget> {
           seedColor: const Color(0xFFE36F6F),
           onPrimary: ColorsTheme.primaryColorLight,
           background: ColorsTheme.background,
+          outline: ColorsTheme.backgroundForm,
         ),
         textTheme: const TextTheme(
           headlineLarge: TextStyle(
