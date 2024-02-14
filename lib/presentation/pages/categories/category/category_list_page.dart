@@ -45,12 +45,14 @@ class _CategoryListPageState extends State<CategoryListPage> {
             ),
           ),
           IconButton(
-            onPressed: () => Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => const ProductFormPage(),
-                settings: RouteSettings(arguments: id),
-              ),
-            ),
+            onPressed: () async => Navigator.of(context)
+                .push(
+                  MaterialPageRoute(
+                    builder: (context) => const ProductFormPage(),
+                    settings: RouteSettings(arguments: id),
+                  ),
+                )
+                .then((value) async => await controller.listByCategory(id)),
             icon: const Icon(
               Icons.add,
             ),
@@ -76,8 +78,7 @@ class _CategoryListPageState extends State<CategoryListPage> {
                   return EmptyList(
                     idPage: id,
                   );
-                }
-                {
+                } else {
                   return Column(
                     children: [
                       const SizedBox(

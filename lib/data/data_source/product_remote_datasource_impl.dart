@@ -66,6 +66,9 @@ class ProductDataSourceImpl implements IProductDataSource {
     try {
       final response =
           await _http.delete('${Endpoints.deleteProduct}/${product.id}');
+      if (product.image != null) {
+        await _firebaseService.deleteImage(product.image!);
+      }
       return response;
     } catch (e) {
       rethrow;
@@ -76,8 +79,9 @@ class ProductDataSourceImpl implements IProductDataSource {
   Future<Response> updateWasBought(ProductEntity product) async {
     Map<String, dynamic> data = {
       "wasBought": product.wasBought,
+      "price": product.price,
+      "category": product.category,
     };
-
     try {
       final _response =
           await _http.put('${Endpoints.products}/${product.id}', data);
@@ -91,6 +95,7 @@ class ProductDataSourceImpl implements IProductDataSource {
   Future<ProductEntity> createProduct(ProductModel product,
       {File? imageFile}) async {
     try {
+      String? imageUrl;
       final _response =
           await _http.post('${Endpoints.products}/create', product.toJson());
       final data = _response.data as Map<String, dynamic>;
@@ -99,7 +104,28 @@ class ProductDataSourceImpl implements IProductDataSource {
         final imageUrl = await _firebaseService.uploadImage(
             imageFile, productEntity.id ?? productEntity.name);
         productEntity.image = imageUrl;
+        await _http.put('${Endpoints.products}/${productEntity.id}',
+            productEntity.toJson());
       }
+
+      return productEntity;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<ProductEntity> editProduct(ProductModel product, {File? image}) async {
+    try {
+      if (image != null) {
+        final imageUrl = await _firebaseService.uploadImage(
+            image, product.id ?? product.name);
+        product.image = imageUrl;
+      }
+      final _response = await _http.put(
+          '${Endpoints.products}/${product.id}', product.toJson());
+      final data = _response.data as Map<String, dynamic>;
+      ProductEntity productEntity = ProductModel.fromJson(data);
       return productEntity;
     } catch (e) {
       rethrow;

@@ -19,6 +19,14 @@ class CreateProductUseCase {
     if (image != null) {
       return _repository.createProduct(product, image: image);
     }
-    return _repository.createProduct(product, image: image);
+    return _repository.createProduct(product);
+  }
+
+  Future<Either<Failure, ProductEntity>> update(ProductModel product,
+      {File? image}) async {
+    if (image != null) {
+      return _repository.updateProduct(product, image: image);
+    }
+    return _repository.updateProduct(product);
   }
 }

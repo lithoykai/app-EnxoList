@@ -14,5 +14,7 @@ abstract class IProductDataSource {
 
   Future<Response> updateWasBought(ProductEntity product);
 
+  Future<ProductEntity> editProduct(ProductModel product, {File? image});
+
   Future<ProductEntity> createProduct(ProductModel product, {File? imageFile});
 }

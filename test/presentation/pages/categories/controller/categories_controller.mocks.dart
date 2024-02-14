@@ -164,6 +164,29 @@ class MockCreateProductUseCase extends _i1.Mock
           ),
         )),
       ) as _i4.Future<_i2.Either<_i5.Failure, _i7.ProductEntity>>);
+
+  @override
+  _i4.Future<_i2.Either<_i5.Failure, _i7.ProductEntity>> update(
+    _i10.ProductModel? product, {
+    _i11.File? image,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #update,
+          [product],
+          {#image: image},
+        ),
+        returnValue:
+            _i4.Future<_i2.Either<_i5.Failure, _i7.ProductEntity>>.value(
+                _FakeEither_0<_i5.Failure, _i7.ProductEntity>(
+          this,
+          Invocation.method(
+            #update,
+            [product],
+            {#image: image},
+          ),
+        )),
+      ) as _i4.Future<_i2.Either<_i5.Failure, _i7.ProductEntity>>);
 }
 
 /// A class which mocks [IProductRepository].
@@ -264,6 +287,29 @@ class MockIProductRepository extends _i1.Mock
           this,
           Invocation.method(
             #createProduct,
+            [product],
+            {#image: image},
+          ),
+        )),
+      ) as _i4.Future<_i2.Either<_i5.Failure, _i7.ProductEntity>>);
+
+  @override
+  _i4.Future<_i2.Either<_i5.Failure, _i7.ProductEntity>> updateProduct(
+    _i10.ProductModel? product, {
+    _i11.File? image,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #updateProduct,
+          [product],
+          {#image: image},
+        ),
+        returnValue:
+            _i4.Future<_i2.Either<_i5.Failure, _i7.ProductEntity>>.value(
+                _FakeEither_0<_i5.Failure, _i7.ProductEntity>(
+          this,
+          Invocation.method(
+            #updateProduct,
             [product],
             {#image: image},
           ),

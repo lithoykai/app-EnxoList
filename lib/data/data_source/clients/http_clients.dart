@@ -37,11 +37,15 @@ class HttpClientApp {
     return token;
   }
 
-  Future<Response> post(String endpoint, Map<String, dynamic> data) {
+  Future<Response> post(String endpoint, Map<String, dynamic> data) async {
+    _dio.options.headers['content-Type'] = 'application/json';
+    _dio.options.headers['authorization'] = await token();
     return _dio.post(endpoint, data: jsonEncode(data));
   }
 
-  Future<Response> put(String endpoint, Map<String, dynamic> data) {
+  Future<Response> put(String endpoint, Map<String, dynamic> data) async {
+    _dio.options.headers['content-Type'] = 'application/json';
+    _dio.options.headers['authorization'] = await token();
     return _dio.put(endpoint, data: jsonEncode(data));
   }
 

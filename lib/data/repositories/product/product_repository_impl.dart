@@ -45,6 +45,7 @@ class ProductRepositoryImpl implements IProductRepository {
       final result = data['msg'];
       return right(result);
     } catch (e) {
+      print(e);
       return left(ServerFailure(msg: e.toString()));
     }
   }
@@ -69,6 +70,17 @@ class ProductRepositoryImpl implements IProductRepository {
         return right(_response);
       }
       final _response = await _dataSource.createProduct(product);
+      return right(_response);
+    } catch (e) {
+      return left(ServerFailure(msg: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, ProductEntity>> updateProduct(ProductModel product,
+      {File? image}) async {
+    try {
+      final _response = await _dataSource.editProduct(product, image: image);
       return right(_response);
     } catch (e) {
       return left(ServerFailure(msg: e.toString()));

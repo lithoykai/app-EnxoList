@@ -71,15 +71,21 @@ class _ProductCardState extends State<ProductCard> {
                             ),
                     ),
                     IconButton(
-                      onPressed: () => Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => ProductFormPage(
-                            product: widget.product,
-                          ),
-                          settings:
-                              RouteSettings(arguments: widget.product.category),
-                        ),
-                      ),
+                      onPressed: () async {
+                        Navigator.of(context)
+                            .push(
+                              MaterialPageRoute(
+                                builder: (context) => ProductFormPage(
+                                  product: widget.product,
+                                ),
+                                settings: RouteSettings(
+                                    arguments: widget.product.category),
+                              ),
+                            )
+                            .then((value) async => await widget.controller
+                                .listByCategory(widget.product.category));
+                        // Atualize a lista de produtos
+                      },
                       icon: Icon(
                         Icons.edit,
                         color: widget.product.wasBought

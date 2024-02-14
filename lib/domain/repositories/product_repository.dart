@@ -14,4 +14,6 @@ abstract class IProductRepository {
   Future<Either<Failure, String>> updateWasBought(ProductEntity product);
   Future<Either<Failure, ProductEntity>> createProduct(ProductModel product,
       {File? image});
+  Future<Either<Failure, ProductEntity>> updateProduct(ProductModel product,
+      {File? image});
 }

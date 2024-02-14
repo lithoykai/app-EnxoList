@@ -140,4 +140,27 @@ class MockIProductRepository extends _i1.Mock
           ),
         )),
       ) as _i4.Future<_i2.Either<_i5.Failure, _i7.ProductEntity>>);
+
+  @override
+  _i4.Future<_i2.Either<_i5.Failure, _i7.ProductEntity>> updateProduct(
+    _i8.ProductModel? product, {
+    _i9.File? image,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #updateProduct,
+          [product],
+          {#image: image},
+        ),
+        returnValue:
+            _i4.Future<_i2.Either<_i5.Failure, _i7.ProductEntity>>.value(
+                _FakeEither_0<_i5.Failure, _i7.ProductEntity>(
+          this,
+          Invocation.method(
+            #updateProduct,
+            [product],
+            {#image: image},
+          ),
+        )),
+      ) as _i4.Future<_i2.Either<_i5.Failure, _i7.ProductEntity>>);
 }

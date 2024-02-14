@@ -20,8 +20,8 @@ O design do aplicativo está sendo realizado no Figma: [**Figma - Enxolist**](ht
  - [x] Alteração de foto de perfil de usuário.
  - [x] Divisão por categoria dos produtos.
  - [x] Armazenamento offline dos dados.
- - [ ] Manipulação (CRUD) do produtos. *InProgress*
- - [ ] Manipulação (CRUD) offline dos produtos e sincronização quando estiver online. 
+ - [x] Manipulação (CRUD) do produtos. 
+ - [ ] Manipulação (CRUD) offline dos produtos e sincronização quando estiver online. *InProgress* 
  - [ ] Avaliação financeira do quantitativo dos produtos.
  - [ ] Tema escuro.
 
