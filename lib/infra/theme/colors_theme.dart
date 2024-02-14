@@ -8,4 +8,5 @@ class ColorsTheme {
   static const greyTransparent = Color(0xFFD9D9D9);
   static const backgroundForm = Color(0xFFFDFDFD);
   static const textColorFormField = Color(0xFF6B6B6B);
+  static const editButtonColorBackground = Color(0xFFCACACA);
 }

@@ -9,7 +9,7 @@ class ProductImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Container(
+      child: SizedBox(
         child: PinchZoom(
             child: CachedNetworkImage(
           imageUrl: productImage,

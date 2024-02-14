@@ -60,12 +60,22 @@ mixin _$CategoriesController on _CategoriesControllerBase, Store {
         .run(() => super.listByCategory(categoryId));
   }
 
+  late final _$updateProductAsyncAction =
+      AsyncAction('_CategoriesControllerBase.updateProduct', context: context);
+
+  @override
+  Future<void> updateProduct(ProductModel product, {File? image}) {
+    return _$updateProductAsyncAction
+        .run(() => super.updateProduct(product, image: image));
+  }
+
   late final _$createProductAsyncAction =
       AsyncAction('_CategoriesControllerBase.createProduct', context: context);
 
   @override
-  Future<void> createProduct(ProductModel product) {
-    return _$createProductAsyncAction.run(() => super.createProduct(product));
+  Future<void> createProduct(ProductModel product, {File? image}) {
+    return _$createProductAsyncAction
+        .run(() => super.createProduct(product, image: image));
   }
 
   late final _$deleteProductAsyncAction =
@@ -74,6 +84,31 @@ mixin _$CategoriesController on _CategoriesControllerBase, Store {
   @override
   Future<void> deleteProduct(ProductEntity product) {
     return _$deleteProductAsyncAction.run(() => super.deleteProduct(product));
+  }
+
+  late final _$_CategoriesControllerBaseActionController =
+      ActionController(name: '_CategoriesControllerBase', context: context);
+
+  @override
+  void setProducts(List<ProductEntity> list) {
+    final _$actionInfo = _$_CategoriesControllerBaseActionController
+        .startAction(name: '_CategoriesControllerBase.setProducts');
+    try {
+      return super.setProducts(list);
+    } finally {
+      _$_CategoriesControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void deleteProductFromList(ProductEntity product) {
+    final _$actionInfo = _$_CategoriesControllerBaseActionController
+        .startAction(name: '_CategoriesControllerBase.deleteProductFromList');
+    try {
+      return super.deleteProductFromList(product);
+    } finally {
+      _$_CategoriesControllerBaseActionController.endAction(_$actionInfo);
+    }
   }
 
   @override

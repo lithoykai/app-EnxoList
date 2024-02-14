@@ -52,7 +52,9 @@ void main() {
     mock
         .when(createProductUseCase.call(_fakeProductModel))
         .thenAnswer((_) async => Right(_fixture));
-    controller.createProduct(_fakeProductModel);
+    controller.createProduct(
+      _fakeProductModel,
+    );
     expect(controller.products.length, lenght + 1);
   });
 }

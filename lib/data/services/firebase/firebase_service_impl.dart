@@ -19,15 +19,30 @@ class FirebaseServiceImpl implements FirebaseService {
     if (image?.path == '') {
       return null;
     } else {
-      final storage = FirebaseStorage.instance;
-      final imageRef = storage.ref().child(idUser).child(imageName);
+      try {
+        final storage = FirebaseStorage.instance;
+        final imageRef = storage.ref().child(idUser).child(imageName);
 
-      await imageRef
-          .putFile(image ??
-              File.fromUri(Uri.parse(
-                  'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg')))
-          .whenComplete(() => {});
-      return await imageRef.getDownloadURL();
+        await imageRef
+            .putFile(image ??
+                File.fromUri(Uri.parse(
+                    'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg')))
+            .whenComplete(() => {});
+        return await imageRef.getDownloadURL();
+      } catch (e) {
+        rethrow;
+      }
+    }
+  }
+
+  @override
+  Future<void> deleteImage(String url) async {
+    try {
+      final storage = FirebaseStorage.instance;
+      Reference photoRef = storage.refFromURL(url);
+      photoRef.delete();
+    } catch (e) {
+      rethrow;
     }
   }
 }

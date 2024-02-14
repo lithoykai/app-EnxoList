@@ -51,9 +51,7 @@ class _AppWidgetState extends State<AppWidget> {
 
   void _observerFailure() {
     AppConfig.instance.streamError.stream.listen((failure) {
-      if (failure != null) {
-        print(failure.toString());
-      }
+      if (failure != null) {}
     });
   }
 

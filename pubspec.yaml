@@ -46,6 +46,8 @@ dependencies:
   google_nav_bar: ^5.0.6
   cached_network_image: ^3.3.1
   pinch_zoom: ^2.0.0
+  image_picker: ^1.0.7
+  url_launcher: ^6.2.4
   
 
 dev_dependencies:

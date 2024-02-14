@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:enxolist/data/models/product/product_model.dart';
 import 'package:enxolist/domain/entities/product/product_entity.dart';
 import 'package:enxolist/domain/use-cases/product/create_product.dart';
@@ -45,6 +47,7 @@ abstract class _CategoriesControllerBase with Store {
     }
   }
 
+  @action
   void setProducts(List<ProductEntity> list) {
     products = ObservableList.of(list);
     products.sort((a, b) => a.wasBought ? 1 : -1);
@@ -54,8 +57,26 @@ abstract class _CategoriesControllerBase with Store {
 
   void setProduct(ProductEntity product) {
     products.add(product);
+    filteredProducts.add(product);
   }
 
+  void updateProductFromList(ProductEntity product) {
+    int index = products.indexWhere((p) => p.id == product.id);
+    if (index != -1) {
+      products[index] = product;
+
+      updateProductInFilteredList(product);
+    }
+  }
+
+  void updateProductInFilteredList(ProductEntity product) {
+    int index = filteredProducts.indexWhere((p) => p.id == product.id);
+    if (index != -1) {
+      filteredProducts[index] = product;
+    }
+  }
+
+  @action
   void deleteProductFromList(ProductEntity product) {
     products.remove(product);
     filteredProducts.remove(product);
@@ -76,10 +97,20 @@ abstract class _CategoriesControllerBase with Store {
   }
 
   @action
-  Future<void> createProduct(ProductModel product) async {
-    final _response = await _createProductUseCase.call(product);
+  Future<void> updateProduct(ProductModel product, {File? image}) async {
+    final _response = await _createProductUseCase.update(product, image: image);
     _response.fold((l) {
       l as ServerFailure;
+      throw ServerFailure(msg: l.msg);
+    }, (r) => updateProductFromList(r));
+  }
+
+  @action
+  Future<void> createProduct(ProductModel product, {File? image}) async {
+    final _response = await _createProductUseCase.call(product, image: image);
+    _response.fold((l) {
+      l as ServerFailure;
+
       throw ServerFailure(msg: l.msg);
     }, (r) => setProduct(r));
   }
@@ -89,6 +120,7 @@ abstract class _CategoriesControllerBase with Store {
     final _response = await _deleteProductUseCase.delete(product);
     _response.fold((l) {
       l as ServerFailure;
+      print(l.msg);
       throw ServerFailure(msg: l.toString());
     }, (r) => deleteProductFromList(product));
   }
