@@ -1,7 +1,6 @@
 import 'package:enxolist/data/models/auth/response/user_response.dart';
 import 'package:enxolist/di/injectable.dart';
 import 'package:enxolist/infra/theme/colors_theme.dart';
-import 'package:enxolist/infra/utils/approuter.dart';
 import 'package:enxolist/presentation/pages/profile/controller/profile_controller.dart';
 import 'package:enxolist/presentation/pages/profile/widgets/profile_avatar.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +14,7 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  bool _showListView = false;
   late var box;
   late UserResponse? user;
   @override
@@ -27,6 +27,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
     // var box = Hive.box<UserResponse>('userData');
   }
 
+  showList() {
+    setState(() {
+      _showListView = !_showListView;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final controller = getIt<ProfileController>();
@@ -34,44 +40,36 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Container(
       color: ColorsTheme.background,
       child: SafeArea(
-          child: Column(
-        children: [
-          const ProfileAvatar(),
-          Text(user!.name, style: Theme.of(context).textTheme.headlineLarge),
-          const SizedBox(
-            height: 20,
-          ),
-          const Divider(),
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pushNamed(AppRouter.CHANGE_USER_INFO);
-            },
-            child: const Text(
-              'Alterar informações de usuário',
-              style: TextStyle(color: ColorsTheme.textColor),
+        child: Column(
+          children: [
+            Expanded(
+              flex: _showListView ? 48 : 40,
+              child: Container(
+                  color: Colors.amber,
+                  child: ProfileAvatar(user: user!, showList: showList)),
             ),
-          ),
-          const Divider(),
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pushNamed(AppRouter.APP_CONFIG_PAGE);
-            },
-            child: const Text(
-              'Configurações do aplicativo',
+            Expanded(
+                flex: _showListView ? 20 : 45,
+                child: Column(
+                  children: [
+                    const Divider(),
+                    TextButton(
+                      onPressed: controller.logout,
+                      child: const Text(
+                        'Desconectar da conta',
+                        style: TextStyle(color: ColorsTheme.textColor),
+                      ),
+                    ),
+                    const Divider(),
+                  ],
+                )),
+            const Text(
+              'Version: 0.1.1',
               style: TextStyle(color: ColorsTheme.textColor),
-            ),
-          ),
-          const Divider(),
-          TextButton(
-            onPressed: controller.logout,
-            child: const Text(
-              'Desconectar da conta',
-              style: TextStyle(color: ColorsTheme.textColor),
-            ),
-          ),
-          const Divider(),
-        ],
-      )),
+            )
+          ],
+        ),
+      ),
     );
   }
 }

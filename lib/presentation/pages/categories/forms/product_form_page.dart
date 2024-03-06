@@ -6,6 +6,7 @@ import 'package:enxolist/domain/entities/product/product_entity.dart';
 import 'package:enxolist/infra/constants/categories_mapper.dart';
 import 'package:enxolist/infra/theme/colors_theme.dart';
 import 'package:enxolist/infra/theme/theme_constants.dart';
+import 'package:enxolist/infra/utils/currency_mask.dart';
 import 'package:enxolist/infra/utils/image_input.dart';
 import 'package:enxolist/presentation/pages/categories/controller/categories_controller.dart';
 import 'package:flutter/material.dart';
@@ -56,22 +57,23 @@ class _ProductFormPageState extends State<ProductFormPage> {
   }
 
   onSubmit() async {
-    setState(() {
-      isLoading = true;
-    });
     final isValid = _productFormKey.currentState?.validate() ?? false;
 
     if (!isValid) {
       return;
     }
+
+    setState(() {
+      isLoading = true;
+    });
     _productFormKey.currentState?.save();
     FocusScope.of(context).unfocus();
     if (widget.product != null) {
       _formData['id'] = widget.product!.id;
     }
 
-    ProductModel productModel = ProductModel.fromJson(_formData);
     try {
+      ProductModel productModel = ProductModel.fromJson(_formData);
       if (widget.product != null) {
         await controller
             .updateProduct(productModel, image: imageFile)
@@ -139,131 +141,152 @@ class _ProductFormPageState extends State<ProductFormPage> {
               ),
             )
           : SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.all(ThemeConstants.padding),
-                child: Observer(builder: (context) {
-                  return Form(
-                    key: _productFormKey,
-                    child: Column(
-                      children: [
-                        Container(
-                          decoration: const BoxDecoration(
-                              color: ColorsTheme.backgroundForm,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(8))),
-                          child: DropdownButtonFormField(
-                            focusNode: _categoryFocus,
-                            borderRadius: BorderRadius.circular(15),
-                            dropdownColor: ColorsTheme.backgroundForm,
-                            onSaved: (category) =>
-                                _formData['category'] = category,
-                            elevation: 5,
-                            decoration: const InputDecoration(
-                              labelText: 'Parte da casa',
-                              fillColor: ColorsTheme.backgroundForm,
-                              border: OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(8))),
-                            ),
-                            items: dropdownCategories,
-                            value: _dropDownValue,
-                            onChanged: (value) => dropDownCallBack(value),
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        TextFormField(
-                          decoration: decorationField('Nome do produto *'),
-                          initialValue: _formData['name'] ?? '',
-                          focusNode: _nameFocus,
-                          onSaved: (name) => _formData['name'] = name ?? '',
-                          validator: (_name) {
-                            final name = _name ?? '';
-                            if (name.trim().isEmpty) {
-                              return 'Informe um nome';
-                            }
-                            return null;
-                          },
-                        ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        TextFormField(
-                          decoration:
-                              decorationField('Valor aproximado do produto *'),
-                          initialValue: _formData['price']?.toString() ?? '',
-                          focusNode: _priceFocus,
-                          keyboardType: const TextInputType.numberWithOptions(),
-                          onSaved: (price) => _formData['price'] =
-                              double.tryParse(price ?? '') ?? 0,
-                          validator: (_price) {
-                            final price = _price ?? '';
-                            if (price.trim().isEmpty) {
-                              return 'Informe uma valor aproximado';
-                            }
-                            return null;
-                          },
-                        ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        TextFormField(
-                          decoration: decorationField('Link do produto'),
-                          initialValue: _formData['urlLink'] ?? '',
-                          focusNode: _urlLinkFocus,
-                          onSaved: (urlLink) =>
-                              _formData['urlLink'] = urlLink ?? '',
-                        ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        ImagePickerForm(
-                          onImagePick: _handleImagePick,
-                          product: widget.product,
-                        ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        wasBoughtCheck(),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        SizedBox(
-                          width: double.infinity,
-                          height: 50,
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color(0xFFE36F6F),
-                              shape: ContinuousRectangleBorder(
-                                borderRadius: BorderRadius.circular(15),
+              child: Scrollbar(
+                child: Padding(
+                  padding: const EdgeInsets.all(ThemeConstants.padding),
+                  child: Observer(builder: (context) {
+                    return Form(
+                      key: _productFormKey,
+                      child: Column(
+                        children: [
+                          Container(
+                            decoration: const BoxDecoration(
+                                color: ColorsTheme.backgroundForm,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(8))),
+                            child: DropdownButtonFormField(
+                              focusNode: _categoryFocus,
+                              borderRadius: BorderRadius.circular(15),
+                              dropdownColor: ColorsTheme.backgroundForm,
+                              onSaved: (category) =>
+                                  _formData['category'] = category,
+                              elevation: 5,
+                              decoration: const InputDecoration(
+                                labelText: 'Parte da casa',
+                                fillColor: ColorsTheme.backgroundForm,
+                                border: OutlineInputBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(8))),
                               ),
-                            ),
-                            onPressed: onSubmit,
-                            child: Text(
-                              widget.product != null
-                                  ? 'Salvar'
-                                  : 'Adicionar novo produto',
-                              style: const TextStyle(
-                                fontFamily: "Roboto",
-                                fontWeight: FontWeight.bold,
-                                fontSize: 17,
-                                color: Colors.white,
-                              ),
+                              items: dropdownCategories,
+                              value: _dropDownValue,
+                              onChanged: (value) => dropDownCallBack(value),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                  );
-                }),
+                          const SizedBox(
+                            height: 15,
+                          ),
+                          TextFormField(
+                            decoration:
+                                decorationField(false, 'Nome do produto *'),
+                            initialValue: _formData['name'] ?? '',
+                            focusNode: _nameFocus,
+                            onSaved: (name) => _formData['name'] = name ?? '',
+                            validator: (_name) {
+                              final name = _name ?? '';
+                              if (name.trim().isEmpty) {
+                                return 'Informe um nome';
+                              }
+                              return null;
+                            },
+                          ),
+                          const SizedBox(
+                            height: 15,
+                          ),
+                          TextFormField(
+                            decoration: decorationField(
+                                true, 'Valor aproximado do produto *'),
+                            initialValue: _formData['price']?.toString() ?? '',
+                            focusNode: _priceFocus,
+                            inputFormatters: [
+                              CurrencyInputFormatter(),
+                            ],
+                            keyboardType:
+                                const TextInputType.numberWithOptions(),
+                            onSaved: (price) => _formData['price'] =
+                                double.tryParse(price
+                                            ?.replaceAll('.', '')
+                                            .replaceAll(',', '.') ??
+                                        '') ??
+                                    0,
+                            validator: (_price) {
+                              final price = _price ?? '';
+                              if (price.trim().isEmpty) {
+                                return 'Informe uma valor aproximado';
+                              }
+                              return null;
+                            },
+                          ),
+                          const SizedBox(
+                            height: 15,
+                          ),
+                          TextFormField(
+                            decoration:
+                                decorationField(false, 'Link do produto'),
+                            initialValue: _formData['urlLink'] ?? '',
+                            focusNode: _urlLinkFocus,
+                            validator: (link) {
+                              if (link != null && link.isNotEmpty) {
+                                if (!link.contains('http')) {
+                                  return 'Adicione um link válido.';
+                                }
+                              }
+                              return null;
+                            },
+                            onSaved: (urlLink) =>
+                                _formData['urlLink'] = urlLink ?? '',
+                          ),
+                          const SizedBox(
+                            height: 15,
+                          ),
+                          ImagePickerForm(
+                            onImagePick: _handleImagePick,
+                            product: widget.product,
+                          ),
+                          const SizedBox(
+                            height: 15,
+                          ),
+                          wasBoughtCheck(),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          SizedBox(
+                            width: double.infinity,
+                            height: 50,
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: const Color(0xFFE36F6F),
+                                shape: ContinuousRectangleBorder(
+                                  borderRadius: BorderRadius.circular(15),
+                                ),
+                              ),
+                              onPressed: onSubmit,
+                              child: Text(
+                                widget.product != null
+                                    ? 'Salvar'
+                                    : 'Adicionar novo produto',
+                                style: const TextStyle(
+                                  fontFamily: "Roboto",
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 17,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  }),
+                ),
               ),
             ),
     );
   }
 
-  InputDecoration decorationField(String labelText) {
+  InputDecoration decorationField(bool prefix, String labelText) {
     return InputDecoration(
+      prefixText: prefix ? 'R\$ ' : null,
       fillColor: ColorsTheme.backgroundForm,
       filled: true,
       enabledBorder: const UnderlineInputBorder(

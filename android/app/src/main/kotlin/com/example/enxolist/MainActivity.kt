@@ -1,4 +1,4 @@
-package com.example.enxolist
+package com.enxolist
 
 import io.flutter.embedding.android.FlutterActivity
 

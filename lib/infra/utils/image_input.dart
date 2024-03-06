@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:enxolist/domain/entities/product/product_entity.dart';
+import 'package:enxolist/infra/constants/constants_images.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -77,7 +78,9 @@ class _ImagePickerFormState extends State<ImagePickerForm> {
                     )
                   : (widget.product != null && widget.product!.image != null)
                       ? CachedNetworkImage(
-                          imageUrl: widget.product!.image!,
+                          imageUrl: widget.product?.image == ''
+                              ? ConstantsImage.withoutPhoto
+                              : widget.product!.image!,
                         )
                       : const Text('Nenhuma imagem!'),
             ),

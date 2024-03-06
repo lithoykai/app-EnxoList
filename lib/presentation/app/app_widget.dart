@@ -4,8 +4,6 @@ import 'package:enxolist/presentation/app/app_config.dart';
 import 'package:enxolist/presentation/auth/auth_page.dart';
 import 'package:enxolist/presentation/pages/auth_or_home.dart';
 import 'package:enxolist/presentation/pages/categories/category/category_list_page.dart';
-import 'package:enxolist/presentation/pages/categories/category/product/product_detail.dart';
-import 'package:enxolist/presentation/pages/categories/forms/product_form_page.dart';
 import 'package:enxolist/presentation/pages/profile/config/app_config_page.dart';
 import 'package:enxolist/presentation/pages/profile/forms/change_user_info.dart';
 import 'package:enxolist/presentation/pages/splash_page.dart';
@@ -22,7 +20,7 @@ class _AppWidgetState extends State<AppWidget> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       _observerFailure();
     });
   }
@@ -51,7 +49,9 @@ class _AppWidgetState extends State<AppWidget> {
 
   void _observerFailure() {
     AppConfig.instance.streamError.stream.listen((failure) {
-      if (failure != null) {}
+      if (failure != null) {
+        _showErrorDialog(failure.toString());
+      }
     });
   }
 
@@ -91,8 +91,8 @@ class _AppWidgetState extends State<AppWidget> {
         AppRouter.CHANGE_USER_INFO: (context) => const ChangeUserInfo(),
         AppRouter.APP_CONFIG_PAGE: (context) => const AppConfigPage(),
         AppRouter.CATEGORY_LIST: (context) => CategoryListPage(),
-        AppRouter.PRODUCT_FORM_PAGE: (context) => const ProductFormPage(),
-        AppRouter.PRODUCT_DETAIL: (context) => const ProductDetail(),
+        // AppRouter.PRODUCT_FORM_PAGE: (context) => const ProductFormPage(),
+        // AppRouter.PRODUCT_DETAIL: (context) => const ProductDetail(),
       },
     );
   }

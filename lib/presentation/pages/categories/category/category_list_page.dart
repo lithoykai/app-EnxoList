@@ -1,5 +1,7 @@
 import 'package:enxolist/di/injectable.dart';
 import 'package:enxolist/domain/entities/product/product_entity.dart';
+import 'package:enxolist/infra/constants/categories_mapper.dart';
+import 'package:enxolist/infra/theme/theme_constants.dart';
 import 'package:enxolist/presentation/pages/categories/category/product/product_card.dart';
 import 'package:enxolist/presentation/pages/categories/category/search/search_bar_delegate.dart';
 import 'package:enxolist/presentation/pages/categories/category/widget/empty_list.dart';
@@ -7,6 +9,7 @@ import 'package:enxolist/presentation/pages/categories/controller/categories_con
 import 'package:enxolist/presentation/pages/categories/forms/product_form_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:intl/intl.dart';
 
 class CategoryListPage extends StatefulWidget {
   // final List<ProductEntity> products;
@@ -21,6 +24,8 @@ class CategoryListPage extends StatefulWidget {
 }
 
 class _CategoryListPageState extends State<CategoryListPage> {
+  final currencyFormatter =
+      NumberFormat.currency(locale: 'pt_BR', symbol: 'R\$');
   TextEditingController searchController =
       TextEditingController(); // Adicione este controlador
 
@@ -31,7 +36,7 @@ class _CategoryListPageState extends State<CategoryListPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Lista de Produtos'),
+        title: Text('${CATEGORIES[id].title} - Lista de produtos'),
         actions: [
           IconButton(
             onPressed: () {
@@ -73,37 +78,78 @@ class _CategoryListPageState extends State<CategoryListPage> {
                 idPage: id,
               );
             } else {
-              return Observer(builder: (context) {
-                if (controller.products.isEmpty) {
-                  return EmptyList(
-                    idPage: id,
-                  );
-                } else {
-                  return Column(
-                    children: [
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      Expanded(
-                        child: ListView.builder(
-                          itemCount: controller.filteredProducts.length,
-                          itemBuilder: (context, index) {
-                            ProductEntity product =
-                                controller.filteredProducts[index];
-                            return Padding(
-                              padding: const EdgeInsets.all(4.0),
-                              child: ProductCard(
-                                product: product,
-                                controller: controller,
-                              ),
-                            );
-                          },
+              return RefreshIndicator.adaptive(
+                onRefresh: () async => await controller.listByCategory(id),
+                child: Observer(builder: (context) {
+                  if (controller.products.isEmpty) {
+                    return EmptyList(
+                      idPage: id,
+                    );
+                  } else {
+                    return Column(
+                      children: [
+                        Container(
+                          color: Colors.white,
+                          height: 60,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: ThemeConstants.halfPadding,
+                                horizontal: ThemeConstants.padding),
+                            child: Column(
+                              children: [
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    const Text('Valor total:'),
+                                    Observer(builder: (context) {
+                                      return Text(currencyFormatter.format(
+                                          controller
+                                              .totalValueForCategory(id)));
+                                    })
+                                  ],
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    const Text('Valor comprado:'),
+                                    Observer(builder: (context) {
+                                      return Text(currencyFormatter.format(
+                                          controller
+                                              .totalValueBoughtForCategory(
+                                                  id)));
+                                    })
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
                         ),
-                      ),
-                    ],
-                  );
-                }
-              });
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        Expanded(
+                          child: ListView.builder(
+                            itemCount: controller.filteredProducts.length,
+                            itemBuilder: (context, index) {
+                              ProductEntity product =
+                                  controller.filteredProducts[index];
+                              return Padding(
+                                padding: const EdgeInsets.all(2.0),
+                                child: ProductCard(
+                                  product: product,
+                                  controller: controller,
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      ],
+                    );
+                  }
+                }),
+              );
             }
           }),
     );

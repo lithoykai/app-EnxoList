@@ -1,11 +1,9 @@
 import 'dart:async';
 
-import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:enxolist/data/data_source/clients/http_clients.dart';
 import 'package:enxolist/data/models/auth/request/auth_request.dart';
 import 'package:enxolist/data/models/auth/response/user_response.dart';
-import 'package:enxolist/infra/constants/endpoints.dart';
 import 'package:enxolist/infra/failure/auth_exception.dart';
 import 'package:hive/hive.dart';
 import 'package:injectable/injectable.dart';
@@ -73,8 +71,7 @@ abstract class AuthServiceBase with Store {
   }
 
   @action
-  Future<Either<AuthException, UserResponse>> authenticate(
-      AuthRequest request) async {
+  Future<UserResponse> authenticate(AuthRequest request) async {
     try {
       if (request.name == null) {
         final response = await _http.login(request);
@@ -86,16 +83,20 @@ abstract class AuthServiceBase with Store {
 
         updateAuthStatus(_token != null && isValid);
 
-        return right(user);
+        return user;
       } else {
-        final response = await _http.register(Endpoints.register, request);
+        final response = await _http.register(request);
+        if (response.statusCode != 200) {
+          throw AuthException(response.data['error']);
+        }
         final user = await saveAuthenticate(response);
         final isValid = _expiryDate?.isAfter(DateTime.now()) ?? false;
         updateAuthStatus(_token != null && isValid);
-        return right(user);
+        return user;
       }
     } catch (e) {
-      throw left(AuthException(e.toString()));
+      throw AuthException(e.toString());
+      // return left(AuthException('Falha na autenticação: $e'));
     }
   }
 

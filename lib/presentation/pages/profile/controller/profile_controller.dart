@@ -4,6 +4,8 @@ import 'package:enxolist/presentation/page-navigator/controller/page_navigator_c
 import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';
 
+import '../../../../infra/utils/store.dart';
+
 part 'profile_controller.g.dart';
 
 @lazySingleton
@@ -19,6 +21,7 @@ abstract class _ProfileControllerBase with Store {
   @action
   void changeSelectedImageProfile(int i) {
     selectedImageProfile = i;
+    StoreData.saveString('avatarIndex', selectedImageProfile.toString());
   }
 
   @action

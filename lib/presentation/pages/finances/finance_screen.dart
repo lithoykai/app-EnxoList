@@ -15,8 +15,8 @@ class _FinanceScreenState extends State<FinanceScreen> {
       color: ColorsTheme.background,
       child: const SafeArea(
           child: Center(
-        child: Text('Páginas de finanças'),
-      )),
+              // child: ,
+              )),
     );
   }
 }

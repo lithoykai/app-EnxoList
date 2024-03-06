@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:enxolist/data/models/auth/request/auth_request.dart';
 import 'package:enxolist/data/services/auth/auth_service.dart';
 import 'package:enxolist/di/injectable.dart';
@@ -18,6 +17,8 @@ class AuthForm extends StatefulWidget {
 }
 
 class _AuthFormState extends State<AuthForm> {
+  bool _obscurePassword = true;
+  bool _confirmObscurePassword = true;
   AuthService authService = getIt<AuthService>();
   final _passwordController = TextEditingController();
   late TextEditingController _emailController;
@@ -34,6 +35,7 @@ class _AuthFormState extends State<AuthForm> {
   // FocusNode
   final _emailFocus = FocusNode();
   final _passwordFocus = FocusNode();
+  final _confirmPasswordFocus = FocusNode();
   final _nameFocus = FocusNode();
 
   @override
@@ -41,6 +43,7 @@ class _AuthFormState extends State<AuthForm> {
     super.dispose();
     _emailFocus.dispose();
     _passwordFocus.dispose();
+    _confirmPasswordFocus.dispose();
     _nameFocus.dispose();
     _emailController.dispose();
   }
@@ -50,6 +53,7 @@ class _AuthFormState extends State<AuthForm> {
     super.initState();
     _emailController = TextEditingController();
     saveLogin = false;
+
     _loadSavedLogin();
   }
 
@@ -96,22 +100,18 @@ class _AuthFormState extends State<AuthForm> {
       isLoading = true;
     });
     if (_isLogin()) _authData.remove('name');
-    await _saveLoginData();
 
     _formKey.currentState?.save();
-    AuthRequest request = AuthRequest(
-      email: _authData['email'] ?? '',
-      password: _authData['password']!,
-      name: _authData['name'],
-    );
+    await _saveLoginData();
 
     try {
+      AuthRequest request = AuthRequest.fromJson(_authData);
       await authService.authenticate(request);
     } on AuthException catch (error) {
-      _showErrorDialog(error.toString());
-    } on DioException catch (error) {
-      if (error.response?.statusCode == 401 ||
-          error.response?.statusCode == 403) {
+      if (error.msg.toString().contains('400')) {
+        _showErrorDialog('Usuário já existente');
+      } else if (error.msg.toString().contains('401') ||
+          error.msg.toString().contains('403')) {
         _showErrorDialog(
             'Credenciais inválidas. Verifique seu e-mail e senha.');
       } else {
@@ -119,11 +119,26 @@ class _AuthFormState extends State<AuthForm> {
             'Erro desconhecido. Por favor, tente novamente mais tarde.');
       }
     } catch (e) {
-      _showErrorDialog('Ocorreu um erro: $e');
+      if (e.toString().contains('400')) {
+        _showErrorDialog('Usuário já existente');
+      } else if (e.toString().contains('401') || e.toString().contains('403')) {
+        _showErrorDialog(
+            'Credenciais inválidas. Verifique seu e-mail e senha.');
+      } else {
+        _showErrorDialog(
+            'Erro desconhecido. Por favor, tente novamente mais tarde.');
+      }
+      // _showErrorDialog('Ocorreu um erro: $e');
     }
 
     setState(() {
       isLoading = false;
+    });
+  }
+
+  void _toggle() {
+    setState(() {
+      _obscurePassword = !_obscurePassword;
     });
   }
 
@@ -207,6 +222,7 @@ class _AuthFormState extends State<AuthForm> {
                           ),
                           TextFormField(
                             decoration: const InputDecoration(
+                              // prefixIcon: Icon(Icons.email_rounded),
                               fillColor: Color(0xFFFDFDFD),
                               filled: true,
                               enabledBorder: UnderlineInputBorder(
@@ -226,7 +242,7 @@ class _AuthFormState extends State<AuthForm> {
                             controller: _emailController,
                             keyboardType: TextInputType.emailAddress,
                             onSaved: (email) =>
-                                _authData['email'] = email ?? '',
+                                _authData['email'] = _emailController.text,
                             validator: (_email) {
                               final email = _email ?? '';
                               if (email.trim().isEmpty ||
@@ -240,27 +256,36 @@ class _AuthFormState extends State<AuthForm> {
                             height: 20,
                           ),
                           TextFormField(
-                            decoration: const InputDecoration(
+                            decoration: InputDecoration(
                               fillColor: Colors.white,
+                              // prefixIcon: const Icon(Icons.lock_rounded),
+                              suffixIcon: IconButton(
+                                onPressed: _toggle,
+                                icon: Icon(
+                                  _obscurePassword
+                                      ? Icons.visibility
+                                      : Icons.visibility_off,
+                                ),
+                              ),
                               filled: true,
-                              enabledBorder: UnderlineInputBorder(
+                              enabledBorder: const UnderlineInputBorder(
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(5)),
                                 borderSide: BorderSide(
                                     color: Colors.transparent, width: 0),
                               ),
-                              labelStyle: TextStyle(
+                              labelStyle: const TextStyle(
                                 fontFamily: "Roboto",
                                 color: Color(0xFF6B6B6B),
                                 fontSize: 17,
                               ),
                               labelText: 'Senha',
                             ),
-                            obscureText: true,
+                            obscureText: _obscurePassword,
                             focusNode: _passwordFocus,
                             controller: _passwordController,
                             onSaved: (password) =>
-                                _authData['password'] = password ?? '',
+                                _authData['password'] = password!,
                             validator: (_password) {
                               final password = _password ?? '';
                               if (password.isEmpty || password.length < 5) {
@@ -269,6 +294,71 @@ class _AuthFormState extends State<AuthForm> {
                               return null;
                             },
                           ),
+                          !_isLogin()
+                              ? Column(
+                                  children: [
+                                    const SizedBox(
+                                      height: 20,
+                                    ),
+                                    AnimatedContainer(
+                                      constraints: BoxConstraints(
+                                          minHeight: _isLogin() ? 0 : 60,
+                                          maxHeight: _isLogin() ? 0 : 120),
+                                      duration:
+                                          const Duration(milliseconds: 300),
+                                      curve: Curves.linear,
+                                      child: TextFormField(
+                                          decoration: InputDecoration(
+                                            fillColor: Colors.white,
+                                            filled: true,
+                                            enabledBorder:
+                                                const UnderlineInputBorder(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(5)),
+                                              borderSide: BorderSide(
+                                                  color: Colors.transparent,
+                                                  width: 0),
+                                            ),
+                                            labelStyle: const TextStyle(
+                                              fontFamily: "Roboto",
+                                              color: Color(0xFF6B6B6B),
+                                              fontSize: 17,
+                                            ),
+                                            labelText: 'Confirmar senha',
+                                            suffixIcon: IconButton(
+                                              onPressed: () => setState(() {
+                                                _confirmObscurePassword =
+                                                    !_confirmObscurePassword;
+                                              }),
+                                              icon: Icon(
+                                                _confirmObscurePassword
+                                                    ? Icons.visibility
+                                                    : Icons.visibility_off,
+                                              ),
+                                            ),
+                                          ),
+                                          obscureText: _confirmObscurePassword,
+                                          onSaved: (confirm) =>
+                                              _authData['confirm'] =
+                                                  confirm ?? '',
+                                          focusNode: _confirmPasswordFocus,
+                                          validator: _isLogin()
+                                              ? null
+                                              : (_password) {
+                                                  final password =
+                                                      _password ?? '';
+                                                  if (_password !=
+                                                      _passwordController
+                                                          .text) {
+                                                    return 'As senhas não conferem!';
+                                                  } else {
+                                                    return null;
+                                                  }
+                                                }),
+                                    ),
+                                  ],
+                                )
+                              : Container(),
                         ],
                       ),
                     ),
@@ -298,52 +388,6 @@ class _AuthFormState extends State<AuthForm> {
                                     ),
                                   ),
                                 ],
-                              ),
-                            ],
-                          )
-                        : Container(),
-                    !_isLogin()
-                        ? Column(
-                            children: [
-                              const SizedBox(
-                                height: 20,
-                              ),
-                              AnimatedContainer(
-                                constraints: BoxConstraints(
-                                    minHeight: _isLogin() ? 0 : 60,
-                                    maxHeight: _isLogin() ? 0 : 120),
-                                duration: const Duration(milliseconds: 300),
-                                curve: Curves.linear,
-                                child: TextFormField(
-                                    decoration: const InputDecoration(
-                                      fillColor: Colors.white,
-                                      filled: true,
-                                      enabledBorder: UnderlineInputBorder(
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(5)),
-                                        borderSide: BorderSide(
-                                            color: Colors.transparent,
-                                            width: 0),
-                                      ),
-                                      labelStyle: TextStyle(
-                                        fontFamily: "Roboto",
-                                        color: Color(0xFF6B6B6B),
-                                        fontSize: 17,
-                                      ),
-                                      labelText: 'Confirmar senha',
-                                    ),
-                                    obscureText: true,
-                                    validator: _isLogin()
-                                        ? null
-                                        : (_password) {
-                                            final password = _password ?? '';
-                                            if (password !=
-                                                _passwordController.text) {
-                                              return 'As senhas não conferem!';
-                                            } else {
-                                              return null;
-                                            }
-                                          }),
                               ),
                             ],
                           )

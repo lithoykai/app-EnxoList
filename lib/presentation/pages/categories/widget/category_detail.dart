@@ -14,7 +14,17 @@ class CategoryDetail extends StatelessWidget {
           .pushNamed(AppRouter.CATEGORY_LIST, arguments: category.id),
       child: Container(
         color: ColorsTheme.primaryColorLight,
-        child: category.icon,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            category.icon,
+            const SizedBox(
+              height: 2,
+            ),
+            Text(category.title),
+          ],
+        ),
       ),
     );
   }

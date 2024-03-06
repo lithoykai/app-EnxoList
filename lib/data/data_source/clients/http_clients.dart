@@ -4,7 +4,6 @@ import 'package:dio/dio.dart';
 import 'package:enxolist/data/models/auth/request/auth_request.dart';
 import 'package:enxolist/data/models/auth/response/user_response.dart';
 import 'package:enxolist/infra/constants/endpoints.dart';
-import 'package:enxolist/infra/failure/auth_exception.dart';
 import 'package:hive/hive.dart';
 import 'package:injectable/injectable.dart';
 
@@ -15,16 +14,21 @@ class HttpClientApp {
   HttpClientApp({required Dio dio}) : _dio = dio;
 
   Future<Response> login(AuthRequest request) async {
-    var response =
-        await _dio.post(Endpoints.login, data: jsonEncode(request.toJson()));
-    if (response.statusCode != 200) {
-      throw AuthException('Credências erradas');
+    try {
+      var response = await _dio.post(Endpoints.login, data: request.toJson());
+      return response;
+    } catch (e) {
+      rethrow;
     }
-    return response;
   }
 
-  Future<Response> register(String endpoint, AuthRequest request) {
-    return _dio.post(endpoint, data: jsonEncode(request.toJson()));
+  Future<Response> register(AuthRequest request) async {
+    try {
+      return await _dio.post(Endpoints.register,
+          data: jsonEncode(request.toJson()));
+    } catch (e) {
+      rethrow;
+    }
   }
 
   Future<String> token() async {

@@ -34,6 +34,18 @@ abstract class _CategoriesControllerBase with Store {
   @observable
   List<ProductEntity> products = ObservableList.of([]);
 
+  double totalValueForCategory(int category) {
+    return filteredProducts
+        .where((p) => p.category == category)
+        .fold(0, (total, product) => total + product.price);
+  }
+
+  double totalValueBoughtForCategory(int category) {
+    return filteredProducts
+        .where((p) => p.category == category && p.wasBought)
+        .fold(0, (total, product) => total + product.price);
+  }
+
   void searchProducts(String searchTerm) {
     if (searchTerm.isEmpty) {
       filteredProducts.clear();
@@ -85,7 +97,8 @@ abstract class _CategoriesControllerBase with Store {
   @action
   Future<void> toggleWasBought(ProductEntity product) async {
     product.toggleWasBought();
-    _getProductsUseCase.updateWasBought(product);
+    updateProductFromList(product);
+    await _getProductsUseCase.updateWasBought(product);
   }
 
   @action
@@ -120,7 +133,6 @@ abstract class _CategoriesControllerBase with Store {
     final _response = await _deleteProductUseCase.delete(product);
     _response.fold((l) {
       l as ServerFailure;
-      print(l.msg);
       throw ServerFailure(msg: l.toString());
     }, (r) => deleteProductFromList(product));
   }

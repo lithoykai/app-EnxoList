@@ -48,7 +48,7 @@ class ProductDataSourceImpl implements IProductDataSource {
 
     try {
       final response = await _http
-          .getMethod('${Endpoints.products}/${user!.id}/category/$categoryId');
+          .getMethod('${Endpoints.products}/${user?.id}/category/$categoryId');
 
       final data = (response.data as List)
           .map((json) => ProductModel.fromJson(json).toEntity())
