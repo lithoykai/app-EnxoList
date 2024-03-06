@@ -5,6 +5,11 @@ AuthRequest authRequest = AuthRequest(
   email: 'teste@teste.com',
   password: 'teste123',
 );
+AuthRequest authRegister = AuthRequest(
+  name: 'Teste',
+  email: 'teste@teste.com',
+  password: 'teste123',
+);
 
 UserResponse fakeUserResponse = UserResponse(
     id: "65a2c8aa3c50904ce685f7ae",

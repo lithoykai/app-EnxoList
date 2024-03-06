@@ -45,7 +45,6 @@ class ProductRepositoryImpl implements IProductRepository {
       final result = data['msg'];
       return right(result);
     } catch (e) {
-      print(e);
       return left(ServerFailure(msg: e.toString()));
     }
   }

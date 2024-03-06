@@ -2,7 +2,6 @@ import 'package:enxolist/di/injectable.dart';
 import 'package:enxolist/infra/theme/theme_constants.dart';
 import 'package:enxolist/presentation/page-navigator/controller/page_navigator_controller.dart';
 import 'package:enxolist/presentation/pages/categories/categories_screen.dart';
-import 'package:enxolist/presentation/pages/finances/finance_screen.dart';
 import 'package:enxolist/presentation/pages/profile/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -48,12 +47,8 @@ class _PageNavigatorScreenState extends State<PageNavigatorScreen> {
               text: 'Home',
             ),
             GButton(
-              icon: Icons.wallet,
-              text: 'Finanças',
-            ),
-            GButton(
               icon: Icons.person,
-              text: 'Person ',
+              text: 'Profile ',
             ),
           ],
         ),
@@ -67,8 +62,7 @@ class _PageNavigatorScreenState extends State<PageNavigatorScreen> {
   Widget _selectedPage(int i) {
     Map<int, Widget> pagesMap = {
       0: const CategoriesScreen(),
-      1: const FinanceScreen(),
-      2: const ProfileScreen(),
+      1: const ProfileScreen(),
     };
 
     if (i <= pagesMap.length) {

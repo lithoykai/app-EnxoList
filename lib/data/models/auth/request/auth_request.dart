@@ -14,4 +14,12 @@ class AuthRequest {
     };
     return data;
   }
+
+  factory AuthRequest.fromJson(Map<String, dynamic> json) {
+    return AuthRequest(
+      email: json['email'],
+      password: json['password'],
+      name: json['name'],
+    );
+  }
 }

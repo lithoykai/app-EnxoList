@@ -13,7 +13,7 @@ class _SplashPageState extends State<SplashPage> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      Future.delayed(Duration(seconds: 5), () {
+      Future.delayed(Duration(seconds: 1), () {
         Navigator.of(context).pushReplacementNamed(AppRouter.AUTH_OR_HOME);
       });
     });

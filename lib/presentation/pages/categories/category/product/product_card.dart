@@ -1,9 +1,10 @@
 import 'package:enxolist/domain/entities/product/product_entity.dart';
 import 'package:enxolist/infra/theme/colors_theme.dart';
-import 'package:enxolist/infra/utils/approuter.dart';
+import 'package:enxolist/presentation/pages/categories/category/product/product_detail.dart';
 import 'package:enxolist/presentation/pages/categories/controller/categories_controller.dart';
 import 'package:enxolist/presentation/pages/categories/forms/product_form_page.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class ProductCard extends StatefulWidget {
   final ProductEntity product;
@@ -16,11 +17,17 @@ class ProductCard extends StatefulWidget {
 }
 
 class _ProductCardState extends State<ProductCard> {
+  final currencyFormatter =
+      NumberFormat.currency(locale: 'pt_BR', symbol: 'R\$');
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Navigator.of(context)
-          .pushNamed(AppRouter.PRODUCT_DETAIL, arguments: widget.product),
+      onTap: () => Navigator.of(context).push(
+        MaterialPageRoute(
+            builder: (context) => ProductDetail(
+                  product: widget.product,
+                )),
+      ),
       child: SizedBox(
         height: 110,
         child: Card(
@@ -43,7 +50,7 @@ class _ProductCardState extends State<ProductCard> {
                   maxLines: 1,
                 ),
                 subtitle: Text(
-                  'Valor: R\$: ${widget.product.price.toStringAsFixed(2)}',
+                  'Valor: ${currencyFormatter.format(widget.product.price)}',
                 ),
                 trailing: Wrap(
                   spacing: 0,
@@ -140,5 +147,18 @@ class _ProductCardState extends State<ProductCard> {
         ),
       ),
     );
+  }
+
+  String _getRoundedValue() {
+    final priceCeil = widget.product.price.ceil();
+    final delta = priceCeil - widget.product.price;
+    final roundPrice = priceCeil - delta.ceil();
+    return roundPrice.toString();
+  }
+
+  String _getCentsValue() {
+    final priceFloor = widget.product.price.floor();
+    final cents = widget.product.price - priceFloor;
+    return cents.toStringAsFixed(2);
   }
 }

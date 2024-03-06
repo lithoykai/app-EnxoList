@@ -3,11 +3,15 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i3;
-import 'dart:io' as _i4;
+import 'dart:async' as _i4;
+import 'dart:io' as _i5;
 
-import 'package:enxolist/data/services/firebase/firebase_service.dart' as _i2;
+import 'package:dio/dio.dart' as _i2;
+import 'package:enxolist/data/data_source/clients/http_clients.dart' as _i6;
+import 'package:enxolist/data/models/auth/request/auth_request.dart' as _i7;
+import 'package:enxolist/data/services/firebase/firebase_service.dart' as _i3;
 import 'package:mockito/mockito.dart' as _i1;
+import 'package:mockito/src/dummies.dart' as _i8;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -22,17 +26,27 @@ import 'package:mockito/mockito.dart' as _i1;
 // ignore_for_file: camel_case_types
 // ignore_for_file: subtype_of_sealed_class
 
+class _FakeResponse_0<T> extends _i1.SmartFake implements _i2.Response<T> {
+  _FakeResponse_0(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
 /// A class which mocks [FirebaseService].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockFirebaseService extends _i1.Mock implements _i2.FirebaseService {
+class MockFirebaseService extends _i1.Mock implements _i3.FirebaseService {
   MockFirebaseService() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i3.Future<String?> uploadImage(
-    _i4.File? file,
+  _i4.Future<String?> uploadImage(
+    _i5.File? file,
     String? imageName,
   ) =>
       (super.noSuchMethod(
@@ -43,16 +57,160 @@ class MockFirebaseService extends _i1.Mock implements _i2.FirebaseService {
             imageName,
           ],
         ),
-        returnValue: _i3.Future<String?>.value(),
-      ) as _i3.Future<String?>);
+        returnValue: _i4.Future<String?>.value(),
+      ) as _i4.Future<String?>);
 
   @override
-  _i3.Future<void> deleteImage(String? url) => (super.noSuchMethod(
+  _i4.Future<void> deleteImage(String? url) => (super.noSuchMethod(
         Invocation.method(
           #deleteImage,
           [url],
         ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+        returnValue: _i4.Future<void>.value(),
+        returnValueForMissingStub: _i4.Future<void>.value(),
+      ) as _i4.Future<void>);
+}
+
+/// A class which mocks [HttpClientApp].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockHttpClientApp extends _i1.Mock implements _i6.HttpClientApp {
+  MockHttpClientApp() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  _i4.Future<_i2.Response<dynamic>> login(_i7.AuthRequest? request) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #login,
+          [request],
+        ),
+        returnValue:
+            _i4.Future<_i2.Response<dynamic>>.value(_FakeResponse_0<dynamic>(
+          this,
+          Invocation.method(
+            #login,
+            [request],
+          ),
+        )),
+      ) as _i4.Future<_i2.Response<dynamic>>);
+
+  @override
+  _i4.Future<_i2.Response<dynamic>> register(_i7.AuthRequest? request) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #register,
+          [request],
+        ),
+        returnValue:
+            _i4.Future<_i2.Response<dynamic>>.value(_FakeResponse_0<dynamic>(
+          this,
+          Invocation.method(
+            #register,
+            [request],
+          ),
+        )),
+      ) as _i4.Future<_i2.Response<dynamic>>);
+
+  @override
+  _i4.Future<String> token() => (super.noSuchMethod(
+        Invocation.method(
+          #token,
+          [],
+        ),
+        returnValue: _i4.Future<String>.value(_i8.dummyValue<String>(
+          this,
+          Invocation.method(
+            #token,
+            [],
+          ),
+        )),
+      ) as _i4.Future<String>);
+
+  @override
+  _i4.Future<_i2.Response<dynamic>> post(
+    String? endpoint,
+    Map<String, dynamic>? data,
+  ) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #post,
+          [
+            endpoint,
+            data,
+          ],
+        ),
+        returnValue:
+            _i4.Future<_i2.Response<dynamic>>.value(_FakeResponse_0<dynamic>(
+          this,
+          Invocation.method(
+            #post,
+            [
+              endpoint,
+              data,
+            ],
+          ),
+        )),
+      ) as _i4.Future<_i2.Response<dynamic>>);
+
+  @override
+  _i4.Future<_i2.Response<dynamic>> put(
+    String? endpoint,
+    Map<String, dynamic>? data,
+  ) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #put,
+          [
+            endpoint,
+            data,
+          ],
+        ),
+        returnValue:
+            _i4.Future<_i2.Response<dynamic>>.value(_FakeResponse_0<dynamic>(
+          this,
+          Invocation.method(
+            #put,
+            [
+              endpoint,
+              data,
+            ],
+          ),
+        )),
+      ) as _i4.Future<_i2.Response<dynamic>>);
+
+  @override
+  _i4.Future<_i2.Response<dynamic>> delete(String? endpoint) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #delete,
+          [endpoint],
+        ),
+        returnValue:
+            _i4.Future<_i2.Response<dynamic>>.value(_FakeResponse_0<dynamic>(
+          this,
+          Invocation.method(
+            #delete,
+            [endpoint],
+          ),
+        )),
+      ) as _i4.Future<_i2.Response<dynamic>>);
+
+  @override
+  _i4.Future<_i2.Response<dynamic>> getMethod(String? endpoint) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getMethod,
+          [endpoint],
+        ),
+        returnValue:
+            _i4.Future<_i2.Response<dynamic>>.value(_FakeResponse_0<dynamic>(
+          this,
+          Invocation.method(
+            #getMethod,
+            [endpoint],
+          ),
+        )),
+      ) as _i4.Future<_i2.Response<dynamic>>);
 }

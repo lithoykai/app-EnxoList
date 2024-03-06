@@ -45,13 +45,19 @@ class _FakeLazyBox_1<E1> extends _i1.SmartFake implements _i2.LazyBox<E1> {
         );
 }
 
-/// A class which mocks [LazyBox].
+/// A class which mocks [Box].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockLazyBox<E> extends _i1.Mock implements _i2.LazyBox<E> {
-  MockLazyBox() {
+class MockBox<E> extends _i1.Mock implements _i2.Box<E> {
+  MockBox() {
     _i1.throwOnMissingStub(this);
   }
+
+  @override
+  Iterable<E> get values => (super.noSuchMethod(
+        Invocation.getter(#values),
+        returnValue: <E>[],
+      ) as Iterable<E>);
 
   @override
   String get name => (super.noSuchMethod(
@@ -99,27 +105,36 @@ class MockLazyBox<E> extends _i1.Mock implements _i2.LazyBox<E> {
       ) as bool);
 
   @override
-  _i4.Future<E?> get(
-    dynamic key, {
-    E? defaultValue,
+  Iterable<E> valuesBetween({
+    dynamic startKey,
+    dynamic endKey,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
-          #get,
-          [key],
-          {#defaultValue: defaultValue},
+          #valuesBetween,
+          [],
+          {
+            #startKey: startKey,
+            #endKey: endKey,
+          },
         ),
-        returnValue: _i4.Future<E?>.value(),
-      ) as _i4.Future<E?>);
+        returnValue: <E>[],
+      ) as Iterable<E>);
 
   @override
-  _i4.Future<E?> getAt(int? index) => (super.noSuchMethod(
+  E? getAt(int? index) => (super.noSuchMethod(Invocation.method(
+        #getAt,
+        [index],
+      )) as E?);
+
+  @override
+  Map<dynamic, E> toMap() => (super.noSuchMethod(
         Invocation.method(
-          #getAt,
-          [index],
+          #toMap,
+          [],
         ),
-        returnValue: _i4.Future<E?>.value(),
-      ) as _i4.Future<E?>);
+        returnValue: <dynamic, E>{},
+      ) as Map<dynamic, E>);
 
   @override
   dynamic keyAt(int? index) => super.noSuchMethod(Invocation.method(
