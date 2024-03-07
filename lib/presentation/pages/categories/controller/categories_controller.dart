@@ -67,6 +67,7 @@ abstract class _CategoriesControllerBase with Store {
     filteredProducts.sort((a, b) => a.wasBought ? 1 : -1);
   }
 
+  @action
   void setProduct(ProductEntity product) {
     products.add(product);
     filteredProducts.add(product);
@@ -123,7 +124,6 @@ abstract class _CategoriesControllerBase with Store {
     final _response = await _createProductUseCase.call(product, image: image);
     _response.fold((l) {
       l as ServerFailure;
-
       throw ServerFailure(msg: l.msg);
     }, (r) => setProduct(r));
   }

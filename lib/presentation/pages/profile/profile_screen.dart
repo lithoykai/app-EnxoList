@@ -14,9 +14,11 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  final controller = getIt<ProfileController>();
   bool _showListView = false;
   late var box;
   late UserResponse? user;
+
   @override
   void initState() {
     super.initState();
@@ -24,7 +26,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
       var box = Hive.box('userData');
       user = box.get('userData');
     }
-    // var box = Hive.box<UserResponse>('userData');
   }
 
   showList() {
@@ -35,22 +36,29 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final controller = getIt<ProfileController>();
+    int _flex1 = 1, _flex2 = 2, _flex3 = 3;
+    final total = _flex1 + _flex2 + _flex3;
+    final height = MediaQuery.of(context).size.height;
+    final height4 = (height * _flex2 * 1.2) / total;
+    final height1 = (height * _flex1) / total;
+    final height3 = (height * _flex3 * 1.05) / total;
 
     return Container(
       color: ColorsTheme.background,
       child: SafeArea(
         child: Column(
           children: [
-            Expanded(
-              flex: _showListView ? 48 : 40,
-              child: Container(
-                  color: Colors.amber,
-                  child: ProfileAvatar(user: user!, showList: showList)),
+            AnimatedContainer(
+              duration: const Duration(milliseconds: 500),
+              height: _showListView ? height3 : height4,
+              child: ProfileAvatar(user: user!, showList: showList),
             ),
-            Expanded(
-                flex: _showListView ? 20 : 45,
+            AnimatedContainer(
+              duration: const Duration(milliseconds: 500),
+              height: _showListView ? height1 : height1,
+              child: SingleChildScrollView(
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     const Divider(),
                     TextButton(
@@ -62,11 +70,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                     const Divider(),
                   ],
-                )),
-            const Text(
-              'Version: 0.1.1',
-              style: TextStyle(color: ColorsTheme.textColor),
-            )
+                ),
+              ),
+            ),
           ],
         ),
       ),
