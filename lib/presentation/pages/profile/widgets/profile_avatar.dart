@@ -97,6 +97,7 @@ class _ProfileAvatarState extends State<ProfileAvatar> {
                     ],
                   ),
                   Text(widget.user.name,
+                      textAlign: TextAlign.center,
                       style: Theme.of(context).textTheme.headlineLarge),
                 ],
               ),
@@ -143,6 +144,7 @@ class _ProfileAvatarState extends State<ProfileAvatar> {
           )
         : Column(
             mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Padding(
                 padding: const EdgeInsets.all(ThemeConstants.padding),
@@ -220,6 +222,7 @@ class _ProfileAvatarState extends State<ProfileAvatar> {
                 ),
               ),
               Text(widget.user.name,
+                  textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.headlineLarge),
             ],
           );

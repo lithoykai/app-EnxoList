@@ -12,45 +12,47 @@ class EmptyList extends StatelessWidget {
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(ThemeConstants.doublePadding),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(
-                height: 320,
-                child: Image.asset('assets/imgs/undraw/nodata.png')),
-            const SizedBox(
-              height: 10,
-            ),
-            Text(
-              'Não há nenhum item adicionado nesta categoria.',
-              textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.bodyLarge,
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            ElevatedButton(
-              onPressed: () => Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => const ProductFormPage(),
-                  settings: RouteSettings(
-                    arguments: idPage,
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(
+                  height: 320,
+                  child: Image.asset('assets/imgs/undraw/nodata.png')),
+              const SizedBox(
+                height: 10,
+              ),
+              Text(
+                'Não há nenhum item adicionado nesta categoria.',
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.bodyLarge,
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              ElevatedButton(
+                onPressed: () => Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const ProductFormPage(),
+                    settings: RouteSettings(
+                      arguments: idPage,
+                    ),
                   ),
                 ),
-              ),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: ColorsTheme.primaryColor,
-                foregroundColor: ColorsTheme.primaryColorLight,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: ColorsTheme.primaryColor,
+                  foregroundColor: ColorsTheme.primaryColorLight,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
                 ),
-              ),
-              child: const Text(
-                'ADICIONAR PRODUTO',
-                style: TextStyle(color: Colors.white),
-              ),
-            )
-          ],
+                child: const Text(
+                  'ADICIONAR PRODUTO',
+                  style: TextStyle(color: Colors.white),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

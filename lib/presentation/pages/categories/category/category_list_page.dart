@@ -24,15 +24,23 @@ class CategoryListPage extends StatefulWidget {
 }
 
 class _CategoryListPageState extends State<CategoryListPage> {
+  int id = 0;
+  final controller = getIt<CategoriesController>();
   final currencyFormatter =
       NumberFormat.currency(locale: 'pt_BR', symbol: 'R\$');
   TextEditingController searchController =
       TextEditingController(); // Adicione este controlador
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    controller
+        .listByCategory(ModalRoute.of(context)!.settings.arguments as int);
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final int id = ModalRoute.of(context)!.settings.arguments as int;
-    final controller = getIt<CategoriesController>();
+    id = ModalRoute.of(context)!.settings.arguments as int;
 
     return Scaffold(
       appBar: AppBar(
@@ -72,10 +80,6 @@ class _CategoryListPageState extends State<CategoryListPage> {
             } else if (snapshot.error != null) {
               return const Center(
                 child: Text('Ocorreu um erro!'),
-              );
-            } else if (controller.products.isEmpty) {
-              return EmptyList(
-                idPage: id,
               );
             } else {
               return RefreshIndicator.adaptive(
@@ -130,20 +134,22 @@ class _CategoryListPageState extends State<CategoryListPage> {
                           height: 5,
                         ),
                         Expanded(
-                          child: ListView.builder(
-                            itemCount: controller.filteredProducts.length,
-                            itemBuilder: (context, index) {
-                              ProductEntity product =
-                                  controller.filteredProducts[index];
-                              return Padding(
-                                padding: const EdgeInsets.all(2.0),
-                                child: ProductCard(
-                                  product: product,
-                                  controller: controller,
-                                ),
-                              );
-                            },
-                          ),
+                          child: Observer(builder: (context) {
+                            return ListView.builder(
+                              itemCount: controller.filteredProducts.length,
+                              itemBuilder: (context, index) {
+                                ProductEntity product =
+                                    controller.filteredProducts[index];
+                                return Padding(
+                                  padding: const EdgeInsets.all(2.0),
+                                  child: ProductCard(
+                                    product: product,
+                                    controller: controller,
+                                  ),
+                                );
+                              },
+                            );
+                          }),
                         ),
                       ],
                     );
