@@ -1,6 +1,6 @@
 import 'package:enxolist/data/models/auth/response/user_response.dart';
 import 'package:enxolist/di/injectable.dart';
-import 'package:enxolist/infra/theme/colors_theme.dart';
+import 'package:enxolist/infra/theme/controller/theme_controller.dart';
 import 'package:enxolist/presentation/pages/profile/controller/profile_controller.dart';
 import 'package:enxolist/presentation/pages/profile/widgets/profile_avatar.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +14,7 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  final themeController = getIt<ThemeController>();
   final controller = getIt<ProfileController>();
   bool _showListView = false;
   late var box;
@@ -41,40 +42,60 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final height = MediaQuery.of(context).size.height;
     final height4 = (height * _flex2 * 1.2) / total;
     final height1 = (height * _flex1) / total;
-    final height3 = (height * _flex3 * 1.05) / total;
+    final height3 = (height * _flex3 * 1.08) / total;
 
-    return Container(
-      color: ColorsTheme.background,
-      child: SafeArea(
-        child: Column(
-          children: [
-            AnimatedContainer(
-              duration: const Duration(milliseconds: 500),
-              height: _showListView ? height3 : height4,
-              child: ProfileAvatar(user: user!, showList: showList),
-            ),
-            AnimatedContainer(
-              duration: const Duration(milliseconds: 500),
-              height: _showListView ? height1 : height1,
-              child: SingleChildScrollView(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    const Divider(),
-                    TextButton(
-                      onPressed: controller.logout,
-                      child: const Text(
-                        'Desconectar da conta',
-                        style: TextStyle(color: ColorsTheme.textColor),
+    return SafeArea(
+      child: Column(
+        children: [
+          AnimatedContainer(
+            duration: const Duration(milliseconds: 500),
+            height: _showListView ? height3 : height4,
+            child: ProfileAvatar(user: user!, showList: showList),
+          ),
+          AnimatedContainer(
+            duration: const Duration(milliseconds: 500),
+            height: _showListView ? height1 : height1,
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Divider(
+                    color: Theme.of(context).colorScheme.onSecondary,
+                  ),
+                  TextButton.icon(
+                    onPressed: () => themeController.changeTheme(),
+                    icon: Icon(
+                      themeController.isDark
+                          ? Icons.light_mode
+                          : Icons.dark_mode,
+                      color: Theme.of(context).colorScheme.onSecondary,
+                    ),
+                    label: Text(
+                      themeController.isDark ? 'Modo claro' : 'Modo escuro',
+                      style: TextStyle(
+                          color: Theme.of(context).colorScheme.onSecondary),
+                    ),
+                  ),
+                  Divider(
+                    color: Theme.of(context).colorScheme.onSecondary,
+                  ),
+                  TextButton(
+                    onPressed: controller.logout,
+                    child: Text(
+                      'Desconectar da conta',
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.onSecondary,
                       ),
                     ),
-                    const Divider(),
-                  ],
-                ),
+                  ),
+                  Divider(
+                    color: Theme.of(context).colorScheme.onSecondary,
+                  ),
+                ],
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

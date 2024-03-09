@@ -6,6 +6,7 @@ import 'package:enxolist/domain/entities/product/product_entity.dart';
 import 'package:enxolist/infra/constants/categories_mapper.dart';
 import 'package:enxolist/infra/theme/colors_theme.dart';
 import 'package:enxolist/infra/theme/theme_constants.dart';
+import 'package:enxolist/infra/utils/approuter.dart';
 import 'package:enxolist/infra/utils/currency_mask.dart';
 import 'package:enxolist/infra/utils/image_input.dart';
 import 'package:enxolist/presentation/pages/categories/controller/categories_controller.dart';
@@ -21,6 +22,7 @@ class ProductFormPage extends StatefulWidget {
 }
 
 class _ProductFormPageState extends State<ProductFormPage> {
+  final _scaffoldkey = GlobalKey<ScaffoldMessengerState>();
   final CategoriesController controller = getIt<CategoriesController>();
   final _productFormKey = GlobalKey<FormState>();
   final FocusNode _nameFocus = FocusNode();
@@ -73,19 +75,48 @@ class _ProductFormPageState extends State<ProductFormPage> {
     }
 
     try {
+      int previousId = ModalRoute.of(context)?.settings.arguments as int;
       ProductModel productModel = ProductModel.fromJson(_formData);
       if (widget.product != null) {
         await controller
             .updateProduct(productModel, image: imageFile)
-            .then((value) => Navigator.pop(context, productModel.toEntity()));
+            .then((value) {
+          if (previousId == _formData['category']) {
+            Navigator.of(context).pop(productModel);
+          } else {
+            _showSnackBar(context);
+            Navigator.of(context).pushReplacementNamed(
+              AppRouter.CATEGORY_LIST,
+              arguments: _formData['category'],
+            );
+          }
+        });
       } else {
         await controller
             .createProduct(productModel, image: imageFile)
-            .then((value) => Navigator.pop(context, productModel.toEntity()));
+            .then((value) {
+          if (previousId == _formData['category']) {
+            Navigator.of(context).pop(productModel);
+          } else {
+            _showSnackBar(context);
+            Navigator.of(context).pushReplacementNamed(
+              AppRouter.CATEGORY_LIST,
+              arguments: _formData['category'],
+            );
+          }
+        });
       }
     } catch (e) {
       _showErrorDialog(e.toString());
     }
+  }
+
+  _showSnackBar(BuildContext context) {
+    return ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+      backgroundColor: ColorsTheme.primaryColor,
+      content: Text('Você foi redirecionado para categoria selecionada.'),
+      duration: Duration(seconds: 3),
+    ));
   }
 
   void _showErrorDialog(String msg) {
@@ -117,8 +148,21 @@ class _ProductFormPageState extends State<ProductFormPage> {
     }
 
     return Scaffold(
+      key: _scaffoldkey,
       appBar: AppBar(
-        title: Text(widget.product?.name ?? 'Adicionar um novo produto'),
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back,
+            color: Theme.of(context).colorScheme.onSecondary,
+          ),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+        title: Text(
+          widget.product?.name ?? 'Adicionar um novo produto',
+          style: TextStyle(
+            color: Theme.of(context).colorScheme.onSecondary,
+          ),
+        ),
       ),
       body: isLoading
           ? Center(
@@ -150,25 +194,26 @@ class _ProductFormPageState extends State<ProductFormPage> {
                       child: Column(
                         children: [
                           Container(
-                            decoration: const BoxDecoration(
-                                color: ColorsTheme.backgroundForm,
+                            decoration: BoxDecoration(
+                                color:
+                                    Theme.of(context).colorScheme.onBackground,
                                 borderRadius:
-                                    BorderRadius.all(Radius.circular(8))),
+                                    const BorderRadius.all(Radius.circular(8))),
                             child: DropdownButtonFormField(
                               focusNode: _categoryFocus,
                               borderRadius: BorderRadius.circular(15),
-                              dropdownColor: ColorsTheme.backgroundForm,
+                              dropdownColor:
+                                  Theme.of(context).colorScheme.onBackground,
                               onSaved: (category) =>
                                   _formData['category'] = category,
                               elevation: 5,
                               decoration: const InputDecoration(
                                 labelText: 'Parte da casa',
-                                fillColor: ColorsTheme.backgroundForm,
                                 border: OutlineInputBorder(
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(8))),
                               ),
-                              items: dropdownCategories,
+                              items: dropdownCategories(context),
                               value: _dropDownValue,
                               onChanged: (value) => dropDownCallBack(value),
                             ),
@@ -177,6 +222,9 @@ class _ProductFormPageState extends State<ProductFormPage> {
                             height: 15,
                           ),
                           TextFormField(
+                            style: TextStyle(
+                              color: Theme.of(context).colorScheme.secondary,
+                            ),
                             decoration:
                                 decorationField(false, 'Nome do produto *'),
                             initialValue: _formData['name'] ?? '',
@@ -194,6 +242,8 @@ class _ProductFormPageState extends State<ProductFormPage> {
                             height: 15,
                           ),
                           TextFormField(
+                            style: TextStyle(
+                                color: Theme.of(context).colorScheme.secondary),
                             decoration: decorationField(
                                 true, 'Valor aproximado do produto *'),
                             initialValue: _formData['price']?.toString() ?? '',
@@ -221,6 +271,8 @@ class _ProductFormPageState extends State<ProductFormPage> {
                             height: 15,
                           ),
                           TextFormField(
+                            style: TextStyle(
+                                color: Theme.of(context).colorScheme.secondary),
                             decoration:
                                 decorationField(false, 'Link do produto'),
                             initialValue: _formData['urlLink'] ?? '',
@@ -287,16 +339,17 @@ class _ProductFormPageState extends State<ProductFormPage> {
   InputDecoration decorationField(bool prefix, String labelText) {
     return InputDecoration(
       prefixText: prefix ? 'R\$ ' : null,
-      fillColor: ColorsTheme.backgroundForm,
+      prefixStyle: TextStyle(color: Theme.of(context).colorScheme.secondary),
+      fillColor: Theme.of(context).colorScheme.onBackground,
       filled: true,
       enabledBorder: const UnderlineInputBorder(
         borderRadius: BorderRadius.all(Radius.circular(5)),
         borderSide: BorderSide(color: Colors.transparent, width: 5),
       ),
       labelText: labelText,
-      labelStyle: const TextStyle(
+      labelStyle: TextStyle(
         fontFamily: "Roboto",
-        color: ColorsTheme.textColorFormField,
+        color: Theme.of(context).colorScheme.secondary,
         fontSize: 17,
       ),
     );
@@ -306,7 +359,10 @@ class _ProductFormPageState extends State<ProductFormPage> {
     return SwitchListTile(
       hoverColor: Colors.transparent,
       focusNode: _wasBoughtFocus,
-      title: const Text('Este item já foi comprado?'),
+      title: Text(
+        'Este item já foi comprado?',
+        style: TextStyle(color: Theme.of(context).colorScheme.onSecondary),
+      ),
       value: _formData['wasBought'] ?? false,
       onChanged: (bool? value) {
         if (value != null) {

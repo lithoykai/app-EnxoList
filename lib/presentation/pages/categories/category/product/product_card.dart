@@ -50,8 +50,10 @@ class _ProductCardState extends State<ProductCard> {
                   maxLines: 1,
                 ),
                 subtitle: Text(
-                  'Valor: ${currencyFormatter.format(widget.product.price)}',
-                ),
+                    'Valor: ${currencyFormatter.format(widget.product.price)}',
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.secondary,
+                    )),
                 trailing: Wrap(
                   spacing: 0,
                   alignment: WrapAlignment.center,
@@ -147,18 +149,5 @@ class _ProductCardState extends State<ProductCard> {
         ),
       ),
     );
-  }
-
-  String _getRoundedValue() {
-    final priceCeil = widget.product.price.ceil();
-    final delta = priceCeil - widget.product.price;
-    final roundPrice = priceCeil - delta.ceil();
-    return roundPrice.toString();
-  }
-
-  String _getCentsValue() {
-    final priceFloor = widget.product.price.floor();
-    final cents = widget.product.price - priceFloor;
-    return cents.toStringAsFixed(2);
   }
 }

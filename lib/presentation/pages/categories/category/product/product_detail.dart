@@ -28,50 +28,7 @@ class _ProductDetailState extends State<ProductDetail> {
 
   @override
   Widget build(BuildContext context) {
-    // ProductEntity product =
-    //     ModalRoute.of(context)!.settings.arguments as ProductEntity;
-    Future<void> _showImageBetter() async {
-      await showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return SimpleDialog(
-                backgroundColor: Colors.transparent,
-                surfaceTintColor: Colors.transparent,
-                children: <Widget>[
-                  PinchZoom(
-                    child: CachedNetworkImage(
-                      imageUrl: (widget.product.image != null &&
-                              widget.product.image!.isNotEmpty)
-                          ? widget.product.image!
-                          : ConstantsImage.withoutPhoto,
-                      imageBuilder: (context, imageProvider) {
-                        return Container(
-                          height: MediaQuery.of(context).size.height * 0.5,
-                          width: MediaQuery.of(context).size.width * 0.5,
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: Colors.transparent,
-                            ),
-                            borderRadius: BorderRadius.circular(20),
-                            image: DecorationImage(
-                              image: imageProvider,
-                              // fit: BoxFit.fitHeight,
-                            ),
-                          ),
-                        );
-                      },
-                      placeholder: (context, url) =>
-                          const Center(child: CircularProgressIndicator()),
-                      errorWidget: (context, url, error) =>
-                          const Center(child: Icon(Icons.error)),
-                    ),
-                  ),
-                ]);
-          });
-    }
-
     return Scaffold(
-      backgroundColor: ColorsTheme.background,
       body: Stack(
         alignment: Alignment.topLeft,
         children: <Widget>[
@@ -146,6 +103,14 @@ class _ProductDetailState extends State<ProductDetail> {
                                     scale: 1.8,
                                     child: Observer(builder: (context) {
                                       return Checkbox(
+                                          side: MaterialStateBorderSide
+                                              .resolveWith(
+                                            (states) => BorderSide(
+                                                width: 1.0,
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .onSecondary),
+                                          ),
                                           checkColor: Colors.white,
                                           activeColor: ColorsTheme.primaryColor,
                                           value: widget.product.wasBought,
@@ -168,7 +133,13 @@ class _ProductDetailState extends State<ProductDetail> {
                                           });
                                     }),
                                   ),
-                            const Text('Realizado'),
+                            Text(
+                              'Realizado',
+                              style: TextStyle(
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .onSecondary),
+                            ),
                           ],
                         ),
                       ],
@@ -279,5 +250,45 @@ class _ProductDetailState extends State<ProductDetail> {
         ],
       ),
     );
+  }
+
+  Future<void> _showImageBetter() async {
+    await showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return SimpleDialog(
+              backgroundColor: Colors.transparent,
+              surfaceTintColor: Colors.transparent,
+              children: <Widget>[
+                PinchZoom(
+                  child: CachedNetworkImage(
+                    imageUrl: (widget.product.image != null &&
+                            widget.product.image!.isNotEmpty)
+                        ? widget.product.image!
+                        : ConstantsImage.withoutPhoto,
+                    imageBuilder: (context, imageProvider) {
+                      return Container(
+                        height: MediaQuery.of(context).size.height * 0.5,
+                        width: MediaQuery.of(context).size.width * 0.5,
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: Colors.transparent,
+                          ),
+                          borderRadius: BorderRadius.circular(20),
+                          image: DecorationImage(
+                            image: imageProvider,
+                            // fit: BoxFit.fitHeight,
+                          ),
+                        ),
+                      );
+                    },
+                    placeholder: (context, url) =>
+                        const Center(child: CircularProgressIndicator()),
+                    errorWidget: (context, url, error) =>
+                        const Center(child: Icon(Icons.error)),
+                  ),
+                ),
+              ]);
+        });
   }
 }

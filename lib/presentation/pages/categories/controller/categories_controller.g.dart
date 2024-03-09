@@ -101,6 +101,17 @@ mixin _$CategoriesController on _CategoriesControllerBase, Store {
   }
 
   @override
+  void setProduct(ProductEntity product) {
+    final _$actionInfo = _$_CategoriesControllerBaseActionController
+        .startAction(name: '_CategoriesControllerBase.setProduct');
+    try {
+      return super.setProduct(product);
+    } finally {
+      _$_CategoriesControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void deleteProductFromList(ProductEntity product) {
     final _$actionInfo = _$_CategoriesControllerBaseActionController
         .startAction(name: '_CategoriesControllerBase.deleteProductFromList');
