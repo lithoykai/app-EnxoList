@@ -2,6 +2,7 @@ import 'package:enxolist/di/injectable.dart';
 import 'package:enxolist/domain/entities/product/product_entity.dart';
 import 'package:enxolist/infra/constants/categories_mapper.dart';
 import 'package:enxolist/infra/theme/theme_constants.dart';
+import 'package:enxolist/infra/utils/approuter.dart';
 import 'package:enxolist/presentation/pages/categories/category/product/product_card.dart';
 import 'package:enxolist/presentation/pages/categories/category/search/search_bar_delegate.dart';
 import 'package:enxolist/presentation/pages/categories/category/widget/empty_list.dart';
@@ -24,7 +25,6 @@ class CategoryListPage extends StatefulWidget {
 }
 
 class _CategoryListPageState extends State<CategoryListPage> {
-  int id = 0;
   final controller = getIt<CategoriesController>();
   final currencyFormatter =
       NumberFormat.currency(locale: 'pt_BR', symbol: 'R\$');
@@ -40,11 +40,24 @@ class _CategoryListPageState extends State<CategoryListPage> {
 
   @override
   Widget build(BuildContext context) {
-    id = ModalRoute.of(context)!.settings.arguments as int;
+    final id = ModalRoute.of(context)!.settings.arguments as int;
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('${CATEGORIES[id].title} - Lista de produtos'),
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back,
+            color: Theme.of(context).colorScheme.onSecondary,
+          ),
+          onPressed: () => Navigator.of(context)
+              .pushReplacementNamed(AppRouter.AUTH_OR_HOME),
+        ),
+        title: Text(
+          '${CATEGORIES[id].title} - Lista de produtos',
+          style: TextStyle(
+            color: Theme.of(context).colorScheme.onSecondary,
+          ),
+        ),
         actions: [
           IconButton(
             onPressed: () {
@@ -53,8 +66,9 @@ class _CategoryListPageState extends State<CategoryListPage> {
                 delegate: SearchBarDelegate(controller: controller),
               );
             },
-            icon: const Icon(
+            icon: Icon(
               Icons.search,
+              color: Theme.of(context).colorScheme.onSecondary,
             ),
           ),
           IconButton(
@@ -66,8 +80,9 @@ class _CategoryListPageState extends State<CategoryListPage> {
                   ),
                 )
                 .then((value) async => await controller.listByCategory(id)),
-            icon: const Icon(
+            icon: Icon(
               Icons.add,
+              color: Theme.of(context).colorScheme.onSecondary,
             ),
           ),
         ],
@@ -93,7 +108,7 @@ class _CategoryListPageState extends State<CategoryListPage> {
                     return Column(
                       children: [
                         Container(
-                          color: Colors.white,
+                          color: Theme.of(context).colorScheme.surface,
                           height: 60,
                           child: Padding(
                             padding: const EdgeInsets.symmetric(
@@ -105,11 +120,24 @@ class _CategoryListPageState extends State<CategoryListPage> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    const Text('Valor total:'),
+                                    Text(
+                                      'Valor total:',
+                                      style: TextStyle(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onSecondary,
+                                      ),
+                                    ),
                                     Observer(builder: (context) {
-                                      return Text(currencyFormatter.format(
-                                          controller
-                                              .totalValueForCategory(id)));
+                                      return Text(
+                                        currencyFormatter.format(controller
+                                            .totalValueForCategory(id)),
+                                        style: TextStyle(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .onSecondary,
+                                        ),
+                                      );
                                     })
                                   ],
                                 ),
@@ -117,12 +145,24 @@ class _CategoryListPageState extends State<CategoryListPage> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    const Text('Valor comprado:'),
+                                    Text(
+                                      'Valor comprado:',
+                                      style: TextStyle(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onSecondary,
+                                      ),
+                                    ),
                                     Observer(builder: (context) {
-                                      return Text(currencyFormatter.format(
-                                          controller
-                                              .totalValueBoughtForCategory(
-                                                  id)));
+                                      return Text(
+                                        currencyFormatter.format(controller
+                                            .totalValueBoughtForCategory(id)),
+                                        style: TextStyle(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .onSecondary,
+                                        ),
+                                      );
                                     })
                                   ],
                                 ),

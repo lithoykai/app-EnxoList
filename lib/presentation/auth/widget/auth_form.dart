@@ -147,12 +147,28 @@ class _AuthFormState extends State<AuthForm> {
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: const Text('Ocorreu um erro.'),
-            content: Text(msg),
+            backgroundColor: Theme.of(context).colorScheme.background,
+            title: const Text(
+              'Ocorreu um erro.',
+              style: TextStyle(
+                color: Colors.white,
+              ),
+            ),
+            content: Text(
+              msg,
+              style: const TextStyle(
+                color: Colors.white,
+              ),
+            ),
             actions: [
               TextButton(
                   onPressed: () => Navigator.of(context).pop(),
-                  child: const Text('Fechar.'))
+                  child: const Text(
+                    'Fechar.',
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ))
             ],
           );
         });
@@ -173,10 +189,7 @@ class _AuthFormState extends State<AuthForm> {
                       child: Text(
                         _isLogin() ? 'Login' : 'Cadastro',
                         textAlign: TextAlign.left,
-                        style: const TextStyle(
-                          fontSize: 40,
-                          fontFamily: "MarkaziText",
-                        ),
+                        style: Theme.of(context).textTheme.displayMedium,
                       ),
                     ),
                     const SizedBox(
@@ -188,10 +201,16 @@ class _AuthFormState extends State<AuthForm> {
                         children: [
                           !_isLogin()
                               ? TextFormField(
-                                  decoration: const InputDecoration(
-                                    fillColor: Color(0xFFFDFDFD),
+                                  style: TextStyle(
+                                    color:
+                                        Theme.of(context).colorScheme.secondary,
+                                  ),
+                                  decoration: InputDecoration(
+                                    fillColor: Theme.of(context)
+                                        .colorScheme
+                                        .onBackground,
                                     filled: true,
-                                    enabledBorder: UnderlineInputBorder(
+                                    enabledBorder: const UnderlineInputBorder(
                                       borderRadius:
                                           BorderRadius.all(Radius.circular(5)),
                                       borderSide: BorderSide(
@@ -200,7 +219,9 @@ class _AuthFormState extends State<AuthForm> {
                                     labelText: 'Nome',
                                     labelStyle: TextStyle(
                                       fontFamily: "Roboto",
-                                      color: Color(0xFF6B6B6B),
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .background,
                                       fontSize: 17,
                                     ),
                                   ),
@@ -221,11 +242,15 @@ class _AuthFormState extends State<AuthForm> {
                             height: 20,
                           ),
                           TextFormField(
-                            decoration: const InputDecoration(
+                            style: TextStyle(
+                              color: Theme.of(context).colorScheme.secondary,
+                            ),
+                            decoration: InputDecoration(
                               // prefixIcon: Icon(Icons.email_rounded),
-                              fillColor: Color(0xFFFDFDFD),
+                              fillColor:
+                                  Theme.of(context).colorScheme.onBackground,
                               filled: true,
-                              enabledBorder: UnderlineInputBorder(
+                              enabledBorder: const UnderlineInputBorder(
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(5)),
                                 borderSide: BorderSide(
@@ -234,7 +259,7 @@ class _AuthFormState extends State<AuthForm> {
                               labelText: 'E-mail',
                               labelStyle: TextStyle(
                                 fontFamily: "Roboto",
-                                color: Color(0xFF6B6B6B),
+                                color: Theme.of(context).colorScheme.background,
                                 fontSize: 17,
                               ),
                             ),
@@ -256,8 +281,12 @@ class _AuthFormState extends State<AuthForm> {
                             height: 20,
                           ),
                           TextFormField(
+                            style: TextStyle(
+                              color: Theme.of(context).colorScheme.secondary,
+                            ),
                             decoration: InputDecoration(
-                              fillColor: Colors.white,
+                              fillColor:
+                                  Theme.of(context).colorScheme.onBackground,
                               // prefixIcon: const Icon(Icons.lock_rounded),
                               suffixIcon: IconButton(
                                 onPressed: _toggle,
@@ -265,6 +294,7 @@ class _AuthFormState extends State<AuthForm> {
                                   _obscurePassword
                                       ? Icons.visibility
                                       : Icons.visibility_off,
+                                  color: Colors.black54,
                                 ),
                               ),
                               filled: true,
@@ -274,9 +304,9 @@ class _AuthFormState extends State<AuthForm> {
                                 borderSide: BorderSide(
                                     color: Colors.transparent, width: 0),
                               ),
-                              labelStyle: const TextStyle(
+                              labelStyle: TextStyle(
                                 fontFamily: "Roboto",
-                                color: Color(0xFF6B6B6B),
+                                color: Theme.of(context).colorScheme.background,
                                 fontSize: 17,
                               ),
                               labelText: 'Senha',
@@ -308,8 +338,15 @@ class _AuthFormState extends State<AuthForm> {
                                           const Duration(milliseconds: 300),
                                       curve: Curves.linear,
                                       child: TextFormField(
+                                          style: TextStyle(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .secondary,
+                                          ),
                                           decoration: InputDecoration(
-                                            fillColor: Colors.white,
+                                            fillColor: Theme.of(context)
+                                                .colorScheme
+                                                .onBackground,
                                             filled: true,
                                             enabledBorder:
                                                 const UnderlineInputBorder(
@@ -319,9 +356,11 @@ class _AuthFormState extends State<AuthForm> {
                                                   color: Colors.transparent,
                                                   width: 0),
                                             ),
-                                            labelStyle: const TextStyle(
+                                            labelStyle: TextStyle(
                                               fontFamily: "Roboto",
-                                              color: Color(0xFF6B6B6B),
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .background,
                                               fontSize: 17,
                                             ),
                                             labelText: 'Confirmar senha',
@@ -334,6 +373,7 @@ class _AuthFormState extends State<AuthForm> {
                                                 _confirmObscurePassword
                                                     ? Icons.visibility
                                                     : Icons.visibility_off,
+                                                color: Colors.black54,
                                               ),
                                             ),
                                           ),
@@ -379,11 +419,13 @@ class _AuthFormState extends State<AuthForm> {
                                       });
                                     },
                                   ),
-                                  const Text(
+                                  Text(
                                     'Salvar email',
                                     style: TextStyle(
                                       fontFamily: "Roboto",
-                                      color: Color(0xFF6B6B6B),
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onSecondary,
                                       fontSize: 17,
                                     ),
                                   ),
@@ -402,7 +444,8 @@ class _AuthFormState extends State<AuthForm> {
                             height: 50,
                             child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: const Color(0xFFE36F6F),
+                                backgroundColor:
+                                    Theme.of(context).colorScheme.primary,
                                 shape: ContinuousRectangleBorder(
                                   borderRadius: BorderRadius.circular(15),
                                 ),
@@ -430,6 +473,7 @@ class _AuthFormState extends State<AuthForm> {
                     onPressed: _switchAuthMode,
                     child: Text(
                       _isLogin() ? 'CRIAR UMA CONTA' : 'JÁ POSSUI CONTA?',
+                      style: Theme.of(context).textTheme.displaySmall,
                     ),
                   ),
                 ),

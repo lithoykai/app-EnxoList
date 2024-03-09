@@ -1,6 +1,5 @@
 import 'package:enxolist/data/models/auth/response/user_response.dart';
 import 'package:enxolist/di/injectable.dart';
-import 'package:enxolist/infra/theme/colors_theme.dart';
 import 'package:enxolist/infra/theme/theme_constants.dart';
 import 'package:enxolist/infra/utils/store.dart';
 import 'package:enxolist/presentation/pages/profile/controller/profile_controller.dart';
@@ -70,10 +69,9 @@ class _ProfileAvatarState extends State<ProfileAvatar> {
                                     alignment: Alignment.bottomCenter,
                                     child: Container(
                                       decoration: const ShapeDecoration(
-                                        shape: LinearBorder(),
-                                        color:
-                                            Color.fromARGB(144, 240, 236, 236),
-                                      ),
+                                          shape: LinearBorder(),
+                                          color:
+                                              Color.fromARGB(87, 75, 73, 73)),
                                       width: double.maxFinite,
                                       height: 50,
                                       child: Center(
@@ -96,48 +94,46 @@ class _ProfileAvatarState extends State<ProfileAvatar> {
                       ),
                     ],
                   ),
-                  Text(widget.user.name,
-                      textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.headlineLarge),
+                  Text(
+                    widget.user.name,
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.headlineLarge,
+                  ),
                 ],
               ),
               AnimatedContainer(
                 height: showListView ? 65 : 0,
                 duration: const Duration(milliseconds: 500),
                 curve: Curves.easeIn,
-                child: Container(
-                  // width: 500,
-                  color: ColorsTheme.greyTransparent,
-                  child: ListView.builder(
-                    shrinkWrap: true,
-                    physics: const ClampingScrollPhysics(),
-                    scrollDirection: Axis.horizontal,
-                    itemCount: profileImages.length,
-                    itemBuilder: (ctx, i) {
-                      return GestureDetector(
-                        onTap: () {
-                          controller.changeSelectedImageProfile(i);
-                          setState(() {
-                            widget.showList();
-                            showListView = false;
-                          });
-                        },
-                        child: Center(
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: SizedBox(
-                              height: 50,
-                              width: 50,
-                              child: Image.asset(
-                                profileImages[i]!,
-                                fit: BoxFit.cover,
-                              ),
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  physics: const ClampingScrollPhysics(),
+                  scrollDirection: Axis.horizontal,
+                  itemCount: profileImages.length,
+                  itemBuilder: (ctx, i) {
+                    return GestureDetector(
+                      onTap: () {
+                        controller.changeSelectedImageProfile(i);
+                        setState(() {
+                          widget.showList();
+                          showListView = false;
+                        });
+                      },
+                      child: Center(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: SizedBox(
+                            height: 50,
+                            width: 50,
+                            child: Image.asset(
+                              profileImages[i]!,
+                              fit: BoxFit.cover,
                             ),
                           ),
                         ),
-                      );
-                    },
-                  ),
+                      ),
+                    );
+                  },
                 ),
               ),
             ],
@@ -159,9 +155,11 @@ class _ProfileAvatarState extends State<ProfileAvatar> {
                           child: Align(
                             alignment: Alignment.bottomCenter,
                             child: Container(
-                              decoration: const ShapeDecoration(
-                                shape: LinearBorder(),
-                                color: Color.fromARGB(144, 240, 236, 236),
+                              decoration: ShapeDecoration(
+                                shape: const LinearBorder(),
+                                color: Theme.of(context)
+                                    .scaffoldBackgroundColor
+                                    .withAlpha(150),
                               ),
                               width: double.maxFinite,
                               height: 50,
@@ -174,7 +172,12 @@ class _ProfileAvatarState extends State<ProfileAvatar> {
                                           showListView = !showListView;
                                         });
                                       },
-                                      icon: const Icon(Icons.edit))),
+                                      icon: Icon(
+                                        Icons.edit,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onSecondary,
+                                      ))),
                             ),
                           ),
                         );
@@ -189,7 +192,7 @@ class _ProfileAvatarState extends State<ProfileAvatar> {
                 curve: Curves.easeIn,
                 child: Container(
                   width: double.infinity,
-                  color: ColorsTheme.greyTransparent,
+                  color: Theme.of(context).cardColor,
                   child: ListView.builder(
                     physics: const ClampingScrollPhysics(),
                     scrollDirection: Axis.horizontal,
@@ -220,6 +223,9 @@ class _ProfileAvatarState extends State<ProfileAvatar> {
                     },
                   ),
                 ),
+              ),
+              const SizedBox(
+                height: 5,
               ),
               Text(widget.user.name,
                   textAlign: TextAlign.center,

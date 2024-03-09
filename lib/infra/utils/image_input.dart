@@ -82,23 +82,33 @@ class _ImagePickerFormState extends State<ImagePickerForm> {
                               ? ConstantsImage.withoutPhoto
                               : widget.product!.image!,
                         )
-                      : const Text('Nenhuma imagem!'),
+                      : Text(
+                          'Nenhuma imagem!',
+                          style: TextStyle(
+                              color: Theme.of(context).colorScheme.onSecondary),
+                        ),
             ),
           ],
         ),
         Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text('Adicione uma imagem:'),
+            Text(
+              'Adicione uma imagem:',
+              style:
+                  TextStyle(color: Theme.of(context).colorScheme.onSecondary),
+            ),
             Row(
               children: [
                 IconButton(
                   onPressed: _pickerImage,
-                  icon: const Icon(Icons.camera),
+                  icon: Icon(Icons.camera,
+                      color: Theme.of(context).colorScheme.onSecondary),
                 ),
                 IconButton(
                   onPressed: _pickerImageGallery,
-                  icon: const Icon(Icons.image),
+                  icon: Icon(Icons.image,
+                      color: Theme.of(context).colorScheme.onSecondary),
                 ),
               ],
             ),

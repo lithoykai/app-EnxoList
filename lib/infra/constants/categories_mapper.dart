@@ -8,16 +8,58 @@ class Category {
   Category({required this.id, required this.title, required this.icon});
 }
 
-const List<DropdownMenuItem<dynamic>>? dropdownCategories = [
-  DropdownMenuItem(value: 0, child: Text('Cozinha')),
-  DropdownMenuItem(value: 1, child: Text('Sala')),
-  DropdownMenuItem(value: 2, child: Text('Quartos')),
-  DropdownMenuItem(value: 3, child: Text('Banheiros')),
-  DropdownMenuItem(value: 4, child: Text('Lavanderia')),
-  DropdownMenuItem(value: 5, child: Text('Eletrodomésticos')),
-  DropdownMenuItem(value: 6, child: Text('Construção/Reformas')),
-  DropdownMenuItem(value: 7, child: Text('Móveis')),
-];
+List<DropdownMenuItem<dynamic>>? dropdownCategories(BuildContext context) {
+  return [
+    DropdownMenuItem(
+        value: 0,
+        child: Text(
+          'Cozinha',
+          style: TextStyle(color: Theme.of(context).colorScheme.secondary),
+        )),
+    DropdownMenuItem(
+        value: 1,
+        child: Text(
+          'Sala',
+          style: TextStyle(color: Theme.of(context).colorScheme.secondary),
+        )),
+    DropdownMenuItem(
+        value: 2,
+        child: Text(
+          'Quartos',
+          style: TextStyle(color: Theme.of(context).colorScheme.secondary),
+        )),
+    DropdownMenuItem(
+        value: 3,
+        child: Text(
+          'Banheiros',
+          style: TextStyle(color: Theme.of(context).colorScheme.secondary),
+        )),
+    DropdownMenuItem(
+        value: 4,
+        child: Text(
+          'Lavanderia',
+          style: TextStyle(color: Theme.of(context).colorScheme.secondary),
+        )),
+    DropdownMenuItem(
+        value: 5,
+        child: Text(
+          'Eletrodomésticos',
+          style: TextStyle(color: Theme.of(context).colorScheme.secondary),
+        )),
+    DropdownMenuItem(
+        value: 6,
+        child: Text(
+          'Construção/Reformas',
+          style: TextStyle(color: Theme.of(context).colorScheme.secondary),
+        )),
+    DropdownMenuItem(
+        value: 7,
+        child: Text(
+          'Móveis',
+          style: TextStyle(color: Theme.of(context).colorScheme.secondary),
+        )),
+  ];
+}
 
 List<Category> CATEGORIES = [
   Category(

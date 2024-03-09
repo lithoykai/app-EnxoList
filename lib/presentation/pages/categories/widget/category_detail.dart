@@ -1,5 +1,4 @@
 import 'package:enxolist/infra/constants/categories_mapper.dart';
-import 'package:enxolist/infra/theme/colors_theme.dart';
 import 'package:enxolist/infra/utils/approuter.dart';
 import 'package:flutter/material.dart';
 
@@ -13,7 +12,10 @@ class CategoryDetail extends StatelessWidget {
       onTap: () => Navigator.of(context)
           .pushNamed(AppRouter.CATEGORY_LIST, arguments: category.id),
       child: Container(
-        color: ColorsTheme.primaryColorLight,
+        decoration: BoxDecoration(
+            // shape: BoxShape.circle,
+            color: Theme.of(context).colorScheme.onPrimary,
+            borderRadius: BorderRadius.circular(10)),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -22,7 +24,10 @@ class CategoryDetail extends StatelessWidget {
             const SizedBox(
               height: 2,
             ),
-            Text(category.title),
+            Text(
+              category.title,
+              style: Theme.of(context).textTheme.displaySmall,
+            ),
           ],
         ),
       ),
