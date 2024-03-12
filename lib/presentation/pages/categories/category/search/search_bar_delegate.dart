@@ -47,7 +47,11 @@ class SearchBarDelegate extends SearchDelegate {
         final product = controller.products[index];
         if (product.name.toLowerCase().contains(query.toLowerCase())) {
           return ListTile(
-            title: Text(product.name),
+            title: Text(
+              product.name,
+              style:
+                  TextStyle(color: Theme.of(context).colorScheme.onSecondary),
+            ),
             onTap: () {
               close(context, product);
             },

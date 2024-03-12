@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:enxolist/data/data_source/remote_config/remote_config.dart';
 import 'package:enxolist/di/injectable.dart' as di;
 import 'package:enxolist/firebase_options.dart';
 import 'package:enxolist/infra/failure/failure.dart';
@@ -21,5 +22,6 @@ void main() async {
 
   await di.init();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  RemoteConfig().initialize();
   runApp(const AppWidget());
 }
