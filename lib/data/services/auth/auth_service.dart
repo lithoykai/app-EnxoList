@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:dio/dio.dart';
-import 'package:enxolist/data/data_source/clients/http_clients.dart';
+import 'package:enxolist/data/data_source/clients/http_client.dart';
 import 'package:enxolist/data/models/auth/request/auth_request.dart';
 import 'package:enxolist/data/models/auth/response/user_response.dart';
 import 'package:enxolist/infra/failure/auth_exception.dart';

@@ -9,11 +9,13 @@ class SplashPage extends StatefulWidget {
 }
 
 class _SplashPageState extends State<SplashPage> {
+  bool? onboardPage = false;
+
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      Future.delayed(Duration(seconds: 1), () {
+      Future.delayed(Duration(seconds: 3), () {
         Navigator.of(context).pushReplacementNamed(AppRouter.AUTH_OR_HOME);
       });
     });

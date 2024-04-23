@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:enxolist/data/models/auth/response/user_response.dart';
 import 'package:enxolist/data/services/auth/auth_service.dart';
+import 'package:enxolist/infra/failure/auth_exception.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:mockito/annotations.dart';
@@ -64,13 +65,8 @@ void main() {
         () async {
       final request = authRequest;
       when(httpClientMock.login(request)).thenThrow(Exception());
-      when(mockHiveInterface.isBoxOpen('userData')).thenAnswer((_) => false);
-      when(mockHiveInterface.openBox('userData'))
-          .thenAnswer((_) async => mockHiveBox);
-
-      final _response = await authService.authenticate(request);
-      expect(_response, isA<Exception>());
-      // expect(_response.fold((l) => l, (r) => null), isA<AuthException>());
+      expect(() async => await authService.authenticate(request),
+          throwsA(isA<AuthException>()));
     });
   });
 }

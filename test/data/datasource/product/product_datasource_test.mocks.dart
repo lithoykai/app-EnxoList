@@ -7,11 +7,10 @@ import 'dart:async' as _i4;
 import 'dart:io' as _i5;
 
 import 'package:dio/dio.dart' as _i2;
-import 'package:enxolist/data/data_source/clients/http_clients.dart' as _i6;
+import 'package:enxolist/data/data_source/clients/http_client.dart' as _i6;
 import 'package:enxolist/data/models/auth/request/auth_request.dart' as _i7;
 import 'package:enxolist/data/services/firebase/firebase_service.dart' as _i3;
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:mockito/src/dummies.dart' as _i8;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -112,21 +111,6 @@ class MockHttpClientApp extends _i1.Mock implements _i6.HttpClientApp {
           ),
         )),
       ) as _i4.Future<_i2.Response<dynamic>>);
-
-  @override
-  _i4.Future<String> token() => (super.noSuchMethod(
-        Invocation.method(
-          #token,
-          [],
-        ),
-        returnValue: _i4.Future<String>.value(_i8.dummyValue<String>(
-          this,
-          Invocation.method(
-            #token,
-            [],
-          ),
-        )),
-      ) as _i4.Future<String>);
 
   @override
   _i4.Future<_i2.Response<dynamic>> post(

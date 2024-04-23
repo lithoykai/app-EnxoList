@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:dio/src/response.dart';
-import 'package:enxolist/data/data_source/clients/http_clients.dart';
+import 'package:enxolist/data/data_source/clients/http_client.dart';
 import 'package:enxolist/data/data_source/product_remote_datasource.dart';
 import 'package:enxolist/data/models/auth/response/user_response.dart';
 import 'package:enxolist/data/models/product/product_model.dart';

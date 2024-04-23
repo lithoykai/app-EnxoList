@@ -28,6 +28,7 @@ class _CategoryListPageState extends State<CategoryListPage> {
   final controller = getIt<CategoriesController>();
   final currencyFormatter =
       NumberFormat.currency(locale: 'pt_BR', symbol: 'R\$');
+  final percent = NumberFormat.percentPattern();
   TextEditingController searchController =
       TextEditingController(); // Adicione este controlador
 
@@ -41,6 +42,8 @@ class _CategoryListPageState extends State<CategoryListPage> {
   @override
   Widget build(BuildContext context) {
     final id = ModalRoute.of(context)!.settings.arguments as int;
+    final bool isPortrait =
+        MediaQuery.of(context).orientation == Orientation.portrait;
 
     return Scaffold(
       appBar: AppBar(
@@ -109,7 +112,9 @@ class _CategoryListPageState extends State<CategoryListPage> {
                       children: [
                         Container(
                           color: Theme.of(context).colorScheme.surface,
-                          height: 60,
+                          height: isPortrait
+                              ? MediaQuery.of(context).size.height * 0.085
+                              : MediaQuery.of(context).size.height * 0.16,
                           child: Padding(
                             padding: const EdgeInsets.symmetric(
                                 vertical: ThemeConstants.halfPadding,

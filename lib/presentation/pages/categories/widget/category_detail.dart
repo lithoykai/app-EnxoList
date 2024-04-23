@@ -12,6 +12,8 @@ class CategoryDetail extends StatelessWidget {
       onTap: () => Navigator.of(context)
           .pushNamed(AppRouter.CATEGORY_LIST, arguments: category.id),
       child: Container(
+        width: MediaQuery.of(context).size.width * 0.5,
+        margin: const EdgeInsets.all(3),
         decoration: BoxDecoration(
             // shape: BoxShape.circle,
             color: Theme.of(context).colorScheme.onPrimary,
