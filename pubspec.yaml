@@ -1,7 +1,7 @@
 name: enxolist
 description: "EnxoList - Um aplicativo de enxoval."
 
-version: 1.0.2+2
+version: 2.0.0+4
 
 environment:
   sdk: '>=3.2.0-140.0.dev <4.0.0'
@@ -75,17 +75,9 @@ flutter:
     - assets/imgs/undraw/nodata.png
     - assets/imgs/login_image.png
     - assets/imgs/text_auth.png
-    - assets/imgs/avatares/av1.png
-    - assets/imgs/avatares/av2.png
-    - assets/imgs/avatares/av3.png
-    - assets/imgs/avatares/av4.png
-    - assets/imgs/avatares/av5.png
-    - assets/imgs/avatares/av6.png
-    - assets/imgs/avatares/av7.png
-    - assets/imgs/avatares/av8.png
-    - assets/imgs/avatares/av9.png
-    - assets/imgs/avatares/av10.png
+    - assets/imgs/avatares/
     - assets/icon/icon.png
+    - assets/imgs/onboard/
 
   fonts:
     - family: JustMeAgainDownHere

@@ -20,6 +20,7 @@ void setup() {}
 Future<void> init() async {
   Hive.registerAdapter(UserResponseAdapter());
   getIt.registerLazySingleton<HiveInterface>(() => Hive);
+  // getIt.registerFactory<HttpClientApp>(() => HttpClientApp());
   Directory directory = await pathProvider.getApplicationDocumentsDirectory();
   var hiveData = Directory('${directory.path}/db');
   await Hive.initFlutter(hiveData.path);

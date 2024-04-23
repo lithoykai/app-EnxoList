@@ -33,9 +33,16 @@ ThemeData lightTheme = ThemeData(
       fontFamily: 'Roboto',
       fontWeight: FontWeight.w300,
     ),
+    bodyMedium: TextStyle(
+      color: ColorsTheme.textColor,
+      fontFamily: 'Roboto',
+      fontSize: 18,
+      fontWeight: FontWeight.w300,
+    ),
     displayLarge: TextStyle(
       fontSize: 40,
       fontFamily: "Roboto",
+      fontWeight: FontWeight.w600,
       color: Colors.black,
     ),
     displayMedium: TextStyle(
@@ -88,6 +95,8 @@ ThemeData darkTheme = ThemeData(
     displayLarge: TextStyle(
       fontSize: 40,
       fontFamily: "Roboto",
+      fontStyle: FontStyle.normal,
+      fontWeight: FontWeight.w600,
       color: ColorsDark.secundary,
     ),
     displayMedium: TextStyle(

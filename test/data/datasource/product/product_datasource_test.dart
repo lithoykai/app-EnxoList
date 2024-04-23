@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:enxolist/data/data_source/clients/http_clients.dart';
+import 'package:enxolist/data/data_source/clients/http_client.dart';
 import 'package:enxolist/data/data_source/product_remote_datasource.dart';
 import 'package:enxolist/data/data_source/product_remote_datasource_impl.dart';
 import 'package:enxolist/data/services/firebase/firebase_service.dart';
@@ -51,39 +51,6 @@ void main() {
       expect(_response, isA<ProductResponse>());
       expect(_response.data.isEmpty, true);
     });
-
-    // test('Should return a list of products from a specific category', () async {
-    //   final int fakeCategoryId = 0;
-    //   final _fakeHttpResponse = fakeProductHttpResponse;
-
-    //   when(httpClientMock.getMethod(
-    //           '${Endpoints.products}/65a2c8aa3c50904ce685f7ae/category/$fakeCategoryId'))
-    //       .thenAnswer(
-    //     (_) async => Response(
-    //       data: _fakeHttpResponse,
-    //       requestOptions: RequestOptions(),
-    //     ),
-    //   );
-
-    //   final _response = await dataSource.getProductsByCategory(fakeCategoryId);
-    //   // List<int> categories = _response.data.map((e) => e.category).toList();
-    //   expect(_response, isA<ProductResponse>());
-    //   // expect(categories[0], 0);
-    //   // expect(_response.data[0].id, fakeProductHttpResponse[0]['id']);
-    // });
-
-    // test(
-    //     'Should try return a list of products from a specific category but throw an exception',
-    //     () async {
-    //   final _fakeHttpResponse = [];
-
-    //   when(httpClientMock.getMethod(Endpoints.products)).thenAnswer((_) async =>
-    //       Response(data: _fakeHttpResponse, requestOptions: RequestOptions()));
-    //   final _response = await dataSource.getProducts();
-
-    //   expect(_response, isA<ProductResponse>());
-    //   expect(_response.data.isEmpty, true);
-    // });
 
     test('Should try to return a list of products and throw an exception',
         () async {

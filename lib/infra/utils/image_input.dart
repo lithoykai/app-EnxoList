@@ -82,10 +82,14 @@ class _ImagePickerFormState extends State<ImagePickerForm> {
                               ? ConstantsImage.withoutPhoto
                               : widget.product!.image!,
                         )
-                      : Text(
-                          'Nenhuma imagem!',
-                          style: TextStyle(
-                              color: Theme.of(context).colorScheme.onSecondary),
+                      : Center(
+                          child: Text(
+                            'Sem imagem.',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                color:
+                                    Theme.of(context).colorScheme.onSecondary),
+                          ),
                         ),
             ),
           ],

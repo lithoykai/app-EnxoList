@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:enxolist/data/data_source/clients/http_clients.dart';
+import 'package:enxolist/data/data_source/clients/http_client_prod.dart';
 import 'package:enxolist/data/data_source/product_remote_datasource.dart';
 import 'package:enxolist/data/models/auth/request/auth_request.dart';
 import 'package:enxolist/data/models/product/product_model.dart';
@@ -23,7 +23,7 @@ class Diomock extends Mock implements Dio {}
 
 class SharedPreferencesMock extends Mock implements SharedPreferences {}
 
-class HttpClientAppMock extends Mock implements HttpClientApp {
+class HttpClientAppMock extends Mock implements HttpClientAppProd {
   @override
   Future<Response> getMethod(String endpoint) =>
       super.noSuchMethod(Invocation.method(#getMethod, [endpoint]),

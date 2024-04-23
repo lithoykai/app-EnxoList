@@ -40,4 +40,12 @@ class RemoteConfig {
     }
     return _endpoint;
   }
+
+  String returnAuthEndpoint(String value) {
+    final _endpoint = _firebaseRemoteConfig.getString(value);
+    if (_endpoint == '') {
+      throw Exception('Não foi possível conectar ao servidor');
+    }
+    return _endpoint;
+  }
 }
