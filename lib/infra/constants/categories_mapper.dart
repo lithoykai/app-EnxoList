@@ -1,3 +1,4 @@
+import 'package:enxolist/domain/entities/product/product_entity.dart';
 import 'package:flutter/material.dart';
 
 class Category {
@@ -101,5 +102,42 @@ List<Category> CATEGORIES = [
     id: 7,
     title: 'Móveis',
     icon: const Icon(Icons.sensor_door),
+  ),
+];
+List<BuildingCategory> BUILDINGCATEGORIES = [
+  BuildingCategory(
+    id: 0,
+    name: 'Cozinha',
+    color: Colors.red,
+  ),
+  BuildingCategory(
+    id: 1,
+    name: 'Sala',
+    color: Colors.red,
+  ),
+  BuildingCategory(
+    id: 2,
+    name: 'Quartos',
+    color: Colors.red,
+  ),
+  BuildingCategory(
+    id: 3,
+    name: 'Banheiros',
+    color: Colors.red,
+  ),
+  BuildingCategory(
+    id: 4,
+    name: 'Lavanderia',
+    color: Colors.red,
+  ),
+  BuildingCategory(
+    id: 5,
+    name: 'Eletrodomésticos',
+    color: Colors.red,
+  ),
+  BuildingCategory(
+    id: 6,
+    name: 'Construção/Reformas',
+    color: Colors.red,
   ),
 ];

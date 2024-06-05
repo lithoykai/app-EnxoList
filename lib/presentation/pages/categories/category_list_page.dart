@@ -3,6 +3,7 @@ import 'package:enxolist/domain/entities/product/product_entity.dart';
 import 'package:enxolist/infra/constants/categories_mapper.dart';
 import 'package:enxolist/infra/theme/theme_constants.dart';
 import 'package:enxolist/infra/utils/approuter.dart';
+import 'package:enxolist/presentation/pages/categories/category/product/building_product_card.dart';
 import 'package:enxolist/presentation/pages/categories/category/product/product_card.dart';
 import 'package:enxolist/presentation/pages/categories/category/search/search_bar_delegate.dart';
 import 'package:enxolist/presentation/pages/categories/category/widget/empty_list.dart';
@@ -187,10 +188,15 @@ class _CategoryListPageState extends State<CategoryListPage> {
                                     controller.filteredProducts[index];
                                 return Padding(
                                   padding: const EdgeInsets.all(2.0),
-                                  child: ProductCard(
-                                    product: product,
-                                    controller: controller,
-                                  ),
+                                  child: id == 6
+                                      ? BuildingProductCard(
+                                          product: product,
+                                          controller: controller,
+                                        )
+                                      : ProductCard(
+                                          product: product,
+                                          controller: controller,
+                                        ),
                                 );
                               },
                             );

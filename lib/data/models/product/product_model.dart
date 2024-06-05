@@ -30,6 +30,9 @@ class ProductModel extends ProductEntity {
   @JsonKey(name: 'image')
   String? image;
 
+  @JsonKey(name: 'buildingCategory')
+  int? buildingCategory;
+
   ProductModel(
       {required this.name,
       required this.wasBought,
@@ -37,15 +40,18 @@ class ProductModel extends ProductEntity {
       required this.category,
       this.id,
       this.image,
-      this.urlLink})
+      this.urlLink,
+      this.buildingCategory})
       : super(
-            name: name,
-            wasBought: wasBought,
-            price: price,
-            category: category,
-            id: id,
-            image: image,
-            urlLink: urlLink);
+          name: name,
+          wasBought: wasBought,
+          price: price,
+          category: category,
+          id: id,
+          image: image,
+          urlLink: urlLink,
+          buildingCategory: buildingCategory,
+        );
 
   void toggleWasBought() {
     wasBought = !wasBought;

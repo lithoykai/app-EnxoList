@@ -10,6 +10,7 @@ ProductModel $ProductModelFromEntity(ProductEntity entity) {
     id: entity.id,
     image: entity.image,
     urlLink: entity.urlLink,
+    buildingCategory: entity.buildingCategory,
   );
 }
 
@@ -22,5 +23,6 @@ ProductEntity $ProductEntityFromModel(ProductModel model) {
     id: model.id,
     image: model.image,
     urlLink: model.urlLink,
+    buildingCategory: model.buildingCategory,
   );
 }

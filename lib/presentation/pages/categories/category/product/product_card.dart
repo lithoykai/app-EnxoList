@@ -6,6 +6,7 @@ import 'package:enxolist/presentation/pages/categories/forms/product_form_page.d
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+
 class ProductCard extends StatefulWidget {
   final ProductEntity product;
   final CategoriesController controller;
