@@ -176,9 +176,70 @@ class _CategoryListPageState extends State<CategoryListPage> {
                             ),
                           ),
                         ),
-                        const SizedBox(
-                          height: 5,
-                        ),
+                        // const SizedBox(
+                        //   height: 5,
+                        // ),
+                        id == 6
+                            ? Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  IconButton(
+                                    onPressed: () {},
+                                    icon: Icon(
+                                      Icons.home,
+                                      size: 15,
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
+                                    ),
+                                  ),
+                                  IconButton(
+                                    onPressed: () {},
+                                    icon: Icon(
+                                      Icons.kitchen,
+                                      size: 15,
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
+                                    ),
+                                  ),
+                                  IconButton(
+                                    onPressed: () {},
+                                    icon: Icon(
+                                      Icons.live_tv_rounded,
+                                      size: 15,
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
+                                    ),
+                                  ),
+                                  IconButton(
+                                    onPressed: () {},
+                                    icon: Icon(
+                                      Icons.bed,
+                                      size: 15,
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
+                                    ),
+                                  ),
+                                  IconButton(
+                                    onPressed: () {},
+                                    icon: Icon(
+                                      Icons.bathtub,
+                                      size: 15,
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
+                                    ),
+                                  ),
+                                  IconButton(
+                                    onPressed: () {},
+                                    icon: Icon(
+                                      Icons.bathroom_rounded,
+                                      size: 15,
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
+                                    ),
+                                  ),
+                                ],
+                              )
+                            : Container(),
                         Expanded(
                           child: Observer(builder: (context) {
                             return ListView.builder(
@@ -212,3 +273,5 @@ class _CategoryListPageState extends State<CategoryListPage> {
     );
   }
 }
+
+List texts = ['Oi', 'Tud bem'];
