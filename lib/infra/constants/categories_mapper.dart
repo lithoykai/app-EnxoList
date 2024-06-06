@@ -68,37 +68,37 @@ List<DropdownMenuItem<dynamic>>? dropdownBuildingCategories(
     DropdownMenuItem(
         value: 0,
         child: Text(
-          'Cozinha',
+          'Geral',
           style: TextStyle(color: Theme.of(context).colorScheme.secondary),
         )),
     DropdownMenuItem(
         value: 1,
         child: Text(
-          'Sala',
+          'Cozinha',
           style: TextStyle(color: Theme.of(context).colorScheme.secondary),
         )),
     DropdownMenuItem(
         value: 2,
         child: Text(
-          'Quartos',
+          'Sala',
           style: TextStyle(color: Theme.of(context).colorScheme.secondary),
         )),
     DropdownMenuItem(
         value: 3,
         child: Text(
-          'Banheiros',
+          'Quartos',
           style: TextStyle(color: Theme.of(context).colorScheme.secondary),
         )),
     DropdownMenuItem(
         value: 4,
         child: Text(
-          'Lavanderia',
+          'Banheiros',
           style: TextStyle(color: Theme.of(context).colorScheme.secondary),
         )),
     DropdownMenuItem(
         value: 5,
         child: Text(
-          'Geral',
+          'Lavanderia',
           style: TextStyle(color: Theme.of(context).colorScheme.secondary),
         )),
   ];
@@ -149,32 +149,32 @@ List<Category> CATEGORIES = [
 List<BuildingCategory> BUILDINGCATEGORIES = [
   BuildingCategory(
     id: 0,
+    name: 'Geral',
+    color: Colors.black,
+  ),
+  BuildingCategory(
+    id: 1,
     name: 'Cozinha',
     color: Colors.yellow,
   ),
   BuildingCategory(
-    id: 1,
+    id: 2,
     name: 'Sala',
     color: Colors.blue,
   ),
   BuildingCategory(
-    id: 2,
+    id: 3,
     name: 'Quartos',
     color: Colors.orange,
   ),
   BuildingCategory(
-    id: 3,
+    id: 4,
     name: 'Banheiros',
     color: Colors.white,
   ),
   BuildingCategory(
-    id: 4,
+    id: 5,
     name: 'Lavanderia',
     color: Colors.red,
-  ),
-  BuildingCategory(
-    id: 5,
-    name: 'Geral',
-    color: Colors.black,
   ),
 ];

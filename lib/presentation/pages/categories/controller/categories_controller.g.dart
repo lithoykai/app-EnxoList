@@ -123,6 +123,18 @@ mixin _$CategoriesController on _CategoriesControllerBase, Store {
   }
 
   @override
+  void filterProductsByCategory(int buildingCategoryId) {
+    final _$actionInfo =
+        _$_CategoriesControllerBaseActionController.startAction(
+            name: '_CategoriesControllerBase.filterProductsByCategory');
+    try {
+      return super.filterProductsByCategory(buildingCategoryId);
+    } finally {
+      _$_CategoriesControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 filteredProducts: ${filteredProducts},

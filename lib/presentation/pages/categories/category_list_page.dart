@@ -176,65 +176,74 @@ class _CategoryListPageState extends State<CategoryListPage> {
                             ),
                           ),
                         ),
-                        // const SizedBox(
-                        //   height: 5,
-                        // ),
                         id == 6
                             ? Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
                                   IconButton(
-                                    onPressed: () {},
+                                    onPressed: () =>
+                                        controller.filterProductsByCategory(0),
                                     icon: Icon(
                                       Icons.home,
                                       size: 15,
-                                      color:
-                                          Theme.of(context).colorScheme.primary,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onSecondary,
                                     ),
                                   ),
                                   IconButton(
-                                    onPressed: () {},
+                                    onPressed: () =>
+                                        controller.filterProductsByCategory(1),
                                     icon: Icon(
                                       Icons.kitchen,
                                       size: 15,
-                                      color:
-                                          Theme.of(context).colorScheme.primary,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onSecondary,
                                     ),
                                   ),
                                   IconButton(
-                                    onPressed: () {},
+                                    onPressed: () =>
+                                        controller.filterProductsByCategory(2),
                                     icon: Icon(
                                       Icons.live_tv_rounded,
                                       size: 15,
-                                      color:
-                                          Theme.of(context).colorScheme.primary,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onSecondary,
                                     ),
                                   ),
                                   IconButton(
-                                    onPressed: () {},
+                                    onPressed: () =>
+                                        controller.filterProductsByCategory(3),
                                     icon: Icon(
                                       Icons.bed,
                                       size: 15,
-                                      color:
-                                          Theme.of(context).colorScheme.primary,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onSecondary,
                                     ),
                                   ),
                                   IconButton(
-                                    onPressed: () {},
+                                    onPressed: () =>
+                                        controller.filterProductsByCategory(4),
                                     icon: Icon(
                                       Icons.bathtub,
                                       size: 15,
-                                      color:
-                                          Theme.of(context).colorScheme.primary,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onSecondary,
                                     ),
                                   ),
                                   IconButton(
-                                    onPressed: () {},
+                                    onPressed: () =>
+                                        controller.filterProductsByCategory(5),
                                     icon: Icon(
                                       Icons.bathroom_rounded,
                                       size: 15,
-                                      color:
-                                          Theme.of(context).colorScheme.primary,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onSecondary,
                                     ),
                                   ),
                                 ],
@@ -273,5 +282,3 @@ class _CategoryListPageState extends State<CategoryListPage> {
     );
   }
 }
-
-List texts = ['Oi', 'Tud bem'];

@@ -23,7 +23,7 @@ class ProductFormPage extends StatefulWidget {
 
 class _ProductFormPageState extends State<ProductFormPage> {
   bool isBuilding = false;
-  int? _dropDownBuildValue = 5;
+  int? _dropDownBuildValue = 0;
   final _scaffoldkey = GlobalKey<ScaffoldMessengerState>();
   final CategoriesController controller = getIt<CategoriesController>();
   final _productFormKey = GlobalKey<FormState>();
