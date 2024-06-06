@@ -32,6 +32,7 @@ abstract class _CategoriesControllerBase with Store {
   ObservableList<ProductEntity> filteredProducts =
       ObservableList<ProductEntity>();
   @observable
+  @observable
   List<ProductEntity> products = ObservableList.of([]);
 
   double totalValueForCategory(int category) {
@@ -108,6 +109,20 @@ abstract class _CategoriesControllerBase with Store {
     _response.fold((l) {
       l as ServerFailure;
     }, (r) => setProducts(r.data));
+  }
+
+  @action
+  void filterProductsByCategory(int buildingCategoryId) {
+    var snapshotProducts = [...products];
+    if (buildingCategoryId == 0) {
+      filteredProducts = ObservableList.of(products);
+    } else {
+      filteredProducts = ObservableList.of(
+        snapshotProducts
+            .where((product) => product.buildingCategory == buildingCategoryId)
+            .toList(),
+      );
+    }
   }
 
   @action
