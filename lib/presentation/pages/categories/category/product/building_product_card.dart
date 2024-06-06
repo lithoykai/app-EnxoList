@@ -1,4 +1,5 @@
 import 'package:enxolist/domain/entities/product/product_entity.dart';
+import 'package:enxolist/infra/constants/categories_mapper.dart';
 import 'package:enxolist/infra/theme/colors_theme.dart';
 import 'package:enxolist/presentation/pages/categories/category/product/product_detail.dart';
 import 'package:enxolist/presentation/pages/categories/controller/categories_controller.dart';
@@ -42,7 +43,13 @@ class _BuildingProductCardState extends State<BuildingProductCard> {
             children: [
               Container(
                 decoration: BoxDecoration(
-                    color: Colors.blue.withAlpha(150),
+                    // color:  Colors.blue.withAlpha(150),
+                    color: BUILDINGCATEGORIES
+                        .firstWhere(
+                          (e) => widget.product.buildingCategory == e.id,
+                        )
+                        .color
+                        .withAlpha(150),
                     borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(10),
                         bottomLeft: Radius.circular(10))),
@@ -58,7 +65,9 @@ class _BuildingProductCardState extends State<BuildingProductCard> {
                         MainAxisAlignment.center, // Centraliza verticalmente
                     children: [
                       Text(
-                        'Categoria: ${widget.product.buildingCategory ?? 'Sem categoria'}',
+                        'Categoria: ${BUILDINGCATEGORIES.firstWhere(
+                              (e) => widget.product.buildingCategory == e.id,
+                            ).name}',
                         style: TextStyle(
                           color: Theme.of(context).colorScheme.secondary,
                           // Cor do texto da categoria

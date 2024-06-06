@@ -62,6 +62,48 @@ List<DropdownMenuItem<dynamic>>? dropdownCategories(BuildContext context) {
   ];
 }
 
+List<DropdownMenuItem<dynamic>>? dropdownBuildingCategories(
+    BuildContext context) {
+  return [
+    DropdownMenuItem(
+        value: 0,
+        child: Text(
+          'Cozinha',
+          style: TextStyle(color: Theme.of(context).colorScheme.secondary),
+        )),
+    DropdownMenuItem(
+        value: 1,
+        child: Text(
+          'Sala',
+          style: TextStyle(color: Theme.of(context).colorScheme.secondary),
+        )),
+    DropdownMenuItem(
+        value: 2,
+        child: Text(
+          'Quartos',
+          style: TextStyle(color: Theme.of(context).colorScheme.secondary),
+        )),
+    DropdownMenuItem(
+        value: 3,
+        child: Text(
+          'Banheiros',
+          style: TextStyle(color: Theme.of(context).colorScheme.secondary),
+        )),
+    DropdownMenuItem(
+        value: 4,
+        child: Text(
+          'Lavanderia',
+          style: TextStyle(color: Theme.of(context).colorScheme.secondary),
+        )),
+    DropdownMenuItem(
+        value: 5,
+        child: Text(
+          'Geral',
+          style: TextStyle(color: Theme.of(context).colorScheme.secondary),
+        )),
+  ];
+}
+
 List<Category> CATEGORIES = [
   Category(
     id: 0,
@@ -108,22 +150,22 @@ List<BuildingCategory> BUILDINGCATEGORIES = [
   BuildingCategory(
     id: 0,
     name: 'Cozinha',
-    color: Colors.red,
+    color: Colors.yellow,
   ),
   BuildingCategory(
     id: 1,
     name: 'Sala',
-    color: Colors.red,
+    color: Colors.blue,
   ),
   BuildingCategory(
     id: 2,
     name: 'Quartos',
-    color: Colors.red,
+    color: Colors.orange,
   ),
   BuildingCategory(
     id: 3,
     name: 'Banheiros',
-    color: Colors.red,
+    color: Colors.white,
   ),
   BuildingCategory(
     id: 4,
@@ -132,12 +174,7 @@ List<BuildingCategory> BUILDINGCATEGORIES = [
   ),
   BuildingCategory(
     id: 5,
-    name: 'Eletrodomésticos',
-    color: Colors.red,
-  ),
-  BuildingCategory(
-    id: 6,
-    name: 'Construção/Reformas',
-    color: Colors.red,
+    name: 'Geral',
+    color: Colors.black,
   ),
 ];
