@@ -23,6 +23,7 @@ class ProductFormPage extends StatefulWidget {
 
 class _ProductFormPageState extends State<ProductFormPage> {
   bool isBuilding = false;
+  int? _dropDownBuildValue = 5;
   final _scaffoldkey = GlobalKey<ScaffoldMessengerState>();
   final CategoriesController controller = getIt<CategoriesController>();
   final _productFormKey = GlobalKey<FormState>();
@@ -47,7 +48,13 @@ class _ProductFormPageState extends State<ProductFormPage> {
 
     if (widget.product != null) {
       _formData = widget.product!.toJson();
+      _dropDownBuildValue = widget.product?.buildingCategory;
     }
+
+    int? idCategory = ModalRoute.of(context)?.settings.arguments as int;
+    setState(() {
+      isBuilding = idCategory == 6;
+    });
   }
 
   @override
@@ -151,6 +158,12 @@ class _ProductFormPageState extends State<ProductFormPage> {
         } else {
           isBuilding = false;
         }
+      });
+    }
+
+    void dropDownSecundaryCallBack(int? selectedValue) {
+      setState(() {
+        _dropDownValue = selectedValue ?? 0;
       });
     }
 
@@ -262,7 +275,6 @@ class _ProductFormPageState extends State<ProductFormPage> {
                                           borderRadius: const BorderRadius.all(
                                               Radius.circular(8))),
                                       child: DropdownButtonFormField(
-                                        style: TextStyle(color: Colors.blue),
                                         focusNode: _buildingCategoryFocus,
                                         borderRadius: BorderRadius.circular(15),
                                         dropdownColor: Theme.of(context)
@@ -282,10 +294,11 @@ class _ProductFormPageState extends State<ProductFormPage> {
                                           ),
                                           isDense: true,
                                         ),
-                                        items: dropdownCategories(context),
-                                        value: _dropDownValue,
+                                        items:
+                                            dropdownBuildingCategories(context),
+                                        value: _dropDownBuildValue,
                                         onChanged: (value) =>
-                                            dropDownCallBack(value),
+                                            dropDownSecundaryCallBack(value),
                                       ),
                                     ),
                                     const SizedBox(
