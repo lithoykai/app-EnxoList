@@ -6,7 +6,6 @@ import 'package:enxolist/presentation/pages/categories/forms/product_form_page.d
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-
 class ProductCard extends StatefulWidget {
   final ProductEntity product;
   final CategoriesController controller;
@@ -109,9 +108,17 @@ class _ProductCardState extends State<ProductCard> {
                             context: context,
                             builder: (context) {
                               return AlertDialog(
-                                title: const Text('Deseja mesmo apagar?'),
-                                content: const Text(
-                                    'Você tem certeza que deseja apagar este produto? '),
+                                backgroundColor:
+                                    Theme.of(context).colorScheme.onBackground,
+                                title: const Text(
+                                  'Deseja mesmo apagar?',
+                                ),
+                                content: Text(
+                                    'Você tem certeza que deseja apagar este produto? ',
+                                    style: TextStyle(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .secondary)),
                                 actions: [
                                   TextButton(
                                     onPressed: () =>

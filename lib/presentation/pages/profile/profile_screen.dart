@@ -42,19 +42,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final height = MediaQuery.of(context).size.height;
     final height4 = (height * _flex2 * 1.2) / total;
     final height1 = (height * _flex1) / total;
-    final height3 = (height * _flex3 * 1.08) / total;
+    final height2 = (height * _flex1 * 2.1) / total;
+    final height3 = (height * _flex3 * 0.9) / total;
 
     return SafeArea(
       child: Column(
         children: [
           AnimatedContainer(
             duration: const Duration(milliseconds: 500),
-            height: _showListView ? height3 : height4,
+            height: _showListView ? height3 : height2,
             child: ProfileAvatar(user: user!, showList: showList),
           ),
           AnimatedContainer(
             duration: const Duration(milliseconds: 500),
-            height: _showListView ? height1 : height1,
+            height: _showListView ? height2 : height4,
             child: SingleChildScrollView(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -74,6 +75,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       themeController.isDark ? 'Modo claro' : 'Modo escuro',
                       style: TextStyle(
                           color: Theme.of(context).colorScheme.onSecondary),
+                    ),
+                  ),
+                  Divider(
+                    color: Theme.of(context).colorScheme.onSecondary,
+                  ),
+                  TextButton(
+                    onPressed: controller.logout,
+                    child: Text(
+                      'Siga-nos no Instagram',
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.onSecondary,
+                      ),
                     ),
                   ),
                   Divider(

@@ -133,8 +133,11 @@ class _ProductFormPageState extends State<ProductFormPage> {
         context: context,
         builder: (context) {
           return AlertDialog(
+            backgroundColor: Theme.of(context).colorScheme.onBackground,
             title: const Text('Ocorreu um erro.'),
-            content: Text(msg),
+            content: Text(msg,
+                style:
+                    TextStyle(color: Theme.of(context).colorScheme.secondary)),
             actions: [
               TextButton(
                   onPressed: () => Navigator.of(context).pop(),

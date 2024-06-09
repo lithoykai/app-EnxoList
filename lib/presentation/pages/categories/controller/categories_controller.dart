@@ -99,6 +99,7 @@ abstract class _CategoriesControllerBase with Store {
   @action
   Future<void> toggleWasBought(ProductEntity product) async {
     product.toggleWasBought();
+    print(product.buildingCategory);
     updateProductFromList(product);
     await _getProductsUseCase.updateWasBought(product);
   }
