@@ -49,7 +49,7 @@ class _BuildingProductCardState extends State<BuildingProductCard> {
                           (e) => widget.product.buildingCategory == e.id,
                         )
                         .color
-                        .withAlpha(150),
+                        .withAlpha(widget.product.wasBought ? 100 : 150),
                     borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(10),
                         bottomLeft: Radius.circular(10))),
@@ -148,9 +148,17 @@ class _BuildingProductCardState extends State<BuildingProductCard> {
                           context: context,
                           builder: (context) {
                             return AlertDialog(
-                              title: const Text('Deseja mesmo apagar?'),
-                              content: const Text(
-                                  'Você tem certeza que deseja apagar este produto? '),
+                              backgroundColor:
+                                  Theme.of(context).colorScheme.onBackground,
+                              title: const Text(
+                                'Deseja mesmo apagar?',
+                              ),
+                              content: Text(
+                                  'Você tem certeza que deseja apagar este produto? ',
+                                  style: TextStyle(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .secondary)),
                               actions: [
                                 TextButton(
                                   onPressed: () => Navigator.of(context).pop(),
