@@ -3,6 +3,7 @@ import 'package:enxolist/domain/entities/product/product_entity.dart';
 import 'package:enxolist/infra/constants/categories_mapper.dart';
 import 'package:enxolist/infra/theme/theme_constants.dart';
 import 'package:enxolist/infra/utils/approuter.dart';
+import 'package:enxolist/presentation/pages/categories/category/product/building_product_card.dart';
 import 'package:enxolist/presentation/pages/categories/category/product/product_card.dart';
 import 'package:enxolist/presentation/pages/categories/category/search/search_bar_delegate.dart';
 import 'package:enxolist/presentation/pages/categories/category/widget/empty_list.dart';
@@ -175,9 +176,115 @@ class _CategoryListPageState extends State<CategoryListPage> {
                             ),
                           ),
                         ),
-                        const SizedBox(
-                          height: 5,
-                        ),
+                        id == 6
+                            ? Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  IconButton(
+                                    onPressed: () {
+                                      controller.iconButtonSelected(0);
+                                      controller.filterProductsByCategory(0);
+                                    },
+                                    icon: Icon(
+                                      Icons.home,
+                                      size: 15,
+                                      color: controller.iconSelected == 0
+                                          ? Theme.of(context)
+                                              .colorScheme
+                                              .primary
+                                          : Theme.of(context)
+                                              .colorScheme
+                                              .onSecondary,
+                                    ),
+                                  ),
+                                  IconButton(
+                                    onPressed: () {
+                                      controller.iconButtonSelected(1);
+                                      controller.filterProductsByCategory(1);
+                                    },
+                                    icon: Icon(
+                                      Icons.kitchen,
+                                      size: 15,
+                                      color: controller.iconSelected == 1
+                                          ? Theme.of(context)
+                                              .colorScheme
+                                              .primary
+                                          : Theme.of(context)
+                                              .colorScheme
+                                              .onSecondary,
+                                    ),
+                                  ),
+                                  IconButton(
+                                    onPressed: () {
+                                      controller.filterProductsByCategory(2);
+                                      controller.iconButtonSelected(2);
+                                    },
+                                    icon: Icon(
+                                      Icons.live_tv_rounded,
+                                      size: 15,
+                                      color: controller.iconSelected == 2
+                                          ? Theme.of(context)
+                                              .colorScheme
+                                              .primary
+                                          : Theme.of(context)
+                                              .colorScheme
+                                              .onSecondary,
+                                    ),
+                                  ),
+                                  IconButton(
+                                    onPressed: () {
+                                      controller.iconButtonSelected(3);
+                                      controller.filterProductsByCategory(3);
+                                    },
+                                    icon: Icon(
+                                      Icons.bed,
+                                      size: 15,
+                                      color: controller.iconSelected == 3
+                                          ? Theme.of(context)
+                                              .colorScheme
+                                              .primary
+                                          : Theme.of(context)
+                                              .colorScheme
+                                              .onSecondary,
+                                    ),
+                                  ),
+                                  IconButton(
+                                    onPressed: () {
+                                      controller.iconButtonSelected(4);
+                                      controller.filterProductsByCategory(4);
+                                    },
+                                    icon: Icon(
+                                      Icons.bathtub,
+                                      size: 15,
+                                      color: controller.iconSelected == 4
+                                          ? Theme.of(context)
+                                              .colorScheme
+                                              .primary
+                                          : Theme.of(context)
+                                              .colorScheme
+                                              .onSecondary,
+                                    ),
+                                  ),
+                                  IconButton(
+                                    onPressed: () {
+                                      controller.iconButtonSelected(5);
+                                      controller.filterProductsByCategory(5);
+                                    },
+                                    icon: Icon(
+                                      Icons.bathroom_rounded,
+                                      size: 15,
+                                      color: controller.iconSelected == 5
+                                          ? Theme.of(context)
+                                              .colorScheme
+                                              .primary
+                                          : Theme.of(context)
+                                              .colorScheme
+                                              .onSecondary,
+                                    ),
+                                  ),
+                                ],
+                              )
+                            : Container(),
                         Expanded(
                           child: Observer(builder: (context) {
                             return ListView.builder(
@@ -187,10 +294,15 @@ class _CategoryListPageState extends State<CategoryListPage> {
                                     controller.filteredProducts[index];
                                 return Padding(
                                   padding: const EdgeInsets.all(2.0),
-                                  child: ProductCard(
-                                    product: product,
-                                    controller: controller,
-                                  ),
+                                  child: id == 6
+                                      ? BuildingProductCard(
+                                          product: product,
+                                          controller: controller,
+                                        )
+                                      : ProductCard(
+                                          product: product,
+                                          controller: controller,
+                                        ),
                                 );
                               },
                             );

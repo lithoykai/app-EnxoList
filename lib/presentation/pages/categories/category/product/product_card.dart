@@ -42,8 +42,8 @@ class _ProductCardState extends State<ProductCard> {
             child: Center(
               child: ListTile(
                 title: Text(
-                  widget.product.name.length > 15
-                      ? '${widget.product.name.substring(0, 15)}...'
+                  widget.product.name.length > 20
+                      ? '${widget.product.name.substring(0, 20)}...'
                       : widget.product.name,
                   style: Theme.of(context).textTheme.headlineSmall,
                   overflow: TextOverflow.ellipsis,
@@ -53,6 +53,7 @@ class _ProductCardState extends State<ProductCard> {
                     'Valor: ${currencyFormatter.format(widget.product.price)}',
                     style: TextStyle(
                       color: Theme.of(context).colorScheme.secondary,
+                      fontSize: 18,
                     )),
                 trailing: Wrap(
                   spacing: 0,
@@ -108,9 +109,17 @@ class _ProductCardState extends State<ProductCard> {
                             context: context,
                             builder: (context) {
                               return AlertDialog(
-                                title: const Text('Deseja mesmo apagar?'),
-                                content: const Text(
-                                    'Você tem certeza que deseja apagar este produto? '),
+                                backgroundColor:
+                                    Theme.of(context).colorScheme.onBackground,
+                                title: const Text(
+                                  'Deseja mesmo apagar?',
+                                ),
+                                content: Text(
+                                    'Você tem certeza que deseja apagar este produto? ',
+                                    style: TextStyle(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .secondary)),
                                 actions: [
                                   TextButton(
                                     onPressed: () =>

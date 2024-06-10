@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:enxolist/di/injectable.dart';
 import 'package:enxolist/domain/entities/product/product_entity.dart';
+import 'package:enxolist/infra/constants/categories_mapper.dart';
 import 'package:enxolist/infra/constants/constants_images.dart';
 import 'package:enxolist/infra/theme/colors_theme.dart';
 import 'package:enxolist/infra/theme/theme_constants.dart';
@@ -90,6 +91,14 @@ class _ProductDetailState extends State<ProductDetail> {
                                 style: Theme.of(context).textTheme.bodyLarge,
                                 textAlign: TextAlign.start,
                               ),
+                              widget.product.category == 6
+                                  ? Text(
+                                      'Item para o cômodo: ${BUILDINGCATEGORIES.firstWhere((e) => widget.product.buildingCategory == e.id).name}',
+                                      style:
+                                          Theme.of(context).textTheme.bodyLarge,
+                                      textAlign: TextAlign.start,
+                                    )
+                                  : Container(),
                             ],
                           ),
                         ),
@@ -161,7 +170,7 @@ class _ProductDetailState extends State<ProductDetail> {
                               ),
                             ),
                             onPressed: () async {
-                              final result = Navigator.of(context)
+                              Navigator.of(context)
                                   .push(MaterialPageRoute(
                                 builder: (context) => ProductFormPage(
                                   product: widget.product,

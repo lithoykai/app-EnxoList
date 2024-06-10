@@ -1,3 +1,4 @@
+import 'package:enxolist/domain/entities/product/product_entity.dart';
 import 'package:flutter/material.dart';
 
 class Category {
@@ -61,6 +62,48 @@ List<DropdownMenuItem<dynamic>>? dropdownCategories(BuildContext context) {
   ];
 }
 
+List<DropdownMenuItem<dynamic>>? dropdownBuildingCategories(
+    BuildContext context) {
+  return [
+    DropdownMenuItem(
+        value: 0,
+        child: Text(
+          'Geral',
+          style: TextStyle(color: Theme.of(context).colorScheme.secondary),
+        )),
+    DropdownMenuItem(
+        value: 1,
+        child: Text(
+          'Cozinha',
+          style: TextStyle(color: Theme.of(context).colorScheme.secondary),
+        )),
+    DropdownMenuItem(
+        value: 2,
+        child: Text(
+          'Sala',
+          style: TextStyle(color: Theme.of(context).colorScheme.secondary),
+        )),
+    DropdownMenuItem(
+        value: 3,
+        child: Text(
+          'Quartos',
+          style: TextStyle(color: Theme.of(context).colorScheme.secondary),
+        )),
+    DropdownMenuItem(
+        value: 4,
+        child: Text(
+          'Banheiros',
+          style: TextStyle(color: Theme.of(context).colorScheme.secondary),
+        )),
+    DropdownMenuItem(
+        value: 5,
+        child: Text(
+          'Lavanderia',
+          style: TextStyle(color: Theme.of(context).colorScheme.secondary),
+        )),
+  ];
+}
+
 List<Category> CATEGORIES = [
   Category(
     id: 0,
@@ -101,5 +144,37 @@ List<Category> CATEGORIES = [
     id: 7,
     title: 'Móveis',
     icon: const Icon(Icons.sensor_door),
+  ),
+];
+List<BuildingCategory> BUILDINGCATEGORIES = [
+  BuildingCategory(
+    id: 0,
+    name: 'Geral',
+    color: Colors.black,
+  ),
+  BuildingCategory(
+    id: 1,
+    name: 'Cozinha',
+    color: Colors.yellow,
+  ),
+  BuildingCategory(
+    id: 2,
+    name: 'Sala',
+    color: Colors.blue,
+  ),
+  BuildingCategory(
+    id: 3,
+    name: 'Quartos',
+    color: Colors.orange,
+  ),
+  BuildingCategory(
+    id: 4,
+    name: 'Banheiros',
+    color: Colors.white,
+  ),
+  BuildingCategory(
+    id: 5,
+    name: 'Lavanderia',
+    color: Colors.red,
   ),
 ];

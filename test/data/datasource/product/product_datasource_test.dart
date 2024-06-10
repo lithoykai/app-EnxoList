@@ -61,8 +61,6 @@ void main() {
     });
 
     test('Should delete the product and return a success message', () async {
-      final _fakeProduct = fakeProduct;
-
       when(httpClientMock
               .delete('${Endpoints.deleteProduct}/${fakeProduct.id}'))
           .thenAnswer((_) async => Response(
@@ -86,7 +84,6 @@ void main() {
     });
 
     test('Should create the product then return a product', () async {
-      final _fakeProductModel = fakeProductModel;
       final _fakeResponse = fakeResponseProduct;
 
       when(httpClientMock.post(

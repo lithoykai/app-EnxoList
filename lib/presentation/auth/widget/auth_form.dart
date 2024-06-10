@@ -147,28 +147,20 @@ class _AuthFormState extends State<AuthForm> {
         context: context,
         builder: (context) {
           return AlertDialog(
-            backgroundColor: Theme.of(context).colorScheme.background,
+            backgroundColor: Theme.of(context).colorScheme.onBackground,
             title: const Text(
               'Ocorreu um erro.',
-              style: TextStyle(
-                color: Colors.white,
-              ),
             ),
-            content: Text(
-              msg,
-              style: const TextStyle(
-                color: Colors.white,
-              ),
-            ),
+            content: Text(msg,
+                style:
+                    TextStyle(color: Theme.of(context).colorScheme.secondary)),
             actions: [
               TextButton(
-                  onPressed: () => Navigator.of(context).pop(),
-                  child: const Text(
-                    'Fechar.',
+                onPressed: () => Navigator.of(context).pop(),
+                child: Text('Fechar.',
                     style: TextStyle(
-                      color: Colors.white,
-                    ),
-                  ))
+                        color: Theme.of(context).colorScheme.secondary)),
+              )
             ],
           );
         });

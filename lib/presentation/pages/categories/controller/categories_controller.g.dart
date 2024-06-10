@@ -25,6 +25,22 @@ mixin _$CategoriesController on _CategoriesControllerBase, Store {
     });
   }
 
+  late final _$iconSelectedAtom =
+      Atom(name: '_CategoriesControllerBase.iconSelected', context: context);
+
+  @override
+  int get iconSelected {
+    _$iconSelectedAtom.reportRead();
+    return super.iconSelected;
+  }
+
+  @override
+  set iconSelected(int value) {
+    _$iconSelectedAtom.reportWrite(value, super.iconSelected, () {
+      super.iconSelected = value;
+    });
+  }
+
   late final _$productsAtom =
       Atom(name: '_CategoriesControllerBase.products', context: context);
 
@@ -123,9 +139,33 @@ mixin _$CategoriesController on _CategoriesControllerBase, Store {
   }
 
   @override
+  void filterProductsByCategory(int buildingCategoryId) {
+    final _$actionInfo =
+        _$_CategoriesControllerBaseActionController.startAction(
+            name: '_CategoriesControllerBase.filterProductsByCategory');
+    try {
+      return super.filterProductsByCategory(buildingCategoryId);
+    } finally {
+      _$_CategoriesControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void iconButtonSelected(int value) {
+    final _$actionInfo = _$_CategoriesControllerBaseActionController
+        .startAction(name: '_CategoriesControllerBase.iconButtonSelected');
+    try {
+      return super.iconButtonSelected(value);
+    } finally {
+      _$_CategoriesControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 filteredProducts: ${filteredProducts},
+iconSelected: ${iconSelected},
 products: ${products}
     ''';
   }

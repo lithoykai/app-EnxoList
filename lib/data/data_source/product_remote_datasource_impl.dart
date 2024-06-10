@@ -81,6 +81,7 @@ class ProductDataSourceImpl implements IProductDataSource {
       "wasBought": product.wasBought,
       "price": product.price,
       "category": product.category,
+      "buildingCategory": product.buildingCategory,
     };
     try {
       final _response =

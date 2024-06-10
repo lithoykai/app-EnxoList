@@ -22,6 +22,8 @@ class ProductFormPage extends StatefulWidget {
 }
 
 class _ProductFormPageState extends State<ProductFormPage> {
+  bool isBuilding = false;
+  int? _dropDownBuildValue = 0;
   final _scaffoldkey = GlobalKey<ScaffoldMessengerState>();
   final CategoriesController controller = getIt<CategoriesController>();
   final _productFormKey = GlobalKey<FormState>();
@@ -30,6 +32,7 @@ class _ProductFormPageState extends State<ProductFormPage> {
   final FocusNode _wasBoughtFocus = FocusNode();
   final FocusNode _priceFocus = FocusNode();
   final FocusNode _categoryFocus = FocusNode();
+  final FocusNode _buildingCategoryFocus = FocusNode();
   Map<String, dynamic> _formData = {
     "wasBought": false,
   };
@@ -45,7 +48,13 @@ class _ProductFormPageState extends State<ProductFormPage> {
 
     if (widget.product != null) {
       _formData = widget.product!.toJson();
+      _dropDownBuildValue = widget.product?.buildingCategory;
     }
+
+    int? idCategory = ModalRoute.of(context)?.settings.arguments as int;
+    setState(() {
+      isBuilding = idCategory == 6;
+    });
   }
 
   @override
@@ -124,8 +133,11 @@ class _ProductFormPageState extends State<ProductFormPage> {
         context: context,
         builder: (context) {
           return AlertDialog(
+            backgroundColor: Theme.of(context).colorScheme.onBackground,
             title: const Text('Ocorreu um erro.'),
-            content: Text(msg),
+            content: Text(msg,
+                style:
+                    TextStyle(color: Theme.of(context).colorScheme.secondary)),
             actions: [
               TextButton(
                   onPressed: () => Navigator.of(context).pop(),
@@ -144,6 +156,17 @@ class _ProductFormPageState extends State<ProductFormPage> {
       setState(() {
         _dropDownValue = selectedValue ?? 0;
         idCategory = _dropDownValue;
+        if (idCategory == 6) {
+          isBuilding = true;
+        } else {
+          isBuilding = false;
+        }
+      });
+    }
+
+    void dropDownSecundaryCallBack(int? selectedValue) {
+      setState(() {
+        _dropDownValue = selectedValue ?? 0;
       });
     }
 
@@ -192,26 +215,38 @@ class _ProductFormPageState extends State<ProductFormPage> {
                     return Form(
                       key: _productFormKey,
                       child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          Text(
+                            'Parte da casa',
+                            style: Theme.of(context).textTheme.displaySmall,
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
                           Container(
                             decoration: BoxDecoration(
-                                color:
-                                    Theme.of(context).colorScheme.onBackground,
-                                borderRadius:
-                                    const BorderRadius.all(Radius.circular(8))),
+                              color: Theme.of(context).colorScheme.onBackground,
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(8)),
+                            ),
                             child: DropdownButtonFormField(
+                              // Cor do texto selecionado
                               focusNode: _categoryFocus,
+
                               borderRadius: BorderRadius.circular(15),
                               dropdownColor:
-                                  Theme.of(context).colorScheme.onBackground,
+                                  Theme.of(context).colorScheme.outline,
                               onSaved: (category) =>
                                   _formData['category'] = category,
                               elevation: 5,
                               decoration: const InputDecoration(
-                                labelText: 'Parte da casa',
                                 border: OutlineInputBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(8))),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(8)),
+                                ),
+                                isDense: true,
                               ),
                               items: dropdownCategories(context),
                               value: _dropDownValue,
@@ -221,6 +256,60 @@ class _ProductFormPageState extends State<ProductFormPage> {
                           const SizedBox(
                             height: 15,
                           ),
+                          isBuilding
+                              ? Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Item de reforma para qual cômodo?',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .displaySmall,
+                                    ),
+                                    const SizedBox(
+                                      height: 5,
+                                    ),
+                                    Container(
+                                      decoration: BoxDecoration(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .onBackground,
+                                          borderRadius: const BorderRadius.all(
+                                              Radius.circular(8))),
+                                      child: DropdownButtonFormField(
+                                        focusNode: _buildingCategoryFocus,
+                                        borderRadius: BorderRadius.circular(15),
+                                        dropdownColor: Theme.of(context)
+                                            .colorScheme
+                                            .outline,
+                                        focusColor: Theme.of(context)
+                                            .colorScheme
+                                            .outline,
+                                        onSaved: (category) =>
+                                            _formData['buildingCategory'] =
+                                                category,
+                                        elevation: 5,
+                                        decoration: const InputDecoration(
+                                          border: OutlineInputBorder(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(8)),
+                                          ),
+                                          isDense: true,
+                                        ),
+                                        items:
+                                            dropdownBuildingCategories(context),
+                                        value: _dropDownBuildValue,
+                                        onChanged: (value) =>
+                                            dropDownSecundaryCallBack(value),
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      height: 15,
+                                    ),
+                                  ],
+                                )
+                              : Container(),
                           TextFormField(
                             style: TextStyle(
                               color: Theme.of(context).colorScheme.secondary,
@@ -335,6 +424,24 @@ class _ProductFormPageState extends State<ProductFormPage> {
             ),
     );
   }
+
+  // DropdownButtonFormField dropdownMenuCategory() {
+  //   return DropdownButtonFormField(
+  //     focusNode: _buildingCategoryFocus,
+  //     borderRadius: BorderRadius.circular(15),
+  //     dropdownColor: Theme.of(context).colorScheme.onBackground,
+  //     onSaved: (category) => _formData['buildingCategory'] = category,
+  //     elevation: 5,
+  //     decoration: const InputDecoration(
+  //       labelText: 'Para qual parte da casa?',
+  //       border: OutlineInputBorder(
+  //           borderRadius: BorderRadius.all(Radius.circular(8))),
+  //     ),
+  //     items: dropdownCategories(context),
+  //     value: _dropDownValue,
+  //     onChanged: (value) => dropDownCallBack(value),
+  //   );
+  // }
 
   InputDecoration decorationField(bool prefix, String labelText) {
     return InputDecoration(

@@ -22,7 +22,8 @@ ThemeData lightTheme = ThemeData(
     outline: ColorsTheme.backgroundForm,
   ),
   textTheme: const TextTheme(
-    headlineSmall: TextStyle(color: Colors.black87), //ProductCard Title color
+    headlineSmall: TextStyle(
+        color: Colors.black87, fontSize: 22), //ProductCard Title color
     headlineMedium: TextStyle(color: Colors.black), //ProductCard Title color
     headlineLarge: TextStyle(
         color: ColorsTheme.primaryColor,

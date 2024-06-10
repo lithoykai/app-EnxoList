@@ -4,6 +4,7 @@ Um simples aplicativo para poder armazenar sua lista de itens para comprar no se
 
 O aplicativo ainda está em desenvolvimento, atualizarei conforme avança.
 
+<a href='https://play.google.com/store/apps/details?id=com.enxolist'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png' height="80"/></a>
 
 ## Desenvolvimento
 
@@ -22,14 +23,14 @@ O design do aplicativo está sendo realizado no Figma: [**Figma - Enxolist**](ht
  - [x] Armazenamento offline dos dados.
  - [x] Manipulação (CRUD) do produtos. 
  - [ ] Manipulação (CRUD) offline dos produtos e sincronização quando estiver online. *InProgress* 
- - [ ] Avaliação financeira do quantitativo dos produtos.
- - [ ] Tema escuro.
+ - [x] Avaliação financeira do quantitativo dos produtos. *InProgress* 
+ - [x] Tema escuro.
 
 
 ## Alguns screenshots.
 
 
-|<img src="assets/imgs/github/a1.png" width="400">| |<img src="assets/imgs/github/a2.png" width="400">|<img src="assets/imgs/github/a3.png" width="400">|<img src="assets/imgs/github/a4.png" width="400">|<img src="assets/imgs/github/a5.png" width="400">|<img src="assets/imgs/github/a6.png" width="400">
+|<img src="assets/imgs/github/a1.png" width="400">| |<img src="assets/imgs/github/a2.png" width="400">|<img src="assets/imgs/github/a3.png" width="400">|<img src="assets/imgs/github/a4.png" width="400">|<img src="assets/imgs/github/a5.png" width="400">|<img src="assets/imgs/github/a6.png" width="400">|<img src="assets/imgs/github/a7.jpeg" width="400">|<img src="assets/imgs/github/a8.jpeg" width="400">|<img src="assets/imgs/github/a9.jpeg" width="400">|<img src="assets/imgs/github/a10.jpeg" width="400">|<img src="assets/imgs/github/a11.jpeg" width="400">|<img src="assets/imgs/github/a12.jpeg" width="400">
 
 ## 🔌 Packages 
 

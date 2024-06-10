@@ -31,6 +31,10 @@ abstract class _CategoriesControllerBase with Store {
   @observable
   ObservableList<ProductEntity> filteredProducts =
       ObservableList<ProductEntity>();
+
+  @observable
+  int iconSelected = 0;
+
   @observable
   List<ProductEntity> products = ObservableList.of([]);
 
@@ -98,6 +102,7 @@ abstract class _CategoriesControllerBase with Store {
   @action
   Future<void> toggleWasBought(ProductEntity product) async {
     product.toggleWasBought();
+    print(product.buildingCategory);
     updateProductFromList(product);
     await _getProductsUseCase.updateWasBought(product);
   }
@@ -108,6 +113,20 @@ abstract class _CategoriesControllerBase with Store {
     _response.fold((l) {
       l as ServerFailure;
     }, (r) => setProducts(r.data));
+  }
+
+  @action
+  void filterProductsByCategory(int buildingCategoryId) {
+    var snapshotProducts = [...products];
+    if (buildingCategoryId == 0) {
+      filteredProducts = ObservableList.of(products);
+    } else {
+      filteredProducts = ObservableList.of(
+        snapshotProducts
+            .where((product) => product.buildingCategory == buildingCategoryId)
+            .toList(),
+      );
+    }
   }
 
   @action
@@ -135,5 +154,10 @@ abstract class _CategoriesControllerBase with Store {
       l as ServerFailure;
       throw ServerFailure(msg: l.toString());
     }, (r) => deleteProductFromList(product));
+  }
+
+  @action
+  void iconButtonSelected(int value) {
+    iconSelected = value;
   }
 }
