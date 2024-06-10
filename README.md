@@ -30,7 +30,7 @@ O design do aplicativo está sendo realizado no Figma: [**Figma - Enxolist**](ht
 ## Alguns screenshots.
 
 
-|<img src="assets/imgs/github/a1.png" width="400">| |<img src="assets/imgs/github/a2.png" width="400">|<img src="assets/imgs/github/a3.png" width="400">|<img src="assets/imgs/github/a4.png" width="400">|<img src="assets/imgs/github/a5.png" width="400">|<img src="assets/imgs/github/a6.png" width="400">|<img src="assets/imgs/github/a7.jpg" width="400">|<img src="assets/imgs/github/a8.jpg" width="400">|<img src="assets/imgs/github/a9.jpg" width="400">|<img src="assets/imgs/github/a10.jpg" width="400">|<img src="assets/imgs/github/a11.jpg" width="400">|<img src="assets/imgs/github/a12.jpg" width="400">
+|<img src="assets/imgs/github/a1.png" width="400">| |<img src="assets/imgs/github/a2.png" width="400">|<img src="assets/imgs/github/a3.png" width="400">|<img src="assets/imgs/github/a4.png" width="400">|<img src="assets/imgs/github/a5.png" width="400">|<img src="assets/imgs/github/a6.png" width="400">|<img src="assets/imgs/github/a7.jpeg" width="400">|<img src="assets/imgs/github/a8.jpeg" width="400">|<img src="assets/imgs/github/a9.jpeg" width="400">|<img src="assets/imgs/github/a10.jpeg" width="400">|<img src="assets/imgs/github/a11.jpeg" width="400">|<img src="assets/imgs/github/a12.jpeg" width="400">
 
 ## 🔌 Packages 
 
