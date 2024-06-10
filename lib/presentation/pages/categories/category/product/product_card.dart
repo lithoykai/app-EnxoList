@@ -42,8 +42,8 @@ class _ProductCardState extends State<ProductCard> {
             child: Center(
               child: ListTile(
                 title: Text(
-                  widget.product.name.length > 15
-                      ? '${widget.product.name.substring(0, 15)}...'
+                  widget.product.name.length > 20
+                      ? '${widget.product.name.substring(0, 20)}...'
                       : widget.product.name,
                   style: Theme.of(context).textTheme.headlineSmall,
                   overflow: TextOverflow.ellipsis,
@@ -53,6 +53,7 @@ class _ProductCardState extends State<ProductCard> {
                     'Valor: ${currencyFormatter.format(widget.product.price)}',
                     style: TextStyle(
                       color: Theme.of(context).colorScheme.secondary,
+                      fontSize: 18,
                     )),
                 trailing: Wrap(
                   spacing: 0,

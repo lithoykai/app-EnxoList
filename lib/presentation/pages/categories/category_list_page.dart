@@ -181,69 +181,105 @@ class _CategoryListPageState extends State<CategoryListPage> {
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
                                   IconButton(
-                                    onPressed: () =>
-                                        controller.filterProductsByCategory(0),
+                                    onPressed: () {
+                                      controller.iconButtonSelected(0);
+                                      controller.filterProductsByCategory(0);
+                                    },
                                     icon: Icon(
                                       Icons.home,
                                       size: 15,
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .onSecondary,
+                                      color: controller.iconSelected == 0
+                                          ? Theme.of(context)
+                                              .colorScheme
+                                              .primary
+                                          : Theme.of(context)
+                                              .colorScheme
+                                              .onSecondary,
                                     ),
                                   ),
                                   IconButton(
-                                    onPressed: () =>
-                                        controller.filterProductsByCategory(1),
+                                    onPressed: () {
+                                      controller.iconButtonSelected(1);
+                                      controller.filterProductsByCategory(1);
+                                    },
                                     icon: Icon(
                                       Icons.kitchen,
                                       size: 15,
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .onSecondary,
+                                      color: controller.iconSelected == 1
+                                          ? Theme.of(context)
+                                              .colorScheme
+                                              .primary
+                                          : Theme.of(context)
+                                              .colorScheme
+                                              .onSecondary,
                                     ),
                                   ),
                                   IconButton(
-                                    onPressed: () =>
-                                        controller.filterProductsByCategory(2),
+                                    onPressed: () {
+                                      controller.filterProductsByCategory(2);
+                                      controller.iconButtonSelected(2);
+                                    },
                                     icon: Icon(
                                       Icons.live_tv_rounded,
                                       size: 15,
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .onSecondary,
+                                      color: controller.iconSelected == 2
+                                          ? Theme.of(context)
+                                              .colorScheme
+                                              .primary
+                                          : Theme.of(context)
+                                              .colorScheme
+                                              .onSecondary,
                                     ),
                                   ),
                                   IconButton(
-                                    onPressed: () =>
-                                        controller.filterProductsByCategory(3),
+                                    onPressed: () {
+                                      controller.iconButtonSelected(3);
+                                      controller.filterProductsByCategory(3);
+                                    },
                                     icon: Icon(
                                       Icons.bed,
                                       size: 15,
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .onSecondary,
+                                      color: controller.iconSelected == 3
+                                          ? Theme.of(context)
+                                              .colorScheme
+                                              .primary
+                                          : Theme.of(context)
+                                              .colorScheme
+                                              .onSecondary,
                                     ),
                                   ),
                                   IconButton(
-                                    onPressed: () =>
-                                        controller.filterProductsByCategory(4),
+                                    onPressed: () {
+                                      controller.iconButtonSelected(4);
+                                      controller.filterProductsByCategory(4);
+                                    },
                                     icon: Icon(
                                       Icons.bathtub,
                                       size: 15,
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .onSecondary,
+                                      color: controller.iconSelected == 4
+                                          ? Theme.of(context)
+                                              .colorScheme
+                                              .primary
+                                          : Theme.of(context)
+                                              .colorScheme
+                                              .onSecondary,
                                     ),
                                   ),
                                   IconButton(
-                                    onPressed: () =>
-                                        controller.filterProductsByCategory(5),
+                                    onPressed: () {
+                                      controller.iconButtonSelected(5);
+                                      controller.filterProductsByCategory(5);
+                                    },
                                     icon: Icon(
                                       Icons.bathroom_rounded,
                                       size: 15,
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .onSecondary,
+                                      color: controller.iconSelected == 5
+                                          ? Theme.of(context)
+                                              .colorScheme
+                                              .primary
+                                          : Theme.of(context)
+                                              .colorScheme
+                                              .onSecondary,
                                     ),
                                   ),
                                 ],
