@@ -31,7 +31,10 @@ abstract class _CategoriesControllerBase with Store {
   @observable
   ObservableList<ProductEntity> filteredProducts =
       ObservableList<ProductEntity>();
+
   @observable
+  int iconSelected = 0;
+
   @observable
   List<ProductEntity> products = ObservableList.of([]);
 
@@ -151,5 +154,10 @@ abstract class _CategoriesControllerBase with Store {
       l as ServerFailure;
       throw ServerFailure(msg: l.toString());
     }, (r) => deleteProductFromList(product));
+  }
+
+  @action
+  void iconButtonSelected(int value) {
+    iconSelected = value;
   }
 }

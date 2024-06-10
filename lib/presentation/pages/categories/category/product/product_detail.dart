@@ -170,7 +170,7 @@ class _ProductDetailState extends State<ProductDetail> {
                               ),
                             ),
                             onPressed: () async {
-                              final result = Navigator.of(context)
+                              Navigator.of(context)
                                   .push(MaterialPageRoute(
                                 builder: (context) => ProductFormPage(
                                   product: widget.product,

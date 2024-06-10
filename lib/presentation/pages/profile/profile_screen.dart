@@ -4,7 +4,9 @@ import 'package:enxolist/infra/theme/controller/theme_controller.dart';
 import 'package:enxolist/presentation/pages/profile/controller/profile_controller.dart';
 import 'package:enxolist/presentation/pages/profile/widgets/profile_avatar.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hive/hive.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -41,7 +43,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final total = _flex1 + _flex2 + _flex3;
     final height = MediaQuery.of(context).size.height;
     final height4 = (height * _flex2 * 1.2) / total;
-    final height1 = (height * _flex1) / total;
     final height2 = (height * _flex1 * 2.1) / total;
     final height3 = (height * _flex3 * 0.9) / total;
 
@@ -64,13 +65,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     color: Theme.of(context).colorScheme.onSecondary,
                   ),
                   TextButton.icon(
-                    onPressed: () => themeController.changeTheme(),
                     icon: Icon(
                       themeController.isDark
                           ? Icons.light_mode
                           : Icons.dark_mode,
                       color: Theme.of(context).colorScheme.onSecondary,
                     ),
+                    onPressed: () => themeController.changeTheme(),
                     label: Text(
                       themeController.isDark ? 'Modo claro' : 'Modo escuro',
                       style: TextStyle(
@@ -80,9 +81,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   Divider(
                     color: Theme.of(context).colorScheme.onSecondary,
                   ),
-                  TextButton(
-                    onPressed: controller.logout,
-                    child: Text(
+                  TextButton.icon(
+                    icon: Icon(
+                      FontAwesomeIcons.instagram,
+                      color: Theme.of(context).colorScheme.onSecondary,
+                    ),
+                    onPressed: () => launchUrl(
+                        Uri.parse("https://bit.ly/enxolist"),
+                        mode: LaunchMode.externalApplication),
+                    label: Text(
                       'Siga-nos no Instagram',
                       style: TextStyle(
                         color: Theme.of(context).colorScheme.onSecondary,
@@ -92,9 +99,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   Divider(
                     color: Theme.of(context).colorScheme.onSecondary,
                   ),
-                  TextButton(
+                  TextButton.icon(
+                    icon: Icon(
+                      Icons.logout,
+                      color: Theme.of(context).colorScheme.onSecondary,
+                    ),
                     onPressed: controller.logout,
-                    child: Text(
+                    label: Text(
                       'Desconectar da conta',
                       style: TextStyle(
                         color: Theme.of(context).colorScheme.onSecondary,
