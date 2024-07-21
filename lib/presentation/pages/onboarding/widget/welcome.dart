@@ -41,25 +41,27 @@ class _WelcomeScreenState extends State<WelcomeScreen>
           ),
           Expanded(
             flex: 35,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                  vertical: ThemeConstants.halfPadding,
-                  horizontal: ThemeConstants.doublePadding),
-              child: Column(
-                children: [
-                  Text(
-                    'Bem-vindo',
-                    style: Theme.of(context).textTheme.displayLarge,
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  Text(
-                    'O Enxolist foi projetado para simplificar a sua experiência de preparar o enxoval para sua nova casa.\n\nCrie e gerencie listas de compras com facilidade para garantir que você tenha tudo o que precisa.',
-                    style: Theme.of(context).textTheme.bodyMedium,
-                    textAlign: TextAlign.center,
-                  ),
-                ],
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                    vertical: ThemeConstants.halfPadding,
+                    horizontal: ThemeConstants.doublePadding),
+                child: Column(
+                  children: [
+                    Text(
+                      'Bem-vindo',
+                      style: Theme.of(context).textTheme.displayLarge,
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    Text(
+                      'O Enxolist foi projetado para simplificar a sua experiência de preparar o enxoval para sua nova casa.\n\nCrie e gerencie listas de compras com facilidade para garantir que você tenha tudo o que precisa.',
+                      style: Theme.of(context).textTheme.bodyMedium,
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
