@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:enxolist/data/data_source/clients/http_client_mock.dart';
+import 'package:enxolist/data/data_source/clients/http_client_prod.dart';
 import 'package:enxolist/data/models/auth/request/auth_request.dart';
 import 'package:enxolist/di/injectable.dart';
 
@@ -16,5 +16,5 @@ abstract class HttpClientApp {
 
   Future<Response> getMethod(String endpoint);
 
-  factory HttpClientApp() => getIt<HttpClientAppMock>();
+  factory HttpClientApp() => getIt<HttpClientAppProd>();
 }
