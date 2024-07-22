@@ -14,7 +14,7 @@ import 'package:hive/hive.dart' as _i18;
 import 'package:injectable/injectable.dart' as _i2;
 
 import '../data/data_source/clients/http_client.dart' as _i11;
-import '../data/data_source/clients/http_client_mock.dart' as _i12;
+import '../data/data_source/clients/http_client_prod.dart' as _i12;
 import '../data/data_source/clients/third_module.dart' as _i29;
 import '../data/data_source/cost_values_remote_datasource.dart' as _i13;
 import '../data/data_source/cost_values_remote_datasource_impl.dart' as _i14;
@@ -63,7 +63,7 @@ _i1.GetIt $initGetIt(
       () => _i7.PageNavigatorController());
   gh.lazySingleton<_i8.ProfileController>(() => _i8.ProfileController());
   gh.factory<_i9.FirebaseService>(() => _i10.FirebaseServiceImpl());
-  gh.factory<_i11.HttpClientApp>(() => _i12.HttpClientAppMock(
+  gh.factory<_i11.HttpClientApp>(() => _i12.HttpClientAppProd(
         dio: gh<_i3.Dio>(),
         remoteConfig: gh<_i4.RemoteConfig>(),
       ));
