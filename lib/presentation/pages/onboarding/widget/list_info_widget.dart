@@ -41,25 +41,27 @@ class _ListInfoWidgetState extends State<ListInfoWidget>
           ),
           Expanded(
             flex: 35,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                  vertical: ThemeConstants.halfPadding,
-                  horizontal: ThemeConstants.doublePadding),
-              child: Column(
-                children: [
-                  Text(
-                    'Crie sua lista',
-                    style: Theme.of(context).textTheme.displayLarge,
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  Text(
-                    ' Aproveite a praticidade de categorizar suas compras de acordo com as diferentes partes da casa, como cozinha, banheiro, quarto, e muito mais. Isso facilita encontrar os itens que você precisa, garantindo uma experiência de compra mais organizada e eficiente.',
-                    style: Theme.of(context).textTheme.bodyMedium,
-                    textAlign: TextAlign.center,
-                  ),
-                ],
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                    vertical: ThemeConstants.halfPadding,
+                    horizontal: ThemeConstants.doublePadding),
+                child: Column(
+                  children: [
+                    Text(
+                      'Crie sua lista',
+                      style: Theme.of(context).textTheme.displayLarge,
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    Text(
+                      ' Aproveite a praticidade de categorizar suas compras de acordo com as diferentes partes da casa, como cozinha, banheiro, quarto, e muito mais. Isso facilita encontrar os itens que você precisa, garantindo uma experiência de compra mais organizada e eficiente.',
+                      style: Theme.of(context).textTheme.bodyMedium,
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

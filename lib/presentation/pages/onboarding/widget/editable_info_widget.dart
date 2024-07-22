@@ -40,25 +40,27 @@ class _EditableInfoWidgetState extends State<EditableInfoWidget>
           ),
           Expanded(
             flex: 35,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                  vertical: ThemeConstants.halfPadding,
-                  horizontal: ThemeConstants.doublePadding),
-              child: Column(
-                children: [
-                  Text(
-                    'Gerencie seus itens',
-                    style: Theme.of(context).textTheme.displayLarge,
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  Text(
-                    'Marque os itens como concluídos à medida que você os adquire. Com isso, visualize o valor total das suas compras para manter o controle do seu orçamento e gerenciar seus gastos de forma eficaz, garantindo que estejam dentro do planejado.\n\n Que tal testar na prática?',
-                    style: Theme.of(context).textTheme.bodyMedium,
-                    textAlign: TextAlign.center,
-                  ),
-                ],
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                    vertical: ThemeConstants.halfPadding,
+                    horizontal: ThemeConstants.doublePadding),
+                child: Column(
+                  children: [
+                    Text(
+                      'Gerencie seus itens',
+                      style: Theme.of(context).textTheme.displayLarge,
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    Text(
+                      'Marque os itens como concluídos à medida que você os adquire. Com isso, visualize o valor total das suas compras para manter o controle do seu orçamento e gerenciar seus gastos de forma eficaz, garantindo que estejam dentro do planejado.\n\n Que tal testar na prática?',
+                      style: Theme.of(context).textTheme.bodyMedium,
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
