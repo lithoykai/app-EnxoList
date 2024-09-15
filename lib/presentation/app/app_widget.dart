@@ -9,6 +9,7 @@ import 'package:enxolist/presentation/pages/onboarding/onboard_page.dart';
 import 'package:enxolist/presentation/pages/profile/config/app_config_page.dart';
 import 'package:enxolist/presentation/pages/profile/forms/change_user_info.dart';
 import 'package:enxolist/presentation/pages/splash_page.dart';
+import 'package:enxolist/presentation/pages/teste/teste_perfil.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
@@ -26,13 +27,13 @@ class _AppWidgetState extends State<AppWidget> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      _observerFailure();
+      // _observerFailure();
     });
   }
 
   @override
   void dispose() {
-    AppConfig.instance.onDispose();
+    // AppConfig.instance.onDispose();
     super.dispose();
   }
 
@@ -76,6 +77,7 @@ class _AppWidgetState extends State<AppWidget> {
             AppRouter.APP_CONFIG_PAGE: (context) => const AppConfigPage(),
             AppRouter.CATEGORY_LIST: (context) => CategoryListPage(),
             AppRouter.ONBOARD_PAGE: (context) => OnboardPage(),
+            AppRouter.TESTE: (context) => CropSample(),
             // AppRouter.PRODUCT_FORM_PAGE: (context) => const ProductFormPage(),
             // AppRouter.PRODUCT_DETAIL: (context) => const ProductDetail(),
           },

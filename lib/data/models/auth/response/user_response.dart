@@ -16,13 +16,20 @@ class UserResponse extends HiveObject {
   String token;
   @HiveField(4)
   DateTime expiryDate;
+  @HiveField(5)
+  String? userCoupleId;
+  @HiveField(6)
+  bool? isCouple = false;
 
-  UserResponse(
-      {required this.id,
-      required this.email,
-      required this.token,
-      required this.expiryDate,
-      required this.name});
+  UserResponse({
+    required this.id,
+    required this.email,
+    required this.token,
+    required this.expiryDate,
+    required this.name,
+    this.userCoupleId,
+    this.isCouple = false,
+  });
 
   factory UserResponse.fromJson(Map<String, dynamic> json) {
     return UserResponse(
@@ -31,6 +38,8 @@ class UserResponse extends HiveObject {
       name: json['name'],
       token: json['token'] ?? '',
       expiryDate: DateTime.now().add(Duration(hours: json['expiryDate'])),
+      userCoupleId: json['userCoupleId'],
+      isCouple: json['isCouple'],
     );
   }
 

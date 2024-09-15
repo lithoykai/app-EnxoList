@@ -2,8 +2,13 @@ class AuthRequest {
   String email;
   String? name;
   String password;
+  String? coupleEmail;
 
-  AuthRequest({required this.email, required this.password, this.name});
+  AuthRequest(
+      {required this.email,
+      required this.password,
+      this.name,
+      this.coupleEmail});
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = {
@@ -11,6 +16,7 @@ class AuthRequest {
       'password': password,
       'name': name ?? '',
       'role': name == null ? '' : 'USER',
+      'coupleEmail': coupleEmail ?? '',
     };
     return data;
   }
@@ -20,6 +26,7 @@ class AuthRequest {
       email: json['email'],
       password: json['password'],
       name: json['name'],
+      coupleEmail: json['coupleEmail'],
     );
   }
 }

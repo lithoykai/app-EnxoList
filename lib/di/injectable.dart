@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:enxolist/data/models/auth/response/user_DTO.dart';
 import 'package:enxolist/data/models/auth/response/user_response.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -19,6 +20,7 @@ void setup() {}
 
 Future<void> init() async {
   Hive.registerAdapter(UserResponseAdapter());
+  Hive.registerAdapter(UserDTOAdapter());
   getIt.registerLazySingleton<HiveInterface>(() => Hive);
   // getIt.registerFactory<HttpClientApp>(() => HttpClientApp());
   Directory directory = await pathProvider.getApplicationDocumentsDirectory();
