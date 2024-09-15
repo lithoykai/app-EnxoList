@@ -1,9 +1,12 @@
+import 'package:enxolist/data/models/auth/response/user_DTO.dart';
 import 'package:enxolist/data/models/auth/response/user_response.dart';
 import 'package:enxolist/di/injectable.dart';
 import 'package:enxolist/infra/theme/controller/theme_controller.dart';
+import 'package:enxolist/infra/theme/theme_constants.dart';
 import 'package:enxolist/presentation/pages/profile/controller/profile_controller.dart';
 import 'package:enxolist/presentation/pages/profile/widgets/profile_avatar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hive/hive.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -21,6 +24,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   bool _showListView = false;
   late var box;
   late UserResponse? user;
+  late UserDTO? userCouple;
 
   @override
   void initState() {
@@ -29,6 +33,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
       var box = Hive.box('userData');
       user = box.get('userData');
     }
+    if (Hive.isBoxOpen('coupleData')) {
+      var box = Hive.box('coupleData');
+      userCouple = box.get('coupleData');
+    }
+    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+      if (user?.userCoupleId != null) {
+        controller.getUser(user!.userCoupleId!);
+      }
+    });
   }
 
   showList() {
@@ -61,6 +74,66 @@ class _ProfileScreenState extends State<ProfileScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
+                  if (user?.userCoupleId != null &&
+                      user!.userCoupleId!.isNotEmpty &&
+                      user!.isCouple == false &&
+                      user!.userCoupleId != user!.id)
+                    Observer(builder: (context) {
+                      return Container(
+                        color: Theme.of(context)
+                            .colorScheme
+                            .onSurface
+                            .withAlpha(20),
+                        alignment: Alignment.center,
+                        child: Column(
+                          children: [
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              textAlign: TextAlign.center,
+                              '${controller.userCouple!.name} está lhe chamando para um relacionamento. Deseja aceitar?',
+                              style: TextStyle(
+                                fontSize: 15,
+                                color:
+                                    Theme.of(context).colorScheme.onSecondary,
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: ThemeConstants.doublePadding),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  TextButton(
+                                    onPressed: () => controller.acceptCouple(
+                                        userID: user!.id,
+                                        coupleID: controller.userCouple!.id),
+                                    child: const Text(
+                                      'Aceitar',
+                                      style: TextStyle(
+                                        color: Colors.green,
+                                      ),
+                                    ),
+                                  ),
+                                  TextButton(
+                                    onPressed: () {},
+                                    child: Text(
+                                      'Recusar',
+                                      style: TextStyle(
+                                        color:
+                                            Theme.of(context).colorScheme.error,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
+                      );
+                    }),
                   Divider(
                     color: Theme.of(context).colorScheme.onSecondary,
                   ),

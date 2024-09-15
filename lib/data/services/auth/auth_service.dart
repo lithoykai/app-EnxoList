@@ -3,7 +3,9 @@ import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:enxolist/data/data_source/clients/http_client.dart';
 import 'package:enxolist/data/models/auth/request/auth_request.dart';
+import 'package:enxolist/data/models/auth/response/user_DTO.dart';
 import 'package:enxolist/data/models/auth/response/user_response.dart';
+import 'package:enxolist/infra/constants/endpoints.dart';
 import 'package:enxolist/infra/failure/auth_exception.dart';
 import 'package:hive/hive.dart';
 import 'package:injectable/injectable.dart';
@@ -17,6 +19,7 @@ class AuthService = AuthServiceBase with _$AuthService;
 
 abstract class AuthServiceBase with Store {
   late Box _userBox;
+  late Box _coupleBox;
   @observable
   String? _token;
   @observable
@@ -52,22 +55,80 @@ abstract class AuthServiceBase with Store {
     if (!_hive.isBoxOpen('userData')) {
       _userBox = await _hive.openBox('userData');
     }
+    if (!_hive.isBoxOpen('coupleData')) {
+      _coupleBox = await _hive.openBox('coupleData');
+    }
   }
 
   Future<UserResponse> saveAuthenticate(Response<dynamic> response) async {
     await _openBoxIfNeeded();
 
-    // final _userBox; = await _hive.openLazyBox('userData');
-
     await _userBox.clear();
     Map<String, dynamic> data = response.data;
     UserResponse user = UserResponse.fromJson(data);
+
     await _userBox.put('userData', user);
     _token = user.token;
     _userId = user.id;
     _expiryDate = user.expiryDate;
 
     return user;
+  }
+
+  @action
+  Future<UserDTO> getCoupleUser(String coupleId) async {
+    try {
+      await _openBoxIfNeeded();
+
+      final response = await _http.getMethod('${Endpoints.getUser}$coupleId');
+      if (response.statusCode != 200) {
+        throw AuthException(response.data['error']);
+      }
+      final coupleUser = UserDTO.fromJson(response.data);
+      await _userBox.put('coupleData', coupleUser);
+      return coupleUser;
+    } catch (e) {
+      throw AuthException(e.toString());
+    }
+  }
+
+  Future<void> acceptCoupleUser({
+    required String coupleId,
+    required String userID,
+  }) async {
+    try {
+      final response = await _http
+          .put('${Endpoints.products}/coupleUser/$userID?id=$coupleId', {});
+      if (response.statusCode != 200) {
+        throw AuthException(response.data['error']);
+      }
+    } catch (e) {
+      throw AuthException(e.toString());
+    }
+  }
+
+  @action
+  Future<void> refuseCouple({
+    required String coupleId,
+    required String userID,
+  }) async {
+    try {
+      await _openBoxIfNeeded();
+
+      final response = await _http.getMethod(
+        'auth/refuseCouple/$userID/$coupleId',
+      );
+      if (response.statusCode != 200) {
+        throw AuthException(response.data['error']);
+      }
+
+      UserResponse? user = _userBox.get('userData');
+      user?.isCouple = false;
+      user?.userCoupleId = null;
+      await _userBox.put('userData', user);
+    } catch (e) {
+      throw AuthException(e.toString());
+    }
   }
 
   @action
@@ -109,6 +170,7 @@ abstract class AuthServiceBase with Store {
     await _openBoxIfNeeded();
 
     await _userBox.clear();
+    await _coupleBox.clear();
     updateAuthStatus(false);
   }
 

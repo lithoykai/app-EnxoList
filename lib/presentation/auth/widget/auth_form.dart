@@ -34,6 +34,7 @@ class _AuthFormState extends State<AuthForm> {
 
   // FocusNode
   final _emailFocus = FocusNode();
+  final _emailCoupleFocus = FocusNode();
   final _passwordFocus = FocusNode();
   final _confirmPasswordFocus = FocusNode();
   final _nameFocus = FocusNode();
@@ -42,6 +43,7 @@ class _AuthFormState extends State<AuthForm> {
   void dispose() {
     super.dispose();
     _emailFocus.dispose();
+    _emailCoupleFocus.dispose();
     _passwordFocus.dispose();
     _confirmPasswordFocus.dispose();
     _nameFocus.dispose();
@@ -102,6 +104,7 @@ class _AuthFormState extends State<AuthForm> {
     if (_isLogin()) _authData.remove('name');
 
     _formKey.currentState?.save();
+    print(_authData['coupleEmail']);
     await _saveLoginData();
 
     try {
@@ -147,7 +150,7 @@ class _AuthFormState extends State<AuthForm> {
         context: context,
         builder: (context) {
           return AlertDialog(
-            backgroundColor: Theme.of(context).colorScheme.onBackground,
+            backgroundColor: Theme.of(context).colorScheme.onSurface,
             title: const Text(
               'Ocorreu um erro.',
             ),
@@ -198,9 +201,8 @@ class _AuthFormState extends State<AuthForm> {
                                         Theme.of(context).colorScheme.secondary,
                                   ),
                                   decoration: InputDecoration(
-                                    fillColor: Theme.of(context)
-                                        .colorScheme
-                                        .onBackground,
+                                    fillColor:
+                                        Theme.of(context).colorScheme.onSurface,
                                     filled: true,
                                     enabledBorder: const UnderlineInputBorder(
                                       borderRadius:
@@ -211,14 +213,12 @@ class _AuthFormState extends State<AuthForm> {
                                     labelText: 'Nome',
                                     labelStyle: TextStyle(
                                       fontFamily: "Roboto",
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .background,
+                                      color:
+                                          Theme.of(context).colorScheme.surface,
                                       fontSize: 17,
                                     ),
                                   ),
                                   focusNode: _nameFocus,
-                                  keyboardType: TextInputType.emailAddress,
                                   onSaved: (name) =>
                                       _authData['name'] = name ?? '',
                                   validator: (_name) {
@@ -240,7 +240,7 @@ class _AuthFormState extends State<AuthForm> {
                             decoration: InputDecoration(
                               // prefixIcon: Icon(Icons.email_rounded),
                               fillColor:
-                                  Theme.of(context).colorScheme.onBackground,
+                                  Theme.of(context).colorScheme.onSurface,
                               filled: true,
                               enabledBorder: const UnderlineInputBorder(
                                 borderRadius:
@@ -251,7 +251,7 @@ class _AuthFormState extends State<AuthForm> {
                               labelText: 'E-mail',
                               labelStyle: TextStyle(
                                 fontFamily: "Roboto",
-                                color: Theme.of(context).colorScheme.background,
+                                color: Theme.of(context).colorScheme.surface,
                                 fontSize: 17,
                               ),
                             ),
@@ -278,7 +278,7 @@ class _AuthFormState extends State<AuthForm> {
                             ),
                             decoration: InputDecoration(
                               fillColor:
-                                  Theme.of(context).colorScheme.onBackground,
+                                  Theme.of(context).colorScheme.onSurface,
                               // prefixIcon: const Icon(Icons.lock_rounded),
                               suffixIcon: IconButton(
                                 onPressed: _toggle,
@@ -298,7 +298,7 @@ class _AuthFormState extends State<AuthForm> {
                               ),
                               labelStyle: TextStyle(
                                 fontFamily: "Roboto",
-                                color: Theme.of(context).colorScheme.background,
+                                color: Theme.of(context).colorScheme.surface,
                                 fontSize: 17,
                               ),
                               labelText: 'Senha',
@@ -338,7 +338,7 @@ class _AuthFormState extends State<AuthForm> {
                                           decoration: InputDecoration(
                                             fillColor: Theme.of(context)
                                                 .colorScheme
-                                                .onBackground,
+                                                .onSurface,
                                             filled: true,
                                             enabledBorder:
                                                 const UnderlineInputBorder(
@@ -352,7 +352,7 @@ class _AuthFormState extends State<AuthForm> {
                                               fontFamily: "Roboto",
                                               color: Theme.of(context)
                                                   .colorScheme
-                                                  .background,
+                                                  .surface,
                                               fontSize: 17,
                                             ),
                                             labelText: 'Confirmar senha',
@@ -390,6 +390,58 @@ class _AuthFormState extends State<AuthForm> {
                                     ),
                                   ],
                                 )
+                              : Container(),
+                          !_isLogin()
+                              ? Column(children: [
+                                  const SizedBox(
+                                    height: 20,
+                                  ),
+                                  TextFormField(
+                                    style: TextStyle(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .secondary,
+                                    ),
+                                    decoration: InputDecoration(
+                                      fillColor: Theme.of(context)
+                                          .colorScheme
+                                          .onSurface,
+                                      filled: true,
+                                      enabledBorder: const UnderlineInputBorder(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(5)),
+                                        borderSide: BorderSide(
+                                            color: Colors.transparent,
+                                            width: 5),
+                                      ),
+                                      labelText: 'Email do casal',
+                                      labelStyle: TextStyle(
+                                        fontFamily: "Roboto",
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .surface,
+                                        fontSize: 17,
+                                      ),
+                                    ),
+                                    validator: (_coupleEmail) {
+                                      final name = _coupleEmail ?? '';
+
+                                      return null;
+                                    },
+                                    focusNode: _emailCoupleFocus,
+                                    keyboardType: TextInputType.emailAddress,
+                                    onSaved: (coupleEmail) =>
+                                        _authData['coupleEmail'] =
+                                            coupleEmail ?? "",
+                                  ),
+                                  const Padding(
+                                    padding:
+                                        EdgeInsets.symmetric(vertical: 8.0),
+                                    child: Text(
+                                      '*Se você deseja compartilhar a lista com alguém já cadastrado, adicione aqui o email dessa pessoa. Caso não, só ignorar.',
+                                    ),
+                                  )
+                                ])
                               : Container(),
                         ],
                       ),
