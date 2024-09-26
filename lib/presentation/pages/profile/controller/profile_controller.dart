@@ -20,6 +20,9 @@ abstract class _ProfileControllerBase with Store {
   UserDTO? userCouple;
 
   @observable
+  ProfileState state = ProfileStateLoading();
+
+  @observable
   int selectedImageProfile = 0;
 
   @action
@@ -36,7 +39,20 @@ abstract class _ProfileControllerBase with Store {
   @action
   Future<void> acceptCouple(
       {required String coupleID, required String userID}) async {
-    await auth.acceptCoupleUser(coupleId: coupleID, userID: userID);
+    state = ProfileStateLoading();
+    final response =
+        await auth.acceptCoupleUser(coupleId: coupleID, userID: userID);
+    if (response == 'Sucess') {
+      state = ProfileStateSucess();
+    } else {
+      state = ProfileStateError(response);
+    }
+  }
+
+  @action
+  Future<void> refuseCouple(
+      {required String coupleID, required String userID}) async {
+    await auth.refuseCouple(coupleId: coupleID, userID: userID);
   }
 
   @action
@@ -45,3 +61,17 @@ abstract class _ProfileControllerBase with Store {
     navigator.changeToPage(0);
   }
 }
+
+class ProfileState {}
+
+class ProfileStateLoading extends ProfileState {}
+
+class ProfileStateError extends ProfileState {
+  final String message;
+
+  ProfileStateError(this.message);
+}
+
+class ProfileStateSucess extends ProfileState {}
+
+class ProfileStateIdle extends ProfileState {}

@@ -9,4 +9,6 @@ abstract class NotificationRepository {
 
   Future<Either<Failure, NotificationDTO>> createNotification(
       NotificationDTO notification);
+
+  Future<Either<Failure, int>> getNotificationCount(String user);
 }

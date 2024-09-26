@@ -8,5 +8,5 @@ class AppRouter {
   static const CATEGORY_LIST = "/category-list";
   static const PRODUCT_FORM_PAGE = "/product-form-page";
   static const PRODUCT_DETAIL = "product-detail";
-  static const TESTE = '/teste';
+  static const NOTIFICATION = '/notification-page';
 }

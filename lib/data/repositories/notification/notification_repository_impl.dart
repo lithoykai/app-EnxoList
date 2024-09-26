@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
-import 'package:enxolist/data/data_source/notification_remote_datasource.dart';
+import 'package:dio/dio.dart';
+import 'package:enxolist/data/data_source/notification/notification_remote_datasource.dart';
 import 'package:enxolist/data/models/notification/notification_dto.dart';
 import 'package:enxolist/domain/repositories/notification_repository.dart';
 import 'package:enxolist/infra/failure/failure.dart';
@@ -32,8 +33,26 @@ class NotificationRepositoryImpl implements NotificationRepository {
     try {
       final _response = await _datasource.getNotifications(user);
       return right(_response);
-    } catch (e) {
-      return left(ServerFailure(msg: 'Erro ao obter lista de notificações'));
+    } on DioException catch (e) {
+      return left(ServerFailure(
+          msg: 'Ocorreu um erro no servidor ao obter as notificações.'));
+    } on Exception catch (e) {
+      return left(AppFailure(
+          msg: 'Ocorreu um erro desconhecido na obtenção das notificações.'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, int>> getNotificationCount(String user) async {
+    try {
+      final _response = await _datasource.getNotificationCount(user);
+      return right(_response);
+    } on DioException catch (e) {
+      return left(ServerFailure(
+          msg: 'Ocorreu um erro no servidor ao obter as notificações.'));
+    } on Exception catch (e) {
+      return left(AppFailure(
+          msg: 'Ocorreu um erro desconhecido na obtenção das notificações.'));
     }
   }
 }

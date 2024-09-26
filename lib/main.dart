@@ -1,4 +1,4 @@
-import 'package:enxolist/data/data_source/remote_config/remote_config.dart';
+import 'package:enxolist/data/data_source/clients/remote_config/remote_config.dart';
 import 'package:enxolist/di/injectable.dart' as di;
 import 'package:enxolist/firebase_options.dart';
 import 'package:enxolist/presentation/app/app_widget.dart';
