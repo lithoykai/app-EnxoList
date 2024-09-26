@@ -1,5 +1,5 @@
 import 'package:enxolist/data/data_source/clients/http_client.dart';
-import 'package:enxolist/data/data_source/notification_remote_datasource.dart';
+import 'package:enxolist/data/data_source/notification/notification_remote_datasource.dart';
 import 'package:enxolist/data/models/notification/notification_dto.dart';
 import 'package:enxolist/infra/constants/endpoints.dart';
 import 'package:injectable/injectable.dart';
@@ -39,12 +39,23 @@ class NotificationRemoteDatasourceImpl
     try {
       final response =
           await _http.getMethod("${Endpoints.notification}?user=$user");
-
       List<NotificationDTO> data = (response.data as List)
           .map((json) => NotificationDTO.fromJson(json))
           .toList();
 
       return data;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<int> getNotificationCount(String user) async {
+    try {
+      final response =
+          await _http.getMethod("${Endpoints.notification}/count?user=$user");
+      final data = response.data;
+      return data['count'];
     } catch (e) {
       rethrow;
     }

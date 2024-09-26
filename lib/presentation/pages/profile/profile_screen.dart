@@ -2,7 +2,8 @@ import 'package:enxolist/data/models/auth/response/user_DTO.dart';
 import 'package:enxolist/data/models/auth/response/user_response.dart';
 import 'package:enxolist/di/injectable.dart';
 import 'package:enxolist/infra/theme/controller/theme_controller.dart';
-import 'package:enxolist/infra/theme/theme_constants.dart';
+import 'package:enxolist/infra/utils/approuter.dart';
+import 'package:enxolist/presentation/pages/notification/controller/notification_controller.dart';
 import 'package:enxolist/presentation/pages/profile/controller/profile_controller.dart';
 import 'package:enxolist/presentation/pages/profile/widgets/profile_avatar.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +22,7 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   final themeController = getIt<ThemeController>();
   final controller = getIt<ProfileController>();
+  final notificationController = getIt<NotificationController>();
   bool _showListView = false;
   late var box;
   late UserResponse? user;
@@ -33,15 +35,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
       var box = Hive.box('userData');
       user = box.get('userData');
     }
-    if (Hive.isBoxOpen('coupleData')) {
-      var box = Hive.box('coupleData');
-      userCouple = box.get('coupleData');
-    }
-    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
-      if (user?.userCoupleId != null) {
-        controller.getUser(user!.userCoupleId!);
-      }
-    });
+    // if (Hive.isBoxOpen('coupleData')) {
+    //   var box = Hive.box('coupleData');
+    //   userCouple = box.get('coupleData');
+    // }
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    notificationController.getNotificationCount(user!.id);
   }
 
   showList() {
@@ -74,69 +77,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  if (user?.userCoupleId != null &&
-                      user!.userCoupleId!.isNotEmpty &&
-                      user!.isCouple == false &&
-                      user!.userCoupleId != user!.id)
-                    Observer(builder: (context) {
-                      return Container(
-                        color: Theme.of(context)
-                            .colorScheme
-                            .onSurface
-                            .withAlpha(20),
-                        alignment: Alignment.center,
-                        child: Column(
-                          children: [
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            Text(
-                              textAlign: TextAlign.center,
-                              '${controller.userCouple!.name} está lhe chamando para um relacionamento. Deseja aceitar?',
-                              style: TextStyle(
-                                fontSize: 15,
-                                color:
-                                    Theme.of(context).colorScheme.onSecondary,
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: ThemeConstants.doublePadding),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  TextButton(
-                                    onPressed: () => controller.acceptCouple(
-                                        userID: user!.id,
-                                        coupleID: controller.userCouple!.id),
-                                    child: const Text(
-                                      'Aceitar',
-                                      style: TextStyle(
-                                        color: Colors.green,
-                                      ),
-                                    ),
-                                  ),
-                                  TextButton(
-                                    onPressed: () {},
-                                    child: Text(
-                                      'Recusar',
-                                      style: TextStyle(
-                                        color:
-                                            Theme.of(context).colorScheme.error,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            )
-                          ],
-                        ),
-                      );
-                    }),
-                  Divider(
-                    color: Theme.of(context).colorScheme.onSecondary,
-                  ),
                   TextButton.icon(
                     icon: Icon(
                       themeController.isDark
@@ -151,6 +91,73 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           color: Theme.of(context).colorScheme.onSecondary),
                     ),
                   ),
+                  Divider(
+                    color: Theme.of(context).colorScheme.onSecondary,
+                  ),
+                  Observer(builder: (context) {
+                    if (notificationController.state
+                        is NotificationStateError) {
+                      return Container(
+                        width: double.infinity,
+                        alignment: Alignment.center,
+                        color: Theme.of(context)
+                            .colorScheme
+                            .onSurface
+                            .withAlpha(20),
+                        child: Text(
+                            (notificationController.state
+                                    as NotificationStateError)
+                                .message,
+                            style: const TextStyle(
+                              color: Colors.red,
+                            )),
+                      );
+                    }
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        TextButton.icon(
+                          icon: Icon(
+                            Icons.notifications,
+                            color: Theme.of(context).colorScheme.onSecondary,
+                          ),
+                          onPressed: () {
+                            notificationController
+                                .getNotifications(user!.id)
+                                .then((_) => Navigator.of(context)
+                                    .pushNamed(AppRouter.NOTIFICATION));
+                          },
+                          label: Text(
+                            'Notificações',
+                            style: TextStyle(
+                                color:
+                                    Theme.of(context).colorScheme.onSecondary),
+                          ),
+                        ),
+                        if (notificationController.count != 0)
+                          Stack(
+                            children: [
+                              Container(
+                                width: 20.0,
+                                height: 20.0,
+                                decoration: BoxDecoration(
+                                  color: Theme.of(context).colorScheme.error,
+                                  shape: BoxShape.circle,
+                                ),
+                                alignment: Alignment.center,
+                                child: Text(
+                                  notificationController.count.toString(),
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                            ],
+                          )
+                      ],
+                    );
+                  }),
                   Divider(
                     color: Theme.of(context).colorScheme.onSecondary,
                   ),

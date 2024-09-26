@@ -20,8 +20,7 @@ ThemeData lightTheme = ThemeData(
     outline: ColorsTheme.backgroundForm,
   ),
   textTheme: const TextTheme(
-    headlineSmall: TextStyle(
-        color: Colors.black87, fontSize: 22), //ProductCard Title color
+    headlineSmall: TextStyle(color: Colors.black87), //ProductCard Title color
     headlineMedium: TextStyle(color: Colors.black), //ProductCard Title color
     headlineLarge: TextStyle(
         color: ColorsTheme.primaryColor,
@@ -77,9 +76,8 @@ ThemeData darkTheme = ThemeData(
   ),
   unselectedWidgetColor: ColorsDark.secundary,
   textTheme: const TextTheme(
-    headlineSmall: TextStyle(color: Colors.black87), //ProductCard Title color
-    headlineMedium:
-        TextStyle(color: ColorsDark.secundary), //ProductCard Title color
+    headlineSmall: TextStyle(color: Colors.black87),
+    headlineMedium: TextStyle(color: ColorsDark.secundary),
     headlineLarge: TextStyle(
         color: ColorsTheme.primaryColor,
         fontFamily: 'Roboto',

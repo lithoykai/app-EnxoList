@@ -25,6 +25,22 @@ mixin _$ProfileController on _ProfileControllerBase, Store {
     });
   }
 
+  late final _$stateAtom =
+      Atom(name: '_ProfileControllerBase.state', context: context);
+
+  @override
+  ProfileState get state {
+    _$stateAtom.reportRead();
+    return super.state;
+  }
+
+  @override
+  set state(ProfileState value) {
+    _$stateAtom.reportWrite(value, super.state, () {
+      super.state = value;
+    });
+  }
+
   late final _$selectedImageProfileAtom = Atom(
       name: '_ProfileControllerBase.selectedImageProfile', context: context);
 
@@ -60,6 +76,16 @@ mixin _$ProfileController on _ProfileControllerBase, Store {
         .run(() => super.acceptCouple(coupleID: coupleID, userID: userID));
   }
 
+  late final _$refuseCoupleAsyncAction =
+      AsyncAction('_ProfileControllerBase.refuseCouple', context: context);
+
+  @override
+  Future<void> refuseCouple(
+      {required String coupleID, required String userID}) {
+    return _$refuseCoupleAsyncAction
+        .run(() => super.refuseCouple(coupleID: coupleID, userID: userID));
+  }
+
   late final _$_ProfileControllerBaseActionController =
       ActionController(name: '_ProfileControllerBase', context: context);
 
@@ -89,6 +115,7 @@ mixin _$ProfileController on _ProfileControllerBase, Store {
   String toString() {
     return '''
 userCouple: ${userCouple},
+state: ${state},
 selectedImageProfile: ${selectedImageProfile}
     ''';
   }

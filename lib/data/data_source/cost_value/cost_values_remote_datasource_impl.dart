@@ -1,5 +1,5 @@
 import 'package:enxolist/data/data_source/clients/http_client.dart';
-import 'package:enxolist/data/data_source/cost_values_remote_datasource.dart';
+import 'package:enxolist/data/data_source/cost_value/cost_values_remote_datasource.dart';
 import 'package:enxolist/data/models/product/cost_values_model.dart';
 import 'package:enxolist/infra/constants/endpoints.dart';
 import 'package:injectable/injectable.dart';

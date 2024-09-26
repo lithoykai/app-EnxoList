@@ -92,7 +92,7 @@ abstract class AuthServiceBase with Store {
     }
   }
 
-  Future<void> acceptCoupleUser({
+  Future<String> acceptCoupleUser({
     required String coupleId,
     required String userID,
   }) async {
@@ -102,6 +102,7 @@ abstract class AuthServiceBase with Store {
       if (response.statusCode != 200) {
         throw AuthException(response.data['error']);
       }
+      return response.data['msg'];
     } catch (e) {
       throw AuthException(e.toString());
     }

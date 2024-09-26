@@ -6,4 +6,6 @@ abstract class INotificationRemoteDataSource {
   Future<String> deleteNotification(String id);
 
   Future<NotificationDTO> createNotification(NotificationDTO notification);
+
+  Future<int> getNotificationCount(String user);
 }
