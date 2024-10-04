@@ -7,7 +7,7 @@ import 'dart:async' as _i6;
 import 'dart:io' as _i8;
 
 import 'package:dio/src/response.dart' as _i3;
-import 'package:enxolist/data/data_source/product/product_remote_datasource_impl.dart'
+import 'package:enxolist/data/data_source/product/product_remote_datasource_online.dart'
     as _i5;
 import 'package:enxolist/data/models/product/product_model.dart' as _i7;
 import 'package:enxolist/domain/entities/product/product_entity.dart' as _i4;
@@ -58,12 +58,12 @@ class _FakeProductEntity_2 extends _i1.SmartFake implements _i4.ProductEntity {
         );
 }
 
-/// A class which mocks [ProductDataSourceImpl].
+/// A class which mocks [ProductRemoteDataSourceOnline].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockProductDataSourceImpl extends _i1.Mock
-    implements _i5.ProductDataSourceImpl {
-  MockProductDataSourceImpl() {
+class MockProductRemoteDataSourceOnline extends _i1.Mock
+    implements _i5.ProductRemoteDataSourceOnline {
+  MockProductRemoteDataSourceOnline() {
     _i1.throwOnMissingStub(this);
   }
 

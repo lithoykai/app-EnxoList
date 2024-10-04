@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+
+part 'product_entity.g.dart';
 
 enum Room { cozinha, sala, quarto, banheiro, eletro, lavanderia, reforma }
 
@@ -22,14 +25,23 @@ class BuildingCategory {
   }
 }
 
-class ProductEntity {
+@HiveType(typeId: 3)
+class ProductEntity extends HiveObject {
+  @HiveField(0)
   final String? id;
+  @HiveField(1)
   final String name;
+  @HiveField(2)
   bool wasBought = false;
+  @HiveField(3)
   final double price;
+  @HiveField(4)
   int category;
+  @HiveField(5)
   String? urlLink;
+  @HiveField(6)
   String? image;
+  @HiveField(7)
   int? buildingCategory;
 
   ProductEntity(

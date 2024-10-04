@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:enxolist/data/data_source/clients/http_client.dart';
 import 'package:enxolist/data/data_source/product/product_remote_datasource.dart';
-import 'package:enxolist/data/data_source/product/product_remote_datasource_impl.dart';
+import 'package:enxolist/data/data_source/product/product_remote_datasource_online.dart';
 import 'package:enxolist/data/services/firebase/firebase_service.dart';
 import 'package:enxolist/domain/entities/product/product_entity.dart';
 import 'package:enxolist/domain/response/product_response.dart';
@@ -25,7 +25,7 @@ void main() {
     dio = Diomock();
     firebaseService = MockFirebaseService();
     httpClientMock = MockHttpClientApp();
-    dataSource = ProductDataSourceImpl(
+    dataSource = ProductRemoteDataSourceOnline(
         http: httpClientMock, firebaseService: firebaseService);
   });
 

@@ -7,6 +7,7 @@ import 'package:enxolist/data/models/auth/response/user_DTO.dart';
 import 'package:enxolist/data/models/auth/response/user_response.dart';
 import 'package:enxolist/infra/constants/endpoints.dart';
 import 'package:enxolist/infra/failure/auth_exception.dart';
+import 'package:enxolist/infra/utils/store.dart';
 import 'package:hive/hive.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';
@@ -144,7 +145,7 @@ abstract class AuthServiceBase with Store {
         final isValid = _expiryDate?.isAfter(DateTime.now()) ?? false;
 
         updateAuthStatus(_token != null && isValid);
-
+        switchDataSource(false);
         return user;
       } else {
         final response = await _http.register(request);
@@ -154,6 +155,7 @@ abstract class AuthServiceBase with Store {
         final user = await saveAuthenticate(response);
         final isValid = _expiryDate?.isAfter(DateTime.now()) ?? false;
         updateAuthStatus(_token != null && isValid);
+        switchDataSource(false);
         return user;
       }
     } catch (e) {
@@ -210,6 +212,10 @@ abstract class AuthServiceBase with Store {
 
     final isValid = _expiryDate?.isAfter(DateTime.now()) ?? false;
     updateAuthStatus(_token != null && isValid);
+  }
+
+  void switchDataSource(bool offlineMode) async {
+    await StoreData.saveBool('offlineMode', offlineMode);
   }
 
 // @action
