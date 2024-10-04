@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:enxolist/data/data_source/clients/http_client.dart';
-import 'package:enxolist/data/data_source/remote_config/remote_config.dart';
+import 'package:enxolist/data/data_source/clients/remote_config/remote_config.dart';
 import 'package:enxolist/data/models/auth/request/auth_request.dart';
 import 'package:enxolist/data/models/auth/response/user_response.dart';
 import 'package:hive/hive.dart';

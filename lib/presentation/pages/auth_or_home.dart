@@ -16,9 +16,11 @@ class AuthOrHomePage extends StatefulWidget {
 
 class _AuthOrHomePageState extends State<AuthOrHomePage> {
   bool? onboardPage;
+  bool? offlineMode;
 
   void seenPage() async {
     onboardPage = await StoreData.getBool('onboardPage') ?? false;
+    offlineMode = await StoreData.getBool('offlineMode') ?? false;
   }
 
   @override
@@ -49,7 +51,11 @@ class _AuthOrHomePageState extends State<AuthOrHomePage> {
             if (onboardPage == null || onboardPage == false) {
               return const OnboardPage();
             } else {
-              return auth.isAuth ? PageNavigatorScreen() : const AuthPage();
+              return offlineMode == false
+                  ? auth.isAuth
+                      ? PageNavigatorScreen()
+                      : const AuthPage()
+                  : PageNavigatorScreen();
             }
           });
         }

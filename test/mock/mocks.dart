@@ -1,10 +1,6 @@
-import 'dart:io';
-
 import 'package:dio/dio.dart';
-import 'package:enxolist/data/data_source/clients/http_client_prod.dart';
-import 'package:enxolist/data/data_source/product_remote_datasource.dart';
+import 'package:enxolist/data/data_source/clients/http_client.dart';
 import 'package:enxolist/data/models/auth/request/auth_request.dart';
-import 'package:enxolist/data/models/product/product_model.dart';
 import 'package:enxolist/domain/entities/product/product_entity.dart';
 import 'package:enxolist/domain/response/product_response.dart';
 import 'package:mockito/mockito.dart';
@@ -23,7 +19,7 @@ class Diomock extends Mock implements Dio {}
 
 class SharedPreferencesMock extends Mock implements SharedPreferences {}
 
-class HttpClientAppMock extends Mock implements HttpClientAppProd {
+class HttpClientAppMock extends Mock implements HttpClientApp {
   @override
   Future<Response> getMethod(String endpoint) =>
       super.noSuchMethod(Invocation.method(#getMethod, [endpoint]),
@@ -41,24 +37,4 @@ class HttpClientAppMock extends Mock implements HttpClientAppProd {
   Future<Response> delete(String endpoint) =>
       super.noSuchMethod(Invocation.method(#delete, [endpoint]),
           returnValue: Future.value(_FakeResponse()));
-}
-
-class ProductDataSourceMock extends Mock implements IProductDataSource {
-// getProducts
-
-  @override
-  Future<ProductResponse> getProducts() =>
-      super.noSuchMethod(Invocation.method(#getProducts, []),
-          returnValue: Future.value(_FakeProductResponse()));
-
-  @override
-  Future<Response> deleteProduct(ProductEntity product) =>
-      super.noSuchMethod(Invocation.method(#deleteProduct, [product]),
-          returnValue: Future.value(_FakeResponse()));
-  @override
-  Future<ProductEntity> createProduct(ProductModel product,
-          {File? imageFile}) =>
-      super.noSuchMethod(
-          Invocation.method(#createProduct, [product, imageFile]),
-          returnValue: Future.value(_FakeProductEntity()));
 }

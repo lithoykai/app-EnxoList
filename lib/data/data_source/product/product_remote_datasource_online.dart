@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:dio/src/response.dart';
 import 'package:enxolist/data/data_source/clients/http_client.dart';
-import 'package:enxolist/data/data_source/product_remote_datasource.dart';
+import 'package:enxolist/data/data_source/product/product_remote_datasource.dart';
 import 'package:enxolist/data/models/auth/response/user_response.dart';
 import 'package:enxolist/data/models/product/product_model.dart';
 import 'package:enxolist/data/services/firebase/firebase_service.dart';
@@ -10,16 +10,15 @@ import 'package:enxolist/domain/entities/product/product_entity.dart';
 import 'package:enxolist/domain/response/product_response.dart';
 import 'package:enxolist/infra/constants/endpoints.dart';
 import 'package:hive/hive.dart';
-import 'package:injectable/injectable.dart';
 
-@Injectable(as: IProductDataSource)
-class ProductDataSourceImpl implements IProductDataSource {
+class ProductRemoteDataSourceOnline implements IProductDataSource {
   HttpClientApp _http;
   FirebaseService _firebaseService;
 
-  ProductDataSourceImpl(
-      {required HttpClientApp http, required FirebaseService firebaseService})
-      : _http = http,
+  ProductRemoteDataSourceOnline({
+    required HttpClientApp http,
+    required FirebaseService firebaseService,
+  })  : _http = http,
         _firebaseService = firebaseService;
 
   @override

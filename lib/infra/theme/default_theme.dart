@@ -9,21 +9,18 @@ ThemeData lightTheme = ThemeData(
   cardColor: ColorsTheme.greyTransparent,
   colorScheme: const ColorScheme(
     brightness: Brightness.light,
-    background: ColorsDark.listViewColor, //profile listview
+    surface: ColorsDark.listViewColor, //profile listview
     secondary: Colors.black, //text form
-    surface: Colors.white,
     error: Colors.red,
-    onBackground: ColorsTheme.backgroundForm, //background form
+    onSurface: ColorsTheme.backgroundForm, //background form
     onError: Colors.red,
     onSecondary: ColorsTheme.textColor, // textsWhite
-    onSurface: Colors.black12,
     primary: ColorsTheme.primaryColor,
     onPrimary: ColorsTheme.primaryColorLight,
     outline: ColorsTheme.backgroundForm,
   ),
   textTheme: const TextTheme(
-    headlineSmall: TextStyle(
-        color: Colors.black87, fontSize: 22), //ProductCard Title color
+    headlineSmall: TextStyle(color: Colors.black87), //ProductCard Title color
     headlineMedium: TextStyle(color: Colors.black), //ProductCard Title color
     headlineLarge: TextStyle(
         color: ColorsTheme.primaryColor,
@@ -66,14 +63,12 @@ ThemeData darkTheme = ThemeData(
   canvasColor: const Color.fromARGB(144, 240, 236, 236), //background
   fontFamily: "Roboto",
   colorScheme: const ColorScheme(
-    background: ColorsDark.listViewColor, //profile listview
+    surface: ColorsDark.listViewColor, //profile listview
     secondary: Colors.black, //text form
-    surface: Color(0xFF222222),
     error: Colors.red,
-    onBackground: ColorsDark.backgroundForm, //background form
     onError: Colors.red,
     onSecondary: Colors.white, // textsWhite
-    onSurface: Colors.black12,
+    onSurface: ColorsDark.backgroundForm,
     brightness: Brightness.dark,
     primary: ColorsTheme.primaryColor,
     onPrimary: ColorsTheme.primaryColor,
@@ -81,9 +76,8 @@ ThemeData darkTheme = ThemeData(
   ),
   unselectedWidgetColor: ColorsDark.secundary,
   textTheme: const TextTheme(
-    headlineSmall: TextStyle(color: Colors.black87), //ProductCard Title color
-    headlineMedium:
-        TextStyle(color: ColorsDark.secundary), //ProductCard Title color
+    headlineSmall: TextStyle(color: Colors.black87),
+    headlineMedium: TextStyle(color: ColorsDark.secundary),
     headlineLarge: TextStyle(
         color: ColorsTheme.primaryColor,
         fontFamily: 'Roboto',

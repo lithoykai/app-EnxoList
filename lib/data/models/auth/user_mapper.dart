@@ -13,9 +13,12 @@ UserResponse $UserModelFromEntity(UserEntity entity) {
 
 UserEntity $UserEntityFromModel(UserResponse model) {
   return UserEntity(
-      email: model.email,
-      name: model.name,
-      id: model.id,
-      token: model.token,
-      expiryDate: model.expiryDate);
+    email: model.email,
+    name: model.name,
+    id: model.id,
+    token: model.token,
+    expiryDate: model.expiryDate,
+    isCouple: model.isCouple ?? false,
+    userCoupleId: model.userCoupleId,
+  );
 }

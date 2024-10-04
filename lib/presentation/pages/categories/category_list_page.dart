@@ -30,8 +30,7 @@ class _CategoryListPageState extends State<CategoryListPage> {
   final currencyFormatter =
       NumberFormat.currency(locale: 'pt_BR', symbol: 'R\$');
   final percent = NumberFormat.percentPattern();
-  TextEditingController searchController =
-      TextEditingController(); // Adicione este controlador
+  TextEditingController searchController = TextEditingController();
 
   @override
   void didChangeDependencies() {
@@ -48,6 +47,7 @@ class _CategoryListPageState extends State<CategoryListPage> {
 
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back,
@@ -112,7 +112,7 @@ class _CategoryListPageState extends State<CategoryListPage> {
                     return Column(
                       children: [
                         Container(
-                          color: Theme.of(context).colorScheme.surface,
+                          color: Theme.of(context).scaffoldBackgroundColor,
                           height: isPortrait
                               ? MediaQuery.of(context).size.height * 0.085
                               : MediaQuery.of(context).size.height * 0.16,

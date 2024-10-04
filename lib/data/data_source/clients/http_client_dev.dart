@@ -2,17 +2,19 @@
 
 // import 'package:dio/dio.dart';
 // import 'package:enxolist/data/data_source/clients/http_client.dart';
-// import 'package:enxolist/data/data_source/remote_config/remote_config.dart';
+// import 'package:enxolist/data/data_source/clients/remote_config/remote_config.dart';
 // import 'package:enxolist/data/models/auth/request/auth_request.dart';
 // import 'package:enxolist/data/models/auth/response/user_response.dart';
 // import 'package:hive/hive.dart';
 // import 'package:injectable/injectable.dart';
 
+// const myIP = "192.168.1.106";
+
 // @Injectable(as: HttpClientApp)
-// class HttpClientAppMock implements HttpClientApp {
+// class HttpClientAppDev implements HttpClientApp {
 //   final Dio _dio;
 
-//   HttpClientAppMock({required Dio dio, required RemoteConfig remoteConfig})
+//   HttpClientAppDev({required Dio dio, required RemoteConfig remoteConfig})
 //       : _dio = dio;
 
 //   Future<Response> _authorizedRequest(
@@ -37,7 +39,7 @@
 //   @override
 //   Future<Response> login(AuthRequest request) async {
 //     try {
-//       const _endpoint = "http://192.168.1.102:8080";
+//       const _endpoint = "http://$myIP:8080";
 //       var response =
 //           await _dio.post('$_endpoint/auth/login', data: request.toJson());
 //       return response;
@@ -48,7 +50,7 @@
 
 //   @override
 //   Future<Response> register(AuthRequest request) async {
-//     const _endpoint = "http://192.168.1.102:8080";
+//     const _endpoint = "http://$myIP:8080";
 //     try {
 //       return await _dio.post("$_endpoint/auth/register",
 //           data: jsonEncode(request.toJson()));
@@ -59,7 +61,7 @@
 
 //   @override
 //   Future<Response> post(String endpoint, Map<String, dynamic> data) async {
-//     const _endpoint = "http://192.168.1.102:8080";
+//     const _endpoint = "http://$myIP:8080";
 //     return _authorizedRequest(() async {
 //       return _dio.post('$_endpoint/$endpoint', data: jsonEncode(data));
 //     });
@@ -68,7 +70,7 @@
 //   @override
 //   Future<Response> put(String endpoint, Map<String, dynamic> data) async {
 //     return _authorizedRequest(() async {
-//       const _endpoint = "http://192.168.1.102:8080";
+//       const _endpoint = "http://$myIP:8080";
 //       return _dio.put('$_endpoint/$endpoint', data: jsonEncode(data));
 //     });
 //   }
@@ -76,14 +78,14 @@
 //   @override
 //   Future<Response> delete(String endpoint) async {
 //     return _authorizedRequest(() async {
-//       const _endpoint = "http://192.168.1.102:8080";
+//       const _endpoint = "http://$myIP:8080";
 //       return _dio.delete('$_endpoint/$endpoint');
 //     });
 //   }
 
 //   @override
 //   Future<Response> getMethod(String endpoint) async {
-//     const _endpoint = "http://192.168.1.102:8080";
+//     const _endpoint = "http://$myIP:8080";
 //     return _authorizedRequest(() async {
 //       return _dio.get('$_endpoint/$endpoint');
 //     });

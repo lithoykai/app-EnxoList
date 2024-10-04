@@ -86,6 +86,24 @@ mixin _$AuthService on AuthServiceBase, Store {
     });
   }
 
+  late final _$getCoupleUserAsyncAction =
+      AsyncAction('AuthServiceBase.getCoupleUser', context: context);
+
+  @override
+  Future<UserDTO> getCoupleUser(String coupleId) {
+    return _$getCoupleUserAsyncAction.run(() => super.getCoupleUser(coupleId));
+  }
+
+  late final _$refuseCoupleAsyncAction =
+      AsyncAction('AuthServiceBase.refuseCouple', context: context);
+
+  @override
+  Future<void> refuseCouple(
+      {required String coupleId, required String userID}) {
+    return _$refuseCoupleAsyncAction
+        .run(() => super.refuseCouple(coupleId: coupleId, userID: userID));
+  }
+
   late final _$authenticateAsyncAction =
       AsyncAction('AuthServiceBase.authenticate', context: context);
 

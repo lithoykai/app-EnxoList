@@ -22,13 +22,15 @@ class UserResponseAdapter extends TypeAdapter<UserResponse> {
       token: fields[3] as String,
       expiryDate: fields[4] as DateTime,
       name: fields[2] as String,
+      userCoupleId: fields[5] as String?,
+      isCouple: fields[6] as bool?,
     );
   }
 
   @override
   void write(BinaryWriter writer, UserResponse obj) {
     writer
-      ..writeByte(5)
+      ..writeByte(7)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -38,7 +40,11 @@ class UserResponseAdapter extends TypeAdapter<UserResponse> {
       ..writeByte(3)
       ..write(obj.token)
       ..writeByte(4)
-      ..write(obj.expiryDate);
+      ..write(obj.expiryDate)
+      ..writeByte(5)
+      ..write(obj.userCoupleId)
+      ..writeByte(6)
+      ..write(obj.isCouple);
   }
 
   @override

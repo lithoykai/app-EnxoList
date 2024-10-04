@@ -111,7 +111,8 @@ abstract class _CategoriesControllerBase with Store {
   Future<void> listByCategory(int categoryId) async {
     final _response = await _getProductsUseCase.callCategory(categoryId);
     _response.fold((l) {
-      l as ServerFailure;
+      l as AppFailure;
+      print(l.msg);
     }, (r) => setProducts(r.data));
   }
 
@@ -142,6 +143,7 @@ abstract class _CategoriesControllerBase with Store {
   Future<void> createProduct(ProductModel product, {File? image}) async {
     final _response = await _createProductUseCase.call(product, image: image);
     _response.fold((l) {
+      print(l.toString());
       l as ServerFailure;
       throw ServerFailure(msg: l.msg);
     }, (r) => setProduct(r));
