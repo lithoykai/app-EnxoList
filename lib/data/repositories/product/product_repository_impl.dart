@@ -14,8 +14,8 @@ import 'package:injectable/injectable.dart';
 class ProductRepositoryImpl implements IProductRepository {
   final IProductDataSource _dataSource;
 
-  ProductRepositoryImpl({required IProductDataSource dataSouce})
-      : _dataSource = dataSouce;
+  ProductRepositoryImpl({required IProductDataSource dataSource})
+      : _dataSource = dataSource;
 
   @override
   Future<Either<Failure, ProductResponse>> getProducts() async {

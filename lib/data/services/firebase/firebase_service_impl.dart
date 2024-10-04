@@ -4,9 +4,7 @@ import 'package:enxolist/data/models/auth/response/user_response.dart';
 import 'package:enxolist/data/services/firebase/firebase_service.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:hive/hive.dart';
-import 'package:injectable/injectable.dart';
 
-@Injectable(as: FirebaseService)
 class FirebaseServiceImpl implements FirebaseService {
   @override
   Future<String?> uploadImage(File? image, String imageName) async {

@@ -2,6 +2,7 @@ import 'package:enxolist/data/models/auth/request/auth_request.dart';
 import 'package:enxolist/data/services/auth/auth_service.dart';
 import 'package:enxolist/di/injectable.dart';
 import 'package:enxolist/infra/failure/auth_exception.dart';
+import 'package:enxolist/infra/utils/approuter.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -104,12 +105,12 @@ class _AuthFormState extends State<AuthForm> {
     if (_isLogin()) _authData.remove('name');
 
     _formKey.currentState?.save();
-    print(_authData['coupleEmail']);
     await _saveLoginData();
 
     try {
       AuthRequest request = AuthRequest.fromJson(_authData);
-      await authService.authenticate(request);
+      await authService.authenticate(request).then((_) =>
+          Navigator.of(context).pushReplacementNamed(AppRouter.AUTH_OR_HOME));
     } on AuthException catch (error) {
       if (error.msg.toString().contains('400')) {
         _showErrorDialog('Usuário já existente');
@@ -521,6 +522,12 @@ class _AuthFormState extends State<AuthForm> {
                     ),
                   ),
                 ),
+                TextButton(
+                    onPressed: () async {
+                      authService.switchDataSource(true);
+                      Navigator.of(context).pushNamed(AppRouter.AUTH_OR_HOME);
+                    },
+                    child: const Text('Continuar sem conta.')),
               ],
             ),
           );

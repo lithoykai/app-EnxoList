@@ -42,7 +42,7 @@ class _NotificationPageState extends State<NotificationPage> {
                   padding: const EdgeInsets.all(ThemeConstants.padding),
                   child: Container(
                     decoration: BoxDecoration(
-                      // border: Border.all(color: Colors.grey),
+                      // border: Border.all(color: Colors.grey),2
                       borderRadius: BorderRadius.circular(10),
                       color:
                           Theme.of(context).colorScheme.surface.withAlpha(800),

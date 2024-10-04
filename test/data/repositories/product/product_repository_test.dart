@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:enxolist/data/data_source/product/product_remote_datasource.dart';
-import 'package:enxolist/data/data_source/product/product_remote_datasource_impl.dart';
+import 'package:enxolist/data/data_source/product/product_remote_datasource_online.dart';
 import 'package:enxolist/data/repositories/product/product_repository_impl.dart';
 import 'package:enxolist/domain/entities/product/product_entity.dart';
 import 'package:enxolist/domain/repositories/product_repository.dart';
@@ -13,14 +13,14 @@ import 'package:mockito/mockito.dart';
 import '../../../fixtures/product_fixture.dart';
 import 'product_repository_test.mocks.dart';
 
-@GenerateMocks([ProductDataSourceImpl])
+@GenerateMocks([ProductRemoteDataSourceOnline])
 void main() {
   late IProductRepository repository;
   late IProductDataSource dataSource;
 
   setUp(() {
-    dataSource = MockProductDataSourceImpl();
-    repository = ProductRepositoryImpl(dataSouce: dataSource);
+    dataSource = MockProductRemoteDataSourceOnline();
+    repository = ProductRepositoryImpl(dataSource: dataSource);
   });
 
   group(
