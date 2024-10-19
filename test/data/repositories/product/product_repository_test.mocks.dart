@@ -4,15 +4,16 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i6;
-import 'dart:io' as _i8;
+import 'dart:io' as _i9;
 
 import 'package:dio/src/response.dart' as _i3;
 import 'package:enxolist/data/data_source/product/product_remote_datasource_online.dart'
     as _i5;
-import 'package:enxolist/data/models/product/product_model.dart' as _i7;
+import 'package:enxolist/data/models/product/product_model.dart' as _i8;
 import 'package:enxolist/domain/entities/product/product_entity.dart' as _i4;
 import 'package:enxolist/domain/response/product_response.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
+import 'package:mockito/src/dummies.dart' as _i7;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -101,21 +102,20 @@ class MockProductRemoteDataSourceOnline extends _i1.Mock
       ) as _i6.Future<_i2.ProductResponse>);
 
   @override
-  _i6.Future<_i3.Response<dynamic>> deleteProduct(_i4.ProductEntity? product) =>
+  _i6.Future<String> deleteProduct(_i4.ProductEntity? product) =>
       (super.noSuchMethod(
         Invocation.method(
           #deleteProduct,
           [product],
         ),
-        returnValue:
-            _i6.Future<_i3.Response<dynamic>>.value(_FakeResponse_1<dynamic>(
+        returnValue: _i6.Future<String>.value(_i7.dummyValue<String>(
           this,
           Invocation.method(
             #deleteProduct,
             [product],
           ),
         )),
-      ) as _i6.Future<_i3.Response<dynamic>>);
+      ) as _i6.Future<String>);
 
   @override
   _i6.Future<_i3.Response<dynamic>> updateWasBought(
@@ -137,8 +137,8 @@ class MockProductRemoteDataSourceOnline extends _i1.Mock
 
   @override
   _i6.Future<_i4.ProductEntity> createProduct(
-    _i7.ProductModel? product, {
-    _i8.File? imageFile,
+    _i8.ProductModel? product, {
+    _i9.File? imageFile,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -158,8 +158,8 @@ class MockProductRemoteDataSourceOnline extends _i1.Mock
 
   @override
   _i6.Future<_i4.ProductEntity> editProduct(
-    _i7.ProductModel? product, {
-    _i8.File? image,
+    _i8.ProductModel? product, {
+    _i9.File? image,
   }) =>
       (super.noSuchMethod(
         Invocation.method(

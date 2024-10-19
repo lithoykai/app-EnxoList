@@ -42,7 +42,7 @@ class _AppWidgetState extends State<AppWidget> {
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: const Text('Ocorreu um erro.'),
+            title: const Text('Ocorreu um erro.1'),
             content: Text(msg),
             actions: [
               TextButton(

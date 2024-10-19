@@ -1,8 +1,10 @@
+import 'package:enxolist/data/data_source/product/product_remote_datasource_offline.dart';
+import 'package:enxolist/data/data_source/product/product_remote_datasource_online.dart';
+import 'package:enxolist/data/data_source/product/product_remote_datasource_proxy.dart';
 import 'package:enxolist/data/models/auth/request/auth_request.dart';
-import 'package:enxolist/data/services/auth/auth_service.dart';
 import 'package:enxolist/di/injectable.dart';
-import 'package:enxolist/infra/failure/auth_exception.dart';
 import 'package:enxolist/infra/utils/approuter.dart';
+import 'package:enxolist/presentation/auth/controller/auth_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -20,7 +22,7 @@ class AuthForm extends StatefulWidget {
 class _AuthFormState extends State<AuthForm> {
   bool _obscurePassword = true;
   bool _confirmObscurePassword = true;
-  AuthService authService = getIt<AuthService>();
+  AuthController authController = getIt<AuthController>();
   final _passwordController = TextEditingController();
   late TextEditingController _emailController;
   final _formKey = GlobalKey<FormState>();
@@ -109,30 +111,11 @@ class _AuthFormState extends State<AuthForm> {
 
     try {
       AuthRequest request = AuthRequest.fromJson(_authData);
-      await authService.authenticate(request).then((_) =>
-          Navigator.of(context).pushReplacementNamed(AppRouter.AUTH_OR_HOME));
-    } on AuthException catch (error) {
-      if (error.msg.toString().contains('400')) {
-        _showErrorDialog('Usuário já existente');
-      } else if (error.msg.toString().contains('401') ||
-          error.msg.toString().contains('403')) {
-        _showErrorDialog(
-            'Credenciais inválidas. Verifique seu e-mail e senha.');
-      } else {
-        _showErrorDialog(
-            'Erro desconhecido. Por favor, tente novamente mais tarde.');
-      }
+      await authController.authenticate(request, request.name == null).then(
+          (_) => Navigator.of(context)
+              .pushReplacementNamed(AppRouter.AUTH_OR_HOME));
     } catch (e) {
-      if (e.toString().contains('400')) {
-        _showErrorDialog('Usuário já existente');
-      } else if (e.toString().contains('401') || e.toString().contains('403')) {
-        _showErrorDialog(
-            'Credenciais inválidas. Verifique seu e-mail e senha.');
-      } else {
-        _showErrorDialog(
-            'Erro desconhecido. Por favor, tente novamente mais tarde.');
-      }
-      // _showErrorDialog('Ocorreu um erro: $e');
+      _showErrorDialog(e.toString());
     }
 
     setState(() {
@@ -524,12 +507,22 @@ class _AuthFormState extends State<AuthForm> {
                 ),
                 TextButton(
                     onPressed: () async {
-                      authService.switchDataSource(true);
+                      switchDataSource(true);
                       Navigator.of(context).pushNamed(AppRouter.AUTH_OR_HOME);
                     },
                     child: const Text('Continuar sem conta.')),
               ],
             ),
           );
+  }
+
+  void switchDataSource(bool offline) {
+    final dataSourceProxy = getIt<ProductDataSourceProxy>();
+
+    if (offline) {
+      dataSourceProxy.switchDataSource(getIt<ProductRemoteDataSourceOffline>());
+    } else {
+      dataSourceProxy.switchDataSource(getIt<ProductRemoteDataSourceOnline>());
+    }
   }
 }

@@ -22,7 +22,7 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  bool offlineMode = true;
+  bool? offlineMode;
   final themeController = getIt<ThemeController>();
   final controller = getIt<ProfileController>();
   final notificationController = getIt<NotificationController>();
@@ -33,7 +33,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   void seenPage() async {
     offlineMode = await StoreData.getBool('offlineMode') ?? false;
-    print("Store: ${await StoreData.getBool('offlineMode')}");
   }
 
   @override
@@ -43,7 +42,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       var box = Hive.box('userData');
       user = box.get('userData');
     }
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
       seenPage();
     });
     // if (Hive.isBoxOpen('coupleData')) {
@@ -55,6 +54,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+    seenPage();
     if (offlineMode == false) {
       notificationController.getNotificationCount(user!.id);
     }
@@ -75,7 +75,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final height2 = (height * _flex1 * 2.1) / total;
     final height3 = (height * _flex3 * 0.9) / total;
 
-    return offlineMode == true
+    return user == null
         ? const OfflineWarning()
         : SafeArea(
             child: Column(

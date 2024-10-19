@@ -94,7 +94,6 @@ class _ProductCardState extends State<ProductCard> {
                             )
                             .then((value) async => await widget.controller
                                 .listByCategory(widget.product.category));
-                        // Atualize a lista de produtos
                       },
                       icon: Icon(
                         Icons.edit,
@@ -160,4 +159,3 @@ class _ProductCardState extends State<ProductCard> {
     );
   }
 }
-

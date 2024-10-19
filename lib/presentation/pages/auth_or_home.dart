@@ -1,7 +1,7 @@
-import 'package:enxolist/data/services/auth/auth_service.dart';
 import 'package:enxolist/di/injectable.dart';
 import 'package:enxolist/infra/utils/store.dart';
 import 'package:enxolist/presentation/auth/auth_page.dart';
+import 'package:enxolist/presentation/auth/controller/auth_controller.dart';
 import 'package:enxolist/presentation/page-navigator/page_navigator.dart';
 import 'package:enxolist/presentation/pages/onboarding/onboard_page.dart';
 import 'package:flutter/material.dart';
@@ -33,10 +33,10 @@ class _AuthOrHomePageState extends State<AuthOrHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    AuthService auth = getIt<AuthService>();
+    AuthController authController = getIt<AuthController>();
 
     return FutureBuilder(
-      future: auth.tryAutoLogin(),
+      future: authController.tryAutoLogin(),
       builder: (ctx, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(
@@ -51,11 +51,15 @@ class _AuthOrHomePageState extends State<AuthOrHomePage> {
             if (onboardPage == null || onboardPage == false) {
               return const OnboardPage();
             } else {
-              return offlineMode == false
-                  ? auth.isAuth
-                      ? PageNavigatorScreen()
-                      : const AuthPage()
-                  : PageNavigatorScreen();
+              return Observer(
+                builder: (context) {
+                  return offlineMode == false
+                      ? authController.isAuth
+                          ? PageNavigatorScreen()
+                          : const AuthPage()
+                      : PageNavigatorScreen();
+                },
+              );
             }
           });
         }

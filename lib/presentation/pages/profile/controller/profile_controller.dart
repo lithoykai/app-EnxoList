@@ -1,6 +1,6 @@
 import 'package:enxolist/data/models/auth/response/user_DTO.dart';
-import 'package:enxolist/data/services/auth/auth_service.dart';
 import 'package:enxolist/di/injectable.dart';
+import 'package:enxolist/presentation/auth/controller/auth_controller.dart';
 import 'package:enxolist/presentation/page-navigator/controller/page_navigator_controller.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';
@@ -13,7 +13,7 @@ part 'profile_controller.g.dart';
 class ProfileController = _ProfileControllerBase with _$ProfileController;
 
 abstract class _ProfileControllerBase with Store {
-  final auth = getIt<AuthService>();
+  AuthController auth = getIt<AuthController>();
   final navigator = getIt<PageNavigatorController>();
 
   @observable
@@ -27,7 +27,7 @@ abstract class _ProfileControllerBase with Store {
 
   @action
   Future<void> getUser(String coupleId) async {
-    userCouple = await auth.getCoupleUser(coupleId);
+    // userCouple = await auth.getCoupleUser(coupleId);
   }
 
   @action
@@ -40,19 +40,19 @@ abstract class _ProfileControllerBase with Store {
   Future<void> acceptCouple(
       {required String coupleID, required String userID}) async {
     state = ProfileStateLoading();
-    final response =
-        await auth.acceptCoupleUser(coupleId: coupleID, userID: userID);
-    if (response == 'Sucess') {
-      state = ProfileStateSucess();
-    } else {
-      state = ProfileStateError(response);
-    }
+    // final response =
+    //     await auth.acceptCoupleUser(coupleId: coupleID, userID: userID);
+    // if (response == 'Sucess') {
+    //   state = ProfileStateSucess();
+    // } else {
+    //   state = ProfileStateError(response);
+    // }
   }
 
   @action
   Future<void> refuseCouple(
       {required String coupleID, required String userID}) async {
-    await auth.refuseCouple(coupleId: coupleID, userID: userID);
+    // await auth.refuseCouple(coupleId: coupleID, userID: userID);
   }
 
   @action
