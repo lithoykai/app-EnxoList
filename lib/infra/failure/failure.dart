@@ -37,3 +37,8 @@ class AuthFailure extends Failure {
   //   }
   // }
 }
+
+class AppFailure extends Failure {
+  String? msg;
+  AppFailure({this.msg});
+}

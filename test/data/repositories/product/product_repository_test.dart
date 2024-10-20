@@ -61,6 +61,7 @@ void main() {
         final _fixture = responseProduct;
         final _fakeProduct = fakeProduct;
 
+
         when(dataSource.deleteProduct(_fakeProduct))
             .thenAnswer((_) async => "Produto deletado com sucesso");
 
