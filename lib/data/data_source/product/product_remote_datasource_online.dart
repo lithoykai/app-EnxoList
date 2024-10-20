@@ -61,14 +61,16 @@ class ProductRemoteDataSourceOnline implements IProductDataSource {
   }
 
   @override
-  Future<Response> deleteProduct(ProductEntity product) async {
+  Future<String> deleteProduct(ProductEntity product) async {
     try {
       final response =
           await _http.delete('${Endpoints.deleteProduct}/${product.id}');
       if (product.image != null) {
         await _firebaseService.deleteImage(product.image!);
       }
-      return response;
+      Map<String, dynamic> data = response.data;
+      String result = data['msg'];
+      return result;
     } catch (e) {
       rethrow;
     }

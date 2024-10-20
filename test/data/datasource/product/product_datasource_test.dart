@@ -68,8 +68,8 @@ void main() {
               requestOptions: RequestOptions()));
       final _response = await dataSource.deleteProduct(fakeProduct);
       expect(_response, isA<Response>());
-      expect(_response.data.isNotEmpty, true);
-      expect(_response.data["msg"], 'Produto deletado com sucesso');
+      expect(_response.isNotEmpty, true);
+      expect(_response, 'Produto deletado com sucesso');
     });
 
     test('Should try delete the product and return throw an exception',

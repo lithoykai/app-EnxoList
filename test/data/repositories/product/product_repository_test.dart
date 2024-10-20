@@ -61,12 +61,9 @@ void main() {
         final _fixture = responseProduct;
         final _fakeProduct = fakeProduct;
 
-        when(dataSource.deleteProduct(_fakeProduct)).thenAnswer(
-          (_) async => Response(
-            requestOptions: RequestOptions(),
-            data: {"msg": "Produto deletado com sucesso"},
-          ),
-        );
+
+        when(dataSource.deleteProduct(_fakeProduct))
+            .thenAnswer((_) async => "Produto deletado com sucesso");
 
         final _response = await repository.deleteProduct(_fakeProduct);
         final _result = _response.fold((l) => l, (r) => r);

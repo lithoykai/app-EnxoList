@@ -28,7 +28,7 @@ class BuildingCategory {
 @HiveType(typeId: 3)
 class ProductEntity extends HiveObject {
   @HiveField(0)
-  final String? id;
+  String? id;
   @HiveField(1)
   final String name;
   @HiveField(2)
@@ -69,5 +69,9 @@ class ProductEntity extends HiveObject {
       'urlLink': urlLink,
       'buildingCategory': buildingCategory
     };
+  }
+
+  void setId(String value) {
+    id = value;
   }
 }

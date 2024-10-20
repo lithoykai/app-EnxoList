@@ -48,9 +48,8 @@ class ProductRepositoryImpl implements IProductRepository {
   Future<Either<Failure, String>> deleteProduct(ProductEntity product) async {
     try {
       final _response = await _dataSource.deleteProduct(product);
-      Map<String, dynamic> data = _response.data;
-      final result = data['msg'];
-      return right(result);
+
+      return right(_response);
     } on DioException {
       return left(
           ServerFailure(msg: 'Estamos com algum problema no servidor.'));
@@ -88,7 +87,7 @@ class ProductRepositoryImpl implements IProductRepository {
       return left(ServerFailure(msg: 'Erro ao obter dados do servidor.'));
     } catch (e) {
       return left(AppFailure(
-          msg: 'Ocorreu um erro desconhecido ao tentar criar o produto.'));
+          msg: 'Ocorreu um erro desconhecido ao tentar criar o produto. $e'));
     }
   }
 

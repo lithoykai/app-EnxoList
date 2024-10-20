@@ -4,6 +4,7 @@ import 'package:enxolist/data/data_source/clients/http_client.dart';
 import 'package:enxolist/data/data_source/product/product_remote_datasource.dart';
 import 'package:enxolist/data/data_source/product/product_remote_datasource_offline.dart';
 import 'package:enxolist/data/data_source/product/product_remote_datasource_online.dart';
+import 'package:enxolist/data/data_source/product/product_remote_datasource_proxy.dart';
 import 'package:enxolist/data/models/auth/response/user_DTO.dart';
 import 'package:enxolist/data/models/auth/response/user_response.dart';
 import 'package:enxolist/data/services/firebase/firebase_service.dart';
@@ -33,7 +34,7 @@ Future<void> init() async {
   Directory directory = await pathProvider.getApplicationDocumentsDirectory();
   var hiveData = Directory('${directory.path}/db');
   await Hive.initFlutter(hiveData.path);
-
+  bool isOffline = await StoreData.getBool('offlineMode') ?? false;
   getIt.registerFactory<HiveInterface>(() => Hive);
 
   getIt.registerFactory<ProductRemoteDataSourceOnline>(
@@ -41,18 +42,17 @@ Future<void> init() async {
             http: getIt<HttpClientApp>(),
             firebaseService: getIt<FirebaseService>(),
           ));
+  getIt.allowReassignment = true;
 
   getIt.registerFactory<ProductRemoteDataSourceOffline>(
       () => ProductRemoteDataSourceOffline(
             hive: getIt<HiveInterface>(),
           ));
-  getIt.allowReassignment = true;
   getIt.registerFactory<FirebaseService>(() => FirebaseServiceImpl());
-  getIt.registerLazySingleton<IProductDataSource>(
-    () => StoreData.getBool('offlineMode') == true
-        ? getIt<ProductRemoteDataSourceOffline>()
-        : getIt<ProductRemoteDataSourceOnline>(),
+  getIt.registerLazySingleton<ProductDataSourceProxy>(
+    () => ProductDataSourceProxy(getIt<ProductRemoteDataSourceOffline>()),
   );
+  getIt.registerLazySingleton<IProductDataSource>(() => IProductDataSource());
   $initGetIt(getIt);
 
   // getIt.registerLazySingleton<ProductRemoteDataSourceOffline>(

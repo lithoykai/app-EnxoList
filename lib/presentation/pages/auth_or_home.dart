@@ -1,35 +1,12 @@
-import 'package:enxolist/data/services/auth/auth_service.dart';
-import 'package:enxolist/di/injectable.dart';
-import 'package:enxolist/infra/utils/store.dart';
-import 'package:enxolist/presentation/auth/auth_page.dart';
-import 'package:enxolist/presentation/page-navigator/page_navigator.dart';
-import 'package:enxolist/presentation/pages/onboarding/onboard_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:site_bi/data/services/auth_service.dart';
+import 'package:site_bi/di/injectable.dart';
+import 'package:site_bi/presentation/web/pages/auth/auth_page.dart';
+import 'package:site_bi/presentation/web/pages/home/home_page.dart';
 
-class AuthOrHomePage extends StatefulWidget {
-  const AuthOrHomePage({Key? key});
-
-  @override
-  State<AuthOrHomePage> createState() => _AuthOrHomePageState();
-}
-
-class _AuthOrHomePageState extends State<AuthOrHomePage> {
-  bool? onboardPage;
-  bool? offlineMode;
-
-  void seenPage() async {
-    onboardPage = await StoreData.getBool('onboardPage') ?? false;
-    offlineMode = await StoreData.getBool('offlineMode') ?? false;
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      seenPage();
-    });
-  }
+class AuthOrHome extends StatelessWidget {
+  const AuthOrHome({Key? key});
 
   @override
   Widget build(BuildContext context) {
@@ -48,15 +25,7 @@ class _AuthOrHomePageState extends State<AuthOrHomePage> {
           );
         } else {
           return Observer(builder: (context) {
-            if (onboardPage == null || onboardPage == false) {
-              return const OnboardPage();
-            } else {
-              return offlineMode == false
-                  ? auth.isAuth
-                      ? PageNavigatorScreen()
-                      : const AuthPage()
-                  : PageNavigatorScreen();
-            }
+            return auth.isAuth ? HomePage() : const AuthPage();
           });
         }
       },

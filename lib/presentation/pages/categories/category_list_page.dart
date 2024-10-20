@@ -32,12 +32,12 @@ class _CategoryListPageState extends State<CategoryListPage> {
   final percent = NumberFormat.percentPattern();
   TextEditingController searchController = TextEditingController();
 
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    controller
-        .listByCategory(ModalRoute.of(context)!.settings.arguments as int);
-  }
+  // @override
+  // void didChangeDependencies() {
+  //   super.didChangeDependencies();
+  //   controller
+  //       .listByCategory(ModalRoute.of(context)!.settings.arguments as int);
+  // }
 
   @override
   Widget build(BuildContext context) {

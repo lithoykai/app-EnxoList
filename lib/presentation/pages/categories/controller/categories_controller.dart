@@ -110,10 +110,7 @@ abstract class _CategoriesControllerBase with Store {
   @action
   Future<void> listByCategory(int categoryId) async {
     final _response = await _getProductsUseCase.callCategory(categoryId);
-    _response.fold((l) {
-      l as AppFailure;
-      print(l.msg);
-    }, (r) => setProducts(r.data));
+    _response.fold((l) {}, (r) => setProducts(r.data));
   }
 
   @action
@@ -153,8 +150,13 @@ abstract class _CategoriesControllerBase with Store {
   Future<void> deleteProduct(ProductEntity product) async {
     final _response = await _deleteProductUseCase.delete(product);
     _response.fold((l) {
-      l as ServerFailure;
-      throw ServerFailure(msg: l.toString());
+      if (l is ServerFailure) {
+        print(l.msg);
+      } else {
+        l as AppFailure;
+        print("FAILURE: ${l.msg.toString()}");
+      }
+      // throw ServerFailure(msg: l.toString());
     }, (r) => deleteProductFromList(product));
   }
 
