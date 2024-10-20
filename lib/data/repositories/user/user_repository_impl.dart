@@ -37,8 +37,14 @@ class UserRepositoryImpl implements IUserRepository {
       await _userBox.put('userData', user);
       return Right(user);
     } on DioException catch (e) {
-      return Left(
-          AuthFailure(msg: e.toString(), statusCode: e.response?.statusCode));
+      final statusCode = e.response?.statusCode;
+
+      final errorMessage = e.response?.data['error'] ?? 'Erro desconhecido';
+
+      if (statusCode == 400) {
+        return Left(AuthFailure(msg: errorMessage));
+      }
+      return Left(ServerFailure(msg: e.toString(), statusCode: statusCode));
     } catch (e) {
       return Left(AppFailure(msg: e.toString()));
     }
@@ -61,9 +67,18 @@ class UserRepositoryImpl implements IUserRepository {
 
       return Right(user);
     } on DioException catch (e) {
-      return Left(ServerFailure(msg: e.toString()));
-    } on Exception catch (e) {
-      return Left(AppFailure(msg: e.toString()));
+      final statusCode = e.response?.statusCode;
+
+      final errorMessage = e.response?.data['error'] ?? 'Erro desconhecido';
+
+      if (statusCode == 400) {
+        return Left(AuthFailure(msg: errorMessage));
+      }
+      return Left(ServerFailure(msg: e.toString(), statusCode: statusCode));
+    } catch (e) {
+      return Left(AppFailure(
+          msg:
+              'Ocorreu um erro desconhecido ao tentar registrar. Tente novamente mais tarde ou contate o administrador.'));
     }
   }
 

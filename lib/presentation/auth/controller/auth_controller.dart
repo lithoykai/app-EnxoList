@@ -65,18 +65,15 @@ abstract class AuthControllerBase with Store {
 
       return user.fold((failure) {
         if (failure is AuthFailure) {
-          if (failure.statusCode != null && failure.statusCode == 401) {
-            state = AuthError(failure.getErrorMessage());
-            return Future.error(failure.getErrorMessage());
-          }
           state = AuthError(failure.msg!);
 
-          return Future.error('Erro no servidor: ${failure.msg!}');
-        } else if (failure is AuthFailure) {
-          state = AuthError('Erro na autenticação: ${failure.msg!}');
-          return Future.error('Erro na autenticação: ${failure.msg!}');
+          return Future.error(failure.msg!);
+        } else if (failure is ServerFailure) {
+          state = AuthError('Ocorreu um erro no servidor!');
+          return Future.error(failure.msg!);
         } else if (failure is AppFailure) {
-          throw Exception('Erro na aplicação: ${failure.msg}');
+          state = AuthError(failure.msg!);
+          throw AppFailure(msg: failure.msg!);
         } else {
           throw Exception('Erro desconhecido');
         }
